@@ -1,0 +1,103 @@
+Mémoire 
+Temps
+Echelle prédiction regularite a la bonne échelle 
+
+Technique
+Obsolence de Fourier 
+Caricature neuronale nous permet de poser des questions d'intérêt entre la relation memoire stimuli
+
+Son
+
+Notion d'échelle de temps
+
+Sinus bruit dirac
+
+Peigne de dirac
+Somme harmonique
+Envelope régulière 
+Modulations
+
+
+Sons environmentaux
+Parole
+Musique
+
+Bruit stimuli arbitraire expression de y
+Pas de régularité dans x mais dans y
+
+Paramètres expressivité perception 
+
+Fourier et autres projections
+
+Tres bien inversible
+Mais
+Compromis temps fréquence 
+Stationarite locale
+
+Court terme
+
+Polyphonie complexité 
+
+Estimation de pente freq amp
+Loi de moore
+
+Variation lente des parametres
+Problematique de compréhension de la communauté 
+Lissage du a la tfct
+Local
+
+Mais principe d'analyse fréquentielle de l'évolution 
+
+Normalized cuts
+Approche segmentation
+Critere asa
+Systeme casa
+Usine a gaz, non replicable
+
+Implementation directe de critères pas bon
+Formalisme dans lequel les contraintes peuvent s'exprimer si besoin
+
+Sons de roulement
+
+Mir
+
+Alc differentes temporalité 
+Formalisme élégant 
+Inutile
+Rejet clair de la communauté 
+
+Isolé 
+
+Chaumière en chaumière  
+
+Abstraction de la méthodologie de la recherche
+Recommandations
+Éthique 
+
+Shamma
+Mallat
+
+Approche profonde
+
+Expliciter la rzalite tres pretentieux et tres dangeureux
+
+Expliciter ce que l'on veux faire et se conformer aux regles de la nature pour le reussir
+
+Bacon
+
+
+Conclusion
+
+Modeles physiques ont montré leur insuffisance en terme de richesse
+
+Modele traitement du signal basé  fourier 
+Première etape de lacher prise
+Decrit pas le processus mais l'outil
+Description implicite
+
+Reseaux de neurones
+Specifie meme plus l'outil de mesure
+
+On ne peut mettre le monde en equation
+Mais on peut essayer de mettre notre perception du monde en équation 
+Ce qui edt passionnant car si on y arrive notre perception du monde aura changé...
