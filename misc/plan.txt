@@ -6,7 +6,7 @@ Themes scientifiques 20
 
 Introduction 
 
-Theme 1 analyse de scenes auditives 10
+Theme 1 analyse de scenes auditives 5
 
 Fin thèse, vic, houle
 
@@ -14,7 +14,7 @@ Theme 2 Methodologie experimentale en traitement du signal audionumerique
 
 y=f'(x)
 
-recherche reproductible, explanes
+recherche reproductible, explanes 5
 
 etude de f' par la construction d'un x'
 
