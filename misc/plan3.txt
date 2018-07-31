@@ -1,0 +1,51 @@
+Transformée de fourier d'un signal discontinu demo
+
+
+Notion de temporalité 
+Du stimuli, de l'acquisition et de la formalisation
+
+Modeles de sons
+
+Physiques ancrage sur l'objet
+Perceptifs ancrage sur la reception
+Modeles receptifs
+
+Signal ancrage algorithmique, mathématiques 
+
+Modele sinsoidal long terme
+
+Physique formalisation mathématique des interactions physiques amenant une modification perceptivement significative  du medium
+
+Traitement du signal
+Modelisation de l'onde
+TF
+
+Modélisation sinusoïdale a court terme
+S t n
+Karhunen loeve
+
+Heisenberg
+
+TFE
+
+Il existe une transformation induisant un espace dédié dans lequel chaque stimuli peut être décrit de manière efficace et effective ie dont les paramètres évolue lentement au cours du temps
+
+Processus de decision
+Description classification
+Bibliothécaire fiches
+Or le language est dynamique, la perception que l'on a d'un livre aussi
+Livres modélisé par un processus dynamique
+
+Lignée matriarcale chez les orques
+Reconnaissance du signal de la mère 
+Développement de son propre signal
+
+Notion d'entité sonore
+Different stimuli amèneront un comportement repetable
+
+Perception
+Shamma dau
+
+Cognition
+Ensemble d'algorithmes de détection dédié chacun a une entité un concept
+Potentiellement adossés
