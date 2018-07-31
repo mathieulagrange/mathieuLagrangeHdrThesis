@@ -1,0 +1,33 @@
+Nb pages 80
+
+Notice individuelle 10
+
+Themes scientifiques 20
+
+Introduction 
+
+Theme 1 analyse de scenes auditives 10
+
+Fin thèse, vic, houle
+
+Theme 2 la synthèse au service de l'ecoute artificielle 5
+
+Dcase
+
+Theme 3 la synthèse au service de la psychologie expérimentale 5
+
+Mcgill, these de Grégoire 
+
+Biblio 5
+
+Modelisation long terme de signaux sonores 35
+
+Approches paramétriques 5
+
+Approches modales 5
+
+Approches temps fréquence modulations 10
+
+Approches temporelles 10
+
+Références 10
