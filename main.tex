@@ -1,4 +1,6 @@
-\documentclass[a4paper, french, 10pt]{book}
+\documentclass[a4paper, french, 10pt]{tufte-book}
+\hypersetup{colorlinks}% uncomment this line if you prefer colored hyperlinks (e.g., for onscreen viewing)
+\setcounter{tocdepth}{2}
 \usepackage[utf8]{inputenc}
 %\usepackage[T1]{fontenc}
 %\usepackage[applemac]{inputenc}
@@ -6,9 +8,7 @@
 \usepackage{euscript,amsmath,amssymb,amsfonts,amsthm,epsfig,subfigure,color}
 \usepackage{latexsym}
 \usepackage{graphicx}
-\usepackage{color}
-\usepackage{array}
-\usepackage{tikz,pgf,pgf-pie}
+\usepackage{tikz,pgf}
 \usetikzlibrary{arrows,positioning}
 \usepackage{xspace}
 
@@ -18,27 +18,18 @@
 \definecolor{green}{rgb}{0.2 ,0.5, 0.7}
 \definecolor{blue}{rgb}{0.3, 0 ,0.6}
 
-\usepackage{multibib}
-
-\bibliographystyle{IEEETran}
-\newcites{journals,conferences,chapters,workshops,software,patents,others}{%
-        Revues à comité de lecture, %
-	Actes de colloques à comité de lecture, %
-	Chapitre d'ouvrage,
-        S\'eminaires,Logiciels,
-	Brevets,Références}
 
 \newcommand{\latex}{\LaTeX\xspace}
 \newcommand{\explanes}{\textsf{expLanes}\xspace}
 
-\usepackage[pdftex,
-            linktocpage,%
-            bookmarks=true,%
-            colorlinks=true,%
-            linkcolor=violet,%
-            citecolor=green,%
-            urlcolor=blue,%
-            ]{hyperref}
+%\usepackage[pdftex,
+%             linktocpage,%
+%             bookmarks=true,%
+%             colorlinks=true,%
+%             linkcolor=violet,%
+%             citecolor=green,%
+%             urlcolor=blue,%
+%             ]{hyperref}
 
 
 \title{}
@@ -49,24 +40,24 @@
 
 %\maketitle
 
-\part{Notice individuelle et thèmes de recherche}
+\tableofcontents
 
-\section{Notice individuelle (10)}
+\section{Notice de lecture}
+
+\chapter{Parcours académique (10)}
 
 \input{notice}
 
-\section{Thèmes de recherche (20)}
+\chapter{Parcours thématique (20)}
 
 \input{themes}
 
-\section{Notice bibliographique (2004-2018)}
-
-\input{biblio}
-
-\part{Modélisation long terme de signaux sonores : un état des lieux (35)}
+\chapter{Avancées en modélisation long terme de signaux sonores}
 
 \input{modeles}
 
+\chapter{Notice bibliographique}
 
+\input{biblio}
 
 \end{document}
