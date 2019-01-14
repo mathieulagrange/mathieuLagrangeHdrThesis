@@ -1,12 +1,64 @@
-Aujourd'hui incontournable dans de nombreux domaines, la simulation numérique utilisée en tant que "réplicateur reproductible" de certaines caractéristiques de l'être humain est à mon sens un fantastique outil de compréhension de l'humain en ce sens qu'il nous permet de mieux se confronter aux limites de notre capacité de modélisation de nos propres comportements. Cet outil ne modifie en rien les règles séculaires du questionnement scientifique rythmé par des allers et retours successifs entre processus inductifs (découverte, avancées techniques, ...) et déductifs (formalisation, théorisation, ...).
+Je m'intéresse à l'étude de l'être humain et en particulier à ses modes de perceptions de l'environnement. Je considère la modalité sonore parce qu'elle comporte intrinsèquement un questionnement sur la dimension temporelle. Le temps est une notion complexe\marginnote{Le temps est en effet une notion abstraite qui est pour de nombreuses raisons sujet à débat dans sa définition physique même et sa perception plus encore, voir etienne klein}, je choisi donc plus précisément de me focaliser sur la notion de causalité : "Je dispose d'un passé, disponible sous forme de mémoires, qui me permet de donner un sens à ce que je perçois".
 
-L'outil informatique permet simplement souvent d'accélérer considérablement la cadence. Cette puissance n'est à mon sens pas sans générer actuellement un certain aveuglement chez certains. En effet, en fortement l'accent sur les avancées technologiques possibles au détriment de leur inclusion nécessaire dans un questionnement scientifique qui résistera au temps et permettra une meilleure utilisation du potentiel de ces avancées, on risque de réduire notre niveau de contrôle, pourtant indispensable.
+Ce sujet d'étude est intrinsèquement multi disciplinaire et investi notamment les disciplines suivantes :
+\begin{enumerate}
+  \item neurosciences :
+  \item psycho perception :
+  \item sciences des données : apprentissage, traitement du signal
+\end{enumerate}
 
-Je présenterai ici un état des lieux de mes travaux organisé de manière a également mettre en lumière l'évolution de mon point de vue sur la recherche scientifique en modélisation numérique. Cette maturation a été pour moi un passage de la phase d'exploration à la phase de proposition en passant par une phase plus critique qui s'est imposée à moi comme nécessaire à la définition d'orientations qui soient intimement motivés par un questionnement et non le résultat d'une affection plus ou moins assumée avec une série de thématiques à la mode. L'équilibre entre isolement et inclusion thématique restant la encore un exercice difficile mais néanmoins souhaitable de manière à maximiser l'impact de mon travail sans en dénaturer les éléments fondateurs.
+Quand on présente  ce type de thématique, il est bien entendu que les deux première disciplines sont lesquelles on pense en premier. Il pourrait donc faire sens, à l'instar de deux estimés collègues, Alain de Cheveigné (directeur de recherche Cnrs au laboratoire d'audition de l'\'Ecole Normale Supérieure) et Jean-Julien Aucouturier (chargé de recherche Cnrs à l'Ircam) qui, disposant comme d'une expertise reconnue en sciences des données contribuent maintenant directement à l'avancée de ces deux thématiques.
+
+Malgré cet intérêt partagé pour les facteur humains, j'ai fait le choix de centrer mon effort de recherche sur cette dernière, pour les raisons suivantes. Aujourd'hui incontournable dans de nombreux domaines, la simulation numérique utilisée en tant que "réplicateur reproductible" de certaines caractéristiques de l'être humain est à mon sens un fantastique outil de compréhension de notre humanité en ce sens qu'il nous permet de nous confronter aux limites de notre capacité de modélisation de nos propres comportements. Cet outil ne modifie en rien les règles séculaires du questionnement scientifique rythmé par des allers et retours successifs entre processus inductifs (découverte, avancées techniques, ...) et déductifs (formalisation, théorisation, ...).
+
+L'outil informatique permet simplement d'accélérer considérablement la cadence. Cette accélération n'est à mon sens pas sans générer actuellement une certaine perte de méthode. En effet, en mettant trop fortement l'accent sur les avancées technologiques possibles au détriment de leur inclusion nécessaire dans un questionnement scientifique qui résistera au temps et permettra une meilleure utilisation du potentiel de ces avancées, il y a à mon sens un risque majeur de réduire notre niveau de contrôle, pourtant indispensable à la vertu.
+
+Ceci étant dit, je reste convaincu que la modélisation numérique sera un levier important dans le défi de la connaissance de soi\marginnote{"Connais toi toi même",  Socrate y voyait plus exactement une exhortation à « prendre conscience de sa propre mesure sans tenter de rivaliser avec les dieux ».}
+
+Candidement armé de ce projet et de ces bonnes intentions, j'ai poursuivi ces vingt dernières années un effort de recherche au sein de quelques institutions de recherche et d'une communauté quasi émergente au début de ma carrière à savoir le traitement du signal audio "non speech", son musical d'abord puis son environnemental. Cette communauté a d'ailleurs, par bien des aspects, suivit des étapes de maturation proches de mon expérience.
+
+Je présenterai premièrement ici un état des lieux de mes travaux organisé de manière à mettre en lumière l'évolution de mon point de vue sur la recherche scientifique en modélisation numérique en général et en traitement du signal sonore en particulier. La présentation de ces thèmes ne suit donc pas un formalisme académique et les opinions exprimées n'engage que moi. Pour une présentation plus formelle d'éléments d'intérêt pour la communauté, voir le chapitre \ref{}.
+
+Cette évolution a été pour moi un passage de la phase d'exploration à la phase de proposition en passant par une phase plus critique qui s'est imposée à moi comme nécessaire à la définition d'orientations qui soient intimement motivés par un questionnement et non le résultat d'une affection plus ou moins assumée avec une série de thématiques à la mode. L'équilibre entre isolement et inclusion thématique restant la encore un exercice difficile mais néanmoins indispensable pour être à même de maximiser l'impact de mon travail dans la communauté sans en dénaturer les motivations fondatrices.
 
 \section{Analyse computationnelle de scènes auditives (5)}
 
+Le système auditif humain (SAH) reste en grande partie un mystère, même si son organisation physiologique est dans ses grandes lignes connue. Je négligerai volontairement ici les aspects binauraux en considérant le système auditif humain comme mono capteur, ces aspects étant des indices finalement assez faible dans notre formidable capacité à inférer une représentation interne plausible de notre environnement. Pour asseoir notre argumentaire, on supposera que le système auditif humain se décompose en quatre étapes de traitement successives :
+\begin{enumerate}
+  \item transfert mécanique (mono directionnel) : tympan, osselets
+  \item conversion mécanique / électrique : cochlée
+  \item transfert électrique (bi-directionnel) : éléments spécifique du cerveau moyen
+  \item traitement : cortex auditif
+\end{enumerate}
+
+En plus de cette conversion d'une énergie mécanique vers une énergie électrique ou encore une information analogique à une information digitale, la cochlée opère une décomposition fréquentielle qui nous permet d'aisément distinguer un son grave d'un son aigu. Le fait que cette décomposition se fasse aussi tôt dans la chaîne de traitement nous indique l'importance de cette décomposition. En prenant un parti pris évolutionnaire, on peut supposer que cette distinction a un impact déterminant pour la survie. En effet, une large caisse de résonance aura tendance à produire un son grave si elle est mise en vibration. Être alerté rapidement de cela peut permettre d'avoir un avantage certain pour sa propre survie.
+
+Un autre élément d'importance est que la décomposition se fait sur axe logarithmique en fréquence et le signal d'amplitude est logarithmique. L'utilité du fait que l'amplitude d'un son soit perçue de manière logarithmique est relativement bien comprise, ce qui n'est pas le cas de la raison d'être de l'axe fréquentiel. Des arguments d'ordre mathématique seront donnés à ce sujet dans la Section \ref{}.
+
+% fig Gray928
+% By Henry Vandyke Carter - Henry Gray (1918) Anatomy of the Human Body (See "Book" section below)Bartleby.com: Gray's Anatomy, Plate 928, Public Domain, https://commons.wikimedia.org/w/index.php?curid=566872
+
+A partir .
+
+Il est important de noter la communication entre le cortex auditif et la cochlée est bi directionnelle, de l'information est transmise. Cette direction montante est relativement aisément étudiable dans le cadre de la psycho perception, on fait écouter un stimuli à un sujet et on lui pose des questions. La direction descendante l'est beaucoup moins car elle implique de conditionner le sujet et de mesurer l'impact de ce conditionnement sur l'organe de reception lui même. Cela implique nécessairement une approche "neuroscience" beaucoup plus complexe à mettre en oeuvre. \cite{mesgarani2012selective}
+
+asa problem
+
+hmaronicitre
+
+common variation cue
+
+
+
+. Si l'on ne considère que
+
+En formalisant ces concepts dans une théorie unifiée, appuyée par de nombreuses expériences perceptive, Bregman a fondé
+L'analyse de scènes auditives \cite{bregman1994auditory}. Ces travaux ont suscités un élan d'optimisme dans la communauté traitement du signal. Il semblait possible de simuler le SAH dans sa globalité en implémentant chacun de ces indices et en les laissant se partager le plan temps/fréquence.
+
 Mieux comprendre comment une
+
+echec
+avancées en neurophisio montrant l'importance de la notion de modulation \ref{scattering}
 
 thèse, vic, houle
 
@@ -14,56 +66,34 @@ thèse, vic, houle
 
 \subsection{"Normalized cuts"}
 
+\cite{lagrangeTaslp08}
+
 \subsection{ALC}
 
 parler de la production de similarite Bof / scarce events comme motivation
 
 
 
-\section{Constat critique}
-
-Au delà des avantages et inconvénients des approches discutées précédemment, des phénomènes récurrents ont pu erre observés dans les communautés auxquelles j'ai contribuer (Mir) et plus largement dans ce que l'on appelle aujourd'hui "les sciences des données."
-
-horse
-
-Ma conclusion de ces années de tâtonnement et d'exploration des différentes approches algorithmiques pour résoudre le problème posé m'a amener a faire le constat suivant :
-\begin{enumerate}
-  \item l'absence de formalisme expérimental (citer le kmeans en image)
-  \item l'ajustement aux données, que ce soit par des approches de types série de peignes, ou de méta paramétrisation amène le plus souvent à la production de données quantitatives coïncidentes et des conclusions qualitatives dont les bases expérimentales sont fragiles.
-
-\end{enumerate}
-
- Il est nécessaire de pouvoir comparer simplement et efficacement de nombreuses approches différentes dans un même formalisme expérimental
-
- mais est ce suffisant ?
-
- Et est-ce finalement si important ?
-
-
-Je tiens à préciser que même si les challenges tels qu'ils sont pratiqués aujourd'hui sont une certes une avancées par rapport à l'approche 'mon problème, ma base de données, mon algorithme, ma métrique' qui porte son intérêt dans des phases de défrichage thématique mais qui dilue considérablement. Ils  ne sont en aucun cas satisfaisant pour une démarche expérimentale rigoureuse visant à répondre à une problématique scientifique. La principale raison étant la domination de l'approche "ingénieur" qui vise à répondre à une application pratique par un procédé plus ou moins automatisable et non d'améliorer les connaissances dans un domaine scientifique bien identifié.
-
-
-
-\section{Méthodologie expérimentale en traitement du signal audionumérique (5)}
-
-y=f'(x)
-
-recherche reproductible, explanes 5
-
-etude de f' par la construction d'un x'
-
-definition de y
-
 \section{La synthèse pour l'écoute artificielle (5)}
 
-Dcase
+dcase 2013 \cite{stowellhal-01253912}
 
-Data augmentation
+questionnement sur la généralisation \cite{lafayhal-01111381}
+
+dcase 2016 controle fin de la complexité
+
+analyse poussée des résultats
+
+Dcase  \cite{mesa} Data augmentation
 
 importance de la question
 
-si la question est d'ordre pratique, est-ce problématique si les réponses ne sont que techniques. Non, encore faut t'il que ces réponses aient un intérêt pour la communauté. Pour cela, la poursuite d'une méthode rigoureuse d'investigation reste d'importance, mais elle ne doit pas etre confondue avec une approche d'investigation scientifique qui elle se base sur une question. De la question nait un corpus d'observation qui sert ensuite de base à l'investigation. Cette investigation technique peut comporte une partie technique, mais elle reste au service
+si la question est d'ordre pratique, est-ce problématique si les réponses ne sont que techniques. Non, encore faut t'il que ces réponses aient un intérêt pour la communauté. Pour cela, la poursuite d'une méthode rigoureuse d'investigation reste d'importance, mais elle ne doit pas être confondue avec une approche d'investigation scientifique qui elle se base sur une question. De la question nait un corpus d'observation qui sert ensuite de base à l'investigation. Cette investigation technique peut comporte une partie technique, mais elle reste au service
 
 \section{La synthèse pour la psychologie expérimentale (5)}
 
-Mcgill, these de Grégoire
+Mcgill, \cite{LagrangeTasslp10}
+
+\cite{Murphy11a}
+
+these de Grégoire \cite{lafayhal-01300399}

@@ -2,7 +2,7 @@
 \hypersetup{colorlinks}% uncomment this line if you prefer colored hyperlinks (e.g., for onscreen viewing)
 \setcounter{tocdepth}{2}
 \usepackage[utf8]{inputenc}
-%\usepackage[T1]{fontenc}
+\usepackage[T1]{fontenc}
 %\usepackage[applemac]{inputenc}
 \usepackage[french]{babel}
 \usepackage{euscript,amsmath,amssymb,amsfonts,amsthm,epsfig,subfigure,color}
@@ -11,12 +11,22 @@
 \usepackage{tikz,pgf}
 \usetikzlibrary{arrows,positioning}
 \usepackage{xspace}
-
+\usepackage{multibib}
 %\usepackage{a4wide}
 
 \definecolor{violet}{rgb}{0.5, 0, 0.8}
 \definecolor{green}{rgb}{0.2 ,0.5, 0.7}
 \definecolor{blue}{rgb}{0.3, 0 ,0.6}
+
+
+
+%\bibliographystyle{IEEETran}
+\newcites{journals,conferences,chapters,workshops,software,patents}{%
+        Revues à comité de lecture, %
+	Actes de colloques à comité de lecture, %
+	Chapitre d'ouvrage,
+        S\'eminaires,Logiciels,
+	Brevets}
 
 
 \newcommand{\latex}{\LaTeX\xspace}
@@ -31,6 +41,41 @@
 %             urlcolor=blue,%
 %             ]{hyperref}
 
+\usepackage{etoolbox}
+
+\makeatletter
+\providecommand{\bibname}{Bibliography}
+\providecommand{\refname}{References}
+\@ifpackageloaded{natbib}
+  {\renewcommand{\bibsection}{%
+    \@ifundefined{chapter}
+    {\subsection*{\refname \markboth{\refname}{\bibname}%
+    \addcontentsline{toc}{subsection}{\refname}}
+    }
+    {\section*{\refname \markboth{\refname}{\bibname}%
+    \addcontentsline{toc}{section}{\refname}}
+    }
+  }}
+  {\@ifundefined{chapter}
+    {\patchcmd{\thebibliography}{\section*{\refname}}{%
+      \subsection*{\refname}
+      \addcontentsline{toc}{subsection}{\refname}
+      }{}{}
+    }
+    {\patchcmd{\thebibliography}{\chapter*{\bibname}}{%
+      \section*{\refname}
+      \addcontentsline{toc}{section}{\refname}
+      }{}{}
+    }
+  }
+\@ifundefined{chapter}
+  {\newcommand{\bibliographies}{%
+  \section*{\bibname}
+  \if@FMB@addtotoc\addcontentsline{toc}{section}{\bibname}\fi}}
+  {\newcommand{\bibliographies}{%
+  \chapter*{\bibname}
+  \if@FMB@addtotoc\addcontentsline{toc}{chapter}{\bibname}\fi}}
+\makeatother
 
 \title{}
 
@@ -65,9 +110,17 @@ La seconde partie présente dans une chronologie globalement respectée, les dir
 
   \input{themes}
 
-  \chapter{Avancées en modélisation long terme de signaux sonores}
+  \chapter{Modélisation long terme de signaux sonores}
 
   \input{modeles}
+
+  \chapter{Réflexions autour de la méthode scientifique en sciences des données}
+
+  \input{meta}
+
+
+  \bibliographystyle{plainnat}
+  \nobibliography{biblio/journals,references}
 
   \chapter{Notice bibliographique}
 

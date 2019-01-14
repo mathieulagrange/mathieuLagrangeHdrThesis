@@ -1,0 +1,139 @@
+\section{Constat critique}
+
+Au delà des avantages et inconvénients des approches discutées précédemment, des phénomènes récurrents ont pu erre observés dans les communautés auxquelles j'ai contribuer (Mir) et plus largement dans ce que l'on appelle aujourd'hui "les sciences des données."
+
+empilage de données
+approche inductive pure
+discussion qualitative permettant de mettre en lumière certaines observations lors de la phase expérimentale
+
+horse
+
+Ma conclusion de ces années de tâtonnement et d'exploration des différentes approches algorithmiques pour résoudre le problème posé m'a amener a faire le constat suivant :
+\begin{enumerate}
+  \item l'absence de formalisme expérimental (citer le kmeans en image)
+  \item l'ajustement aux données, que ce soit par des approches de types série de peignes, ou de méta paramétrisation amène le plus souvent à la production de données quantitatives coïncidentes et des conclusions qualitatives dont les bases expérimentales sont fragiles.
+
+\end{enumerate}
+
+ Il est nécessaire de pouvoir comparer simplement et efficacement de nombreuses approches différentes dans un même formalisme expérimental
+
+ mais est ce suffisant ?
+
+ Et est-ce finalement si important ?
+
+
+Je tiens à préciser que même si les challenges tels qu'ils sont pratiqués aujourd'hui sont une certes une avancées par rapport à l'approche 'mon problème, ma base de données, mon algorithme, ma métrique' qui porte son intérêt dans des phases de défrichage thématique mais qui dilue considérablement. Ils  ne sont en aucun cas satisfaisant pour une démarche expérimentale rigoureuse visant à répondre à une problématique scientifique. La principale raison étant la domination de l'approche "ingénieur" qui vise à répondre à une application pratique par un procédé plus ou moins automatisable et non d'améliorer les connaissances dans un domaine scientifique bien identifié.
+
+Pour reprendre le cas du mir, il est troublant de constater qu'une infime partie des publications font état de travaux effectués conjointement avec des musicologues. Or, qui connais mieux la matière que ceux qui la questionnent depuis des centaines d'années ? Certes, un dialogue est nécessaire car les deux communautés sont assez disjointes, autant en terme d'objectifs, de vocabulaire que de temporalité. Il est à mon avis néanmoins critique pour l'avenir de toutes disciplines portant sur la science des données de ne pas oublier d'ou viennent ces données
+
+
+\section{Méthodologie expérimentale en sciences des données (5)}
+
+La définition d'une problématique scientifique pour étudier un sujet particulier est régie dans ses grandes lignes par la méthode scientifique. Issue de pionniers comme Francis bacon (cite novum organum), elle permet de faire une étape importante dans la qualité de notre appréhension du monde. L'apport des penseurs grecs et romains qui est parvenu jusqu'a nous porte essentiellement sur la nature et la définition de la vérité et finalement assez peu sur la bonne manière de l’obtenir.
+
+On trouve par contre des éléments en Orient sur cette période, comme le rapporte ce dialogue attribué à Bouddha et un de ses disciples \marginnote{ Question : "Maître, comment savoir si quelque chose est vrai ou faux ? \\
+Comment savoir ce qu'il faut croire ?" \\
+Réponse :"Ne croyez pas en quelque chose simplement parce que
+vous l'avez entendu. \\
+Ne croyez pas aux traditions simplement parce que
+elles se sont transmises depuis de nombreuses générations. \\
+Ne croyez pas en quelque chose simplement parce que
+tout le monde en parle. \\
+Ne croyez pas en quelque chose simplement parce qu'on le trouve dans vos livres religieux. \\
+Ne pas croire en quelque chose simplement en vous basant sur l'autorité de vos enseignants et de vos aînés. \\
+Mais après une observation minutieuse et une analyse rigoureuse,
+Quand vous trouvez que quelque chose est en accord avec la raison,
+Et qui est propice au bien et au bénéfice de l'un et de tous,
+Alors vous pouvez l'accepter et vivre en fonction. \\
+Question : "Alors, Maître, cela signifie-t-il que nous ne devrions pas nécessairement croire ce que vous venez de répondre ?" \\
+$K\bar{a}l\bar{a}ma Sutta$, Gautama Bouddha, 500 avJc}.
+
+Cette traduction contient pour moi deux éléments importants : 1) son exposé simple du caractère fondamentalement mal posé de la quête de la vérité, 2) le caractère résolument pragmatique de sa résolution de la "tension sceptique". Face à l'absence de référentiel non discutable permettant de confirmer ou d'infirmer une thèse, même après tout le soin que l'on peut apporter à notre argumentation, et seulement si l'on peut démontrer son intérêt pour la communauté, on peut choisir de vivre avec si tel est notre souhait.
+
+Reste donc que c'est l'observation minutieuse et l'analyse rigoureuse qui va régir cette prise de décision. Il est donc capital de disposer de protocoles solides pour fonder nos expériences. Il est important de prendre conscience que la manière dont on considère une pratique impacte nécessairement cette pratique. Cet aller et retour entre pratique expérimentale (i) et observation critique de cette pratique (ii) constitue pour moi un fondement de la recherche moderne\marginnote{Cela s'incarne très bien dans la relation encadré / encadrant, par exemple dans le cas d'une thèse de doctorat (A DVT).  Néanmoins, il est à mon sens important que l'encadrant soit, sur d'autres projets l'encadré et qu'il garde un contact avec l'expérimentation, car sans cela, ses connaissances critiques resterons en arrière par rapport aux avancées de la pratique expérimentale}.
+
+C'est bien connu, aquérir des connaissances sur une pratique peut se faire en pratiquant, si possible avec des personnes reconnues dans cette pratique. Il est sans doute vain de vouloir formaliser complètements ces savoirs, néanmoins, ne serais que peut etre pour mieux les maîtriser et les transmettre, je me suis interessé a ce problème pendant plusieurs années.
+
+Je discuterai ici dans le cadre de la méthode scientifique moderne qui se définit comme un processus itératif et cyclique dans lequel nos connaissances sont continuellement révisées à l'aide d'un processus comprenant les composants suivants:
+\begin{itemize}
+  \item \textbf{Caractérisations}: observations, définitions et mesures
+  \item \textbf{Hypothèses}: explications théoriques ou hypothèses d'observations
+  \item \textbf{Prédictions} : raisonnement inductif et déductif à partir de l'hypothèse ou de la théorie
+  \item \textbf{Expériences} : évaluation de la pertinence de chacun des éléments précédents
+\end{itemize}
+
+Il est difficile de produire des recommandations qui soient pertinente pour l'intégralité des étapes de la méthode scientifique. En effet, les trois premiers composants relèvent de l'état des connaissances dans la communauté et des "directions" thématiques prises par cette communauté. Chaque communauté scientifique doit réfléchir aux axes à privilégier, à l'allocation de ressources, etc. J'ai donc fait le choix de consacrer ma réflexion à la partie expérimentale de la méthode scientifique, les autres relevant plus d'un choix ou d'une inclinaison culturelle et politique\marginnote{Je n'exclue pas qu'il soit possible de produire des recommandations dans ces domaines, je pense simplement n'être pas assez expérimenter pour cela. La tentative serait pourtant d'intérêt, car de nombreuses personnes se retrouvent aujourd'hui à des postes décisionnaires sans nécessairement être assuré du recul et des connaissances suffisantes pour faire des choix éclairés, ou au moins explicitement motivés.}.
+
+On dispose par contre pour la partie expérimentale d'un ensemble assez solide et fourni de méthodes et d'outils pour mener à bien cette étape. Ces connaissances nous proviennent d'autres
+
+Même si la tâche de systématisation est moins ambitieuse pour le composant expérimental, il est bien entendu illusoire de pouvoir proposer à la communauté un environment d'expérimentation qui soit suffisament flexible pour permettre toutes les expériences utiles à la communauté. C'est néanmoins par ce biais que j'ai approché la question, en suivant le paradigme du \textsl{lfaire pour apprendre}. Durant plusieurs années j'ai donc développé l'outil \textsl{expLanes}\cite{explanes} que j'utilise avec plus ou moins de bonheur pour mes besoins propres et ceux des personnes que j'encadrent. A ce titre, la formalisation que je détaille ici n'est peut être pas la plus élégante, mais elle a l'immense avantage d'être rompue à la pratique, où les besoins en expressivité sont dominants.
+
+image d p s
+        o
+
+En sciences des données comme dans d'autres sciences, le principe est d'étudier la sortie $s$ d'un processus $p$ en fonction de certaines données d'entrée $d$. On souhaite que $s$ soit la meilleure possible, en fonction d'un ensemble de critères mesurables, que l'on appelera ici des \textsl{observations} ($o$).
+
+A des fins de reproducibilité, on supposera que $d$ est pérenne, \textit{i.e.} n'est pas modifié par $p$. $s$ et $o$ sont non volatils, \textit{i.e.} stockés sur disque. $p$ peut éventuellement être segmenté en plusieurs étapes de traitement, qui appliquées séquentiellement permettent de produire le même résultat ($s_2=s$ et $o_2=o$).
+
+%image d p_1 s_1 p_2 s_2
+%         o_1     o_2
+
+\marginnote{Ce découpage peut se faire de manière analytique en considérant l'architecture algorithmique de $p$. Néanmoins, en pratique, ce découpage se fait de manière à optimiser le temps nécessaire à la production de $s$, voir Section \ref{} pour plus de détails.}
+
+facteurs modalités
+
+Le but de l'expérimentation est la confrontation de plusieurs alternatives concernant l'architecture de $p$. Nous nommerons \textsl{facteur}, un élément de design de $p$. Chacun de ces facteurs peut prendre plusieurs valeurs, que nous nommerons \textsl{modalités}. Nous nommerons également \textsl{condition expérimentale} l'ensemble des modalités permettant de paramétriser $p$. Pour déterminer la condition menant à la meilleure solution, l'exploration d'un plan expérimental est pour cela nécessaire. Dès que l'étude dépasse la trivialité, l'exécution et l'analyse du plan complet (toutes les conditions)
+
+\subsection{Les étapes de l'expérimentation}
+
+On considérera que l'expérimentation se compose de trois grandes étapes :
+\begin{enumerate}
+  \item \textbf{le design} : conception et implantation de $p$, mise en place du plan expérimental, paramétrisation de l'environnement d'execution, execution de tests de conformité
+  \item \textbf{l'exécution} :
+  \item \textbf{la réduction} : conversion des observations générer par chaque paramétrisation
+\end{enumerate}
+
+Comme tout processus computationel, on peut mesurer l'accès aux ressources en terme de
+\begin{itemize}
+  \item calcul
+  \item d'accès disque
+\end{itemize}
+
+local / distant
+
+Chacune de ces étapes a ses besoins propres en terme de ressources. L'étape de design nécessite une capacité élevée d'interaction avec $p$. Il est souhaitable que $p$ puisse être exécuté localement, éventuellement avec une version réduite de $d$ pour assurer au maximum la qualité du développement de $p$ avant l'étape d'exécution.
+
+L'étape d'exécution a pour but de réaliser la plus grande partie possible du plan expérimental demandé. L'interaction avec $p$ étant alors minimale, on peut déporter le calcul sur des machines distantes. Des possibilités d'analyse de l'execution de cette étape sont cruciales pour optimiser le temps nécessaire a ce que cette étape.
+
+L'étape d'éxécution va produire un ensemble généralement grand d'observations qu'il sera necessaire de réduire pour produire un ensemble de données réduit permettant de nous informer sur le comportement de $p$ lorsqu'il est soumis à $d$. Même si le nombre d'observations est trop grand pour être apréhender directement pour un être humain, on supposera que le volume de données est suffisament faible pour pouvoir être manipuler localement.
+
+La maîtrise du temps de calcul est un point crucial de toute planification expérimentale. Cela se fait par le contrôle du temps de calcul nécessaire pour une condition expérimentale donnée, ainsi que le contrôle du nombre de conditions expérimentales.
+
+\subsection{Exemple du bof}
+
+\cite{lagrange2015}
+
+\subsection{Réflexions sur la revue par les pairs en sciences des données}
+
+Outil indispensable à la communauté scientifique, elle comporte néanmoins des risques pour le chercheur, c'est en effet à ce moment que les fruits de son travail sont exposés, à la critique, à l'utilisation abusive, ... C'est aussi une formidable opportunité pour voir son travail servir de base pour la recherche future.
+
+On assiste, je trouve, actuellement à une "crise" de la revue par les pairs ou plus exactement une crise de la publication d'article, principalement à cause d'une normalisation d'une expression anglo saxonne "publish or perish" qui est, dans un nombre toujours plus grand de pays, devenue loi. Les nouveaux moyens numériques de diffusion facilitant cette inflation, le chercheur doit passer beaucoup de temps à écrire, mais aussi à relire, des articles dont le contenu s'allège en conséquence\marginnote{En considérant que le nombre de personnes dédiant leur carrière à la recherche scientifique est resté stable durant ces 50 dernières années, les estimations du nombres d'articles publiés (nbArticles.png) sont inquiétants.}. \marginnote{A ceci s'ajoute la position indéfendable des éditeurs qui par abus de position historique ne facilite pas l'évolution nécessaire. Comment expliquer au contribuable les sommes que l'on nous demande pour l'archivage sur internet de nos articles (environ 1500 euros pour un fichier d'une dizaine de Mo) ?}. Comme tout moment de crise, de nouvelles opportunités émergent également qui pourraient amener à une nouvelle implémentation de cette dernière étape de la méthode scientifique qui soit plus respectueuse du chercheur et plus effective pour la communauté. \marginnote{J'éviterai ici toutes questions concernant l'évaluation du chercheur, les produits de l'étape de la revue par les pairs n'étant pas à mon sens un outil approprié pour cet objectif.}
+
+Dans une tradition issue de la physique expérimentale, la revue par les pairs se base sur une description aussi précise que possible du protocole expérimental et d'une discussion plus ou moins approfondie sur l'interprétation que font les auteurs sur les résultats obtenus. Ce format "article" est motivé par le fait que l'environnement expérimental est très couteux à mettre en place et difficilement transposable. Par accumulation d'expériences avec des protocoles expérimentaux d'une différence plus ou moins contrôlé, on arrive à s'approcher de ce que l'on peut penser être la vérité (figure sur le copper).
+
+Dans le domaine de la sciences des données, on peut considérablement accélérer le processus de reproduction et d'extension, car il est plus aisé de mettre en place le paradigme de la recherche reproductible. En suivant la définition séminale de Donoho\marginnote{An article about computational science in a scientific publication is not the scholarship itself, it is merely an advertising of the scholarship. The actual scholarship is the complete software development environment and the complete set of instructions which generated the figures. \\—D. Donoho} et en l'étendant au cadre des sciences des données, on peut considérer qu'une contribution scientifique doit pour cela être composée:
+\begin{enumerate}
+  \item des données servant de base à l'expérimentation
+  \item de l'implémentation qui, en fonction de ces données, produits les éléments quantitatifs discutés dans le compte rendu
+  \item d'un article ou compte rendu d'expérience détaillant les hypothèses, le protocole expérimentale et les conclusions.
+\end{enumerate}
+
+Concernant la pérennité des données et de l'article, ces données numériques dites "statiques" ne posent pas de challenge particulier. Ce n'est malheureusement pas le cas du code informatique car il dépend d'une pérennité de l'interprétation de ce code sur les machines actuelles\marginnote{L'archivage et la maintenance du matériel qui a servi aux expérimentations n'est pas dans le cas général envisageable.}. Les difficultés de réplication pour cause d'obsolescence matérielle et logicielle sont endémiques de la recherche car cette activité se situe généralement dans des secteurs de pointe évoluant très rapidement\marginnote{Je citerai pour exemple l'évolution actuelle des bibliothèques de calcul sur unité de calcul graphique comme la bibliothèque cuda développée par nVidia. Indispensable pour tout traitement efficace d'architectures profondes, cette bibliothèque est propriétaire et les versions antérieures ne sont plus maintenues après quelques années.}.
+
+Il reste que, bien souvent, une maintenance progressive du code par les auteurs au cours du temps permet de maintenir un certain niveau d'équivalence des résultats. Il est alors pour cela très utile de disposer d'un code qui soit bien structuré et facile à maintenir. Cette maintenance sera également grandement facilité par le choix judicieux des dépendances du code informatique.
+
+Si la phase d'expérimentation nous incite généralement à essayer de nombreuse approches, dont certaines très novatrices mais potentiellement instable et faiblement maintenues, il convient au moment de la publication
+
+J'en ai maintenant terminé avec cette réflexion sur l'application de la méthode scientifique dans un effort d'une production d'une recherche qui soit, autant que faire se peut, reproductible. Comme on l'a vu, garantir une reproducibilité complète pour un temps long de toutes ses productions est probablement trop coûteux pour le chercheur. Il convient néanmoins de réfléchir en amont à cette problématique et d'allouer l'énergie nécessaire aux projets qui trouvent intérêt dans la communauté\marginnote{Les plateformes de développement collaboratif comme gitHub sont à ce titre extrêmement utiles.}.
+
+Il est par contre aisé que les données expérimentales soient publiques et stockées de manière pérenne. Ceci doit être enforcé par la communauté. Même si l'implémentation particulière n'a pas vocation à être pérenne, il est bien évident que si les auteurs ont suivi un protocole expérimental canonique avec un effort de clarté et de concision dans l'implémentation, la réplication sera bien plus accessible. L'utilisation de cadres computationnels comme expLanes sont d'intérêt car ils permettent d'enforcer de bonnes pratiques. Ceci vient neéanmoins avec une réduction de la flexibilité mais surtout une nécéssiter de maintenance.
