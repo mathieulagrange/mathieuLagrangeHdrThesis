@@ -66,7 +66,7 @@ Il est difficile de produire des recommandations qui soient pertinente pour l'in
 
 On dispose par contre pour la partie expérimentale d'un ensemble assez solide et fourni de méthodes et d'outils pour mener à bien cette étape. Ces connaissances nous proviennent d'autres
 
-Même si la tâche de systématisation est moins ambitieuse pour le composant expérimental, il est bien entendu illusoire de pouvoir proposer à la communauté un environment d'expérimentation qui soit suffisament flexible pour permettre toutes les expériences utiles à la communauté. C'est néanmoins par ce biais que j'ai approché la question, en suivant le paradigme du \textsl{lfaire pour apprendre}. Durant plusieurs années j'ai donc développé l'outil \textsl{expLanes}\cite{explanes} que j'utilise avec plus ou moins de bonheur pour mes besoins propres et ceux des personnes que j'encadrent. A ce titre, la formalisation que je détaille ici n'est peut être pas la plus élégante, mais elle a l'immense avantage d'être rompue à la pratique, où les besoins en expressivité sont dominants.
+Même si la tâche de systématisation est moins ambitieuse pour le composant expérimental, il est bien entendu illusoire de pouvoir proposer à la communauté un environment d'expérimentation qui soit suffisament flexible pour permettre toutes les expériences utiles à la communauté. C'est néanmoins par ce biais que j'ai approché la question, en suivant le paradigme du \textsl{faire pour apprendre}. Durant plusieurs années j'ai donc développé l'outil \textsl{expLanes}\cite{explanes} que j'utilise avec plus ou moins de bonheur pour mes besoins propres et ceux des personnes que j'encadrent. A ce titre, la formalisation que je détaille ici n'est peut être pas la plus élégante, mais elle a l'immense avantage d'être rompue à la pratique, où les besoins en expressivité sont dominants.
 
 image d p s
         o
@@ -80,16 +80,20 @@ A des fins de reproducibilité, on supposera que $d$ est pérenne, \textit{i.e.}
 
 \marginnote{Ce découpage peut se faire de manière analytique en considérant l'architecture algorithmique de $p$. Néanmoins, en pratique, ce découpage se fait de manière à optimiser le temps nécessaire à la production de $s$, voir Section \ref{} pour plus de détails.}
 
-facteurs modalités
+Le but de l'expérimentation est la confrontation de plusieurs alternatives concernant l'architecture de $p$. Nous nommerons \textsl{facteur}, un élément de design de $p$. Chacun de ces facteurs peut prendre plusieurs valeurs, que nous nommerons \textsl{modalités}. Nous nommerons également \textsl{condition expérimentale} l'ensemble des modalités permettant de paramétriser $p$. Pour déterminer la condition menant à la meilleure solution, l'exploration d'un plan expérimental est pour cela nécessaire. Dès que l'étude dépasse la trivialité, le coût d'exécution du plan complet (toutes les conditions expérimentales) devient prohibitif.
 
-Le but de l'expérimentation est la confrontation de plusieurs alternatives concernant l'architecture de $p$. Nous nommerons \textsl{facteur}, un élément de design de $p$. Chacun de ces facteurs peut prendre plusieurs valeurs, que nous nommerons \textsl{modalités}. Nous nommerons également \textsl{condition expérimentale} l'ensemble des modalités permettant de paramétriser $p$. Pour déterminer la condition menant à la meilleure solution, l'exploration d'un plan expérimental est pour cela nécessaire. Dès que l'étude dépasse la trivialité, l'exécution et l'analyse du plan complet (toutes les conditions)
+Il convient alors de judicieux choisir les conditions qui nous permettent de maximiser notre connaissances de l'influence des différents facteurs, et en particulier leurs interactions. En effet, supposer que tout les facteurs sont indépendants permet de linéariser l'exploration des conditions. Malheureusement, cette indépendance est rarement complètement vérifiée de manière expérimentale. Il convient alors de savoir juger ce degré d'interaction pour faire des choix éclairés. Une autre technique consiste à effectuer l'intégralité du plan expérimental mais en simplifiant le problème à résoudre, souvent en réduisant la taille de $d$ (nombres d'exemples ou dimensions). Cette approche est risquée car elle peut amener à des choix algorithemiques qui ne généralisent pas correctement si le jeu de données réduit n'est pas représentatif\marginnote{Condition difficile à vérifier en pratique.}.
+
+La littérature en factorial design
+
+exemple du designOfExperiment \marginnote{Voir la documentation de expLanes pour une mise en pratique de cet exemeple}
 
 \subsection{Les étapes de l'expérimentation}
 
 On considérera que l'expérimentation se compose de trois grandes étapes :
 \begin{enumerate}
   \item \textbf{le design} : conception et implantation de $p$, mise en place du plan expérimental, paramétrisation de l'environnement d'execution, execution de tests de conformité
-  \item \textbf{l'exécution} :
+  \item \textbf{l'exécution} : exécution des conditions expérimentales choisies
   \item \textbf{la réduction} : conversion des observations générer par chaque paramétrisation
 \end{enumerate}
 
@@ -109,9 +113,24 @@ L'étape d'éxécution va produire un ensemble généralement grand d'observatio
 
 La maîtrise du temps de calcul est un point crucial de toute planification expérimentale. Cela se fait par le contrôle du temps de calcul nécessaire pour une condition expérimentale donnée, ainsi que le contrôle du nombre de conditions expérimentales.
 
-\subsection{Exemple du bof}
+\subsection{Explanes}
 
-\cite{lagrange2015}
+presenter l'architecture logicielle
+
+Je présenterai ici la plateforme expLanes à des fins d'illustration\marginnote{Pour des informations plus complètes, la documentation est dipsonible sur le site web dédié : \url{}.}. Prenons l'exemple d'une exploration de l'influence des facteurs sur un $p$ trivial.
+
+utiliser l'exemple designOfExperiment
+
+description du plan expérimental : facteurs, modalités
+
+implantation de $p$
+
+
+\subsection{Explanes par l'exemple}
+
+traduire l'exemple des figures geométriques
+
+\marginnote{La plupart de mes productions scientifiques s'accompagnent\cite{lagrange2015}}
 
 \subsection{Réflexions sur la revue par les pairs en sciences des données}
 
@@ -128,12 +147,10 @@ Dans le domaine de la sciences des données, on peut considérablement accélér
   \item d'un article ou compte rendu d'expérience détaillant les hypothèses, le protocole expérimentale et les conclusions.
 \end{enumerate}
 
-Concernant la pérennité des données et de l'article, ces données numériques dites "statiques" ne posent pas de challenge particulier. Ce n'est malheureusement pas le cas du code informatique car il dépend d'une pérennité de l'interprétation de ce code sur les machines actuelles\marginnote{L'archivage et la maintenance du matériel qui a servi aux expérimentations n'est pas dans le cas général envisageable.}. Les difficultés de réplication pour cause d'obsolescence matérielle et logicielle sont endémiques de la recherche car cette activité se situe généralement dans des secteurs de pointe évoluant très rapidement\marginnote{Je citerai pour exemple l'évolution actuelle des bibliothèques de calcul sur unité de calcul graphique comme la bibliothèque cuda développée par nVidia. Indispensable pour tout traitement efficace d'architectures profondes, cette bibliothèque est propriétaire et les versions antérieures ne sont plus maintenues après quelques années.}.
+Concernant la pérennité des données et de l'article, ces données numériques dites "statiques" ne posent pas de challenge particulier. Ce n'est malheureusement pas le cas du code informatique car il dépend d'une pérennité de l'interprétation de ce code sur les machines actuelles\marginnote{L'archivage et la maintenance du matériel qui a servi aux expérimentations n'est pas dans le cas général envisageable.}. Les difficultés de réplication pour cause d'obsolescence matérielle et logicielle sont endémiques de la recherche en sciences des données car cette activité se situe généralement dans des secteurs de pointe évoluant très rapidement\marginnote{Je citerai pour exemple l'évolution actuelle des bibliothèques de calcul sur unité de calcul graphique comme la bibliothèque cuda développée par nVidia. Indispensable pour tout traitement efficace d'architectures profondes, cette bibliothèque est propriétaire et les versions antérieures ne sont plus maintenues après quelques années.}.
 
-Il reste que, bien souvent, une maintenance progressive du code par les auteurs au cours du temps permet de maintenir un certain niveau d'équivalence des résultats. Il est alors pour cela très utile de disposer d'un code qui soit bien structuré et facile à maintenir. Cette maintenance sera également grandement facilité par le choix judicieux des dépendances du code informatique.
+Il reste que, bien souvent, une maintenance progressive du code par les auteurs au cours du temps permet de maintenir un certain niveau d'équivalence des résultats. Il est alors pour cela très utile de disposer d'un code qui soit bien structuré et facile à maintenir. Cette maintenance sera également grandement facilité par le choix judicieux des dépendances du code informatique publié. Si la phase d'expérimentation nous incite généralement à essayer de nombreuse approches, dont certaines très novatrices mais potentiellement instable et faiblement maintenues, il convient au moment de la publication de réfléchir à un bon équilibre entre apport scientifique et pérennité.
 
-Si la phase d'expérimentation nous incite généralement à essayer de nombreuse approches, dont certaines très novatrices mais potentiellement instable et faiblement maintenues, il convient au moment de la publication
+Garantir une reproducibilité complète pour un temps long de toutes ses productions est un défi probablement trop coûteux pour le chercheur. Il convient néanmoins de réfléchir en amont à cette problématique et d'allouer l'énergie nécessaire aux projets qui trouvent intérêt dans la communauté\marginnote{Les plateformes de développement collaboratif comme gitHub sont à ce titre particulièrement adaptées car elles permettent d'être informé de l'intérêt que porte la communauté aux travaux publiés et d'assister les collègues lors des tentatives de réplication.}.
 
-J'en ai maintenant terminé avec cette réflexion sur l'application de la méthode scientifique dans un effort d'une production d'une recherche qui soit, autant que faire se peut, reproductible. Comme on l'a vu, garantir une reproducibilité complète pour un temps long de toutes ses productions est probablement trop coûteux pour le chercheur. Il convient néanmoins de réfléchir en amont à cette problématique et d'allouer l'énergie nécessaire aux projets qui trouvent intérêt dans la communauté\marginnote{Les plateformes de développement collaboratif comme gitHub sont à ce titre extrêmement utiles.}.
-
-Il est par contre aisé que les données expérimentales soient publiques et stockées de manière pérenne. Ceci doit être enforcé par la communauté. Même si l'implémentation particulière n'a pas vocation à être pérenne, il est bien évident que si les auteurs ont suivi un protocole expérimental canonique avec un effort de clarté et de concision dans l'implémentation, la réplication sera bien plus accessible. L'utilisation de cadres computationnels comme expLanes sont d'intérêt car ils permettent d'enforcer de bonnes pratiques. Ceci vient neéanmoins avec une réduction de la flexibilité mais surtout une nécéssiter de maintenance.
+Il est par contre aisé que les données expérimentales soient publiques et stockées de manière pérenne. Ceci doit être enforcé par la communauté\marginnote{Les plateformes de type archive ou zenodo sont de bons candidats.}. Même si l'implémentation particulière n'a pas vocation à être pérenne, il est bien évident que si les auteurs ont suivi un protocole expérimental canonique avec un effort de clarté et de concision dans l'implémentation, la réplication sera bien plus accessible. L'utilisation de cadres computationnels comme expLanes sont donc d'intérêt car ils permettent d'encourager de bonnes pratiques.
