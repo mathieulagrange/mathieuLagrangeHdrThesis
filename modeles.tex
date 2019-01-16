@@ -7,7 +7,7 @@ Egalement, le terme modélisation étant fortement polysémique, il me paraît i
 Trois critères d'évaluation émergent alors pour ce modèle :
 \begin{enumerate}
   \item fidélité : est'il capable de ne pas produire d'artefacts ($Pe(s) \sim Pe(\tilde{s})$)
-  \item manipulabilité (expressivité) : est'il capable de mettre à disposition des mécanismes de manipulation tels que $Pe(Sy(X')) \sim Pe'(Sy(X))$.
+  \item expressivité : est'il capable de mettre à disposition des mécanismes de manipulation tels que $Pe(Sy(X')) \sim Pe'(Sy(X))$.
   \item flexibilité : capacité du modèle à s'appliquer à tout type de signal sonore d'intérêt
 \end{enumerate}
 
@@ -123,7 +123,7 @@ On considère donc ici que dans l'intervalle d'observation, une source sonore es
 
 \section{Modélisation sinusoïdale court terme (1)}
 
-Lorsque l'on observe un spectrogramme un instrument de musique tonal (FIGURE), il apparait clairement que l'énergie est concentrée en un ensemble réduit de zones fréquentielles. On dit que ces signaux sont parcimonieux en fréquence. C'est, dans une certaine mesure le cas de la parole\marginnote{En tout cas, il est clair que la "charge sémantique" est portée par cette partie du signal de la parole. En supposant que le récepteur (l'oreille) est capable de décomposer les sons sur l'axe fréquentiel, il fait sens écologiquement de procéder ainsi. Comme le montre les exemples de "sine-wave speech", quelques sinusoïdes (3 ou 4) judicieusement placées aux zones de résonances formantiques suffisent à rendre le signal intelligible \url{http://webpages.mcgill.ca/staff/Group2/abregm1/web/downloadstoc.htm#23}.}.
+Lorsque l'on observe un spectrogramme un instrument de musique tonal (FIGURE), il apparait clairement que l'énergie est concentrée en un ensemble réduit de zones fréquentielles. On dit que ces signaux sont parcimonieux en fréquence. C'est, dans une certaine mesure le cas de la parole\marginnote{En tout cas, il est clair que la "charge sémantique" est portée par cette partie du signal de la parole. En supposant que le récepteur (l'oreille) est capable de décomposer les sons sur l'axe fréquentiel, il fait sens écologiquement de procéder ainsi. Comme le montre les exemples de "sine-wave speech", quelques sinusoïdes (3 ou 4) judicieusement placées aux zones de résonances formantiques suffisent à rendre le signal intelligible \url{http://webpages.mcgill.ca/staff/Group2/abregm1/web/downloadstoc.htm\#23}.}.
 
 En suivant cette observation, on peut considérer l'heuristique des maxima locaux pour extraire de chaque spectre du spectrogramme un ensemble de "pics spectraux", ou "atomes" :
 
@@ -138,7 +138,7 @@ Comme évoqué dans la partie précédente, la précision de ces estimations peu
 
 Ce problème d'estimation dépassant largement la problématique de la modélisation du signal audio, un effort conséquent d'amélioration des ces estimateurs a été effectué par la communauté de traitement du signal. Les approches les plus efficaces et les plus élégantes pour ce faire se basent sur des relations entre les paramètres spectraux de plusieurs transformées de Fourier effectuées après différents traitements du signal observé. La technique du reassignement spectral\cite{auger1995improving} considère le rapport entre la DFT du signal fenêtré et la DFT du signal fenêtré par la dérivée de la fenêtre :
 \begin{equation}
-
+t
 \end{equation}
 En considérant le rapport de la DFT du signal et celle de la DFT de la dérivée du signal, on obtient une autre série d'estimateurs. On a prouvé l'équivalence théorique de ces dernières à la technique du réassignement, supportée par des expérimentations montrant des performances similaires \cite{lagrangeJaes07}.
 
@@ -171,17 +171,17 @@ Ces approches, comme la transformée en ondelettes, ont trouvés application plu
 
 L'approche court terme effectue des observations discrètes d'un processus de production sonore qui lui est par essence continu. Dans le cas de nombreux instruments de musique, il est raisonnable de considérer que ce processus continu est approximable par une somme de sinusoïdes dont les paramètres varient \textsl{lentement}\marginnote{Typiquement, de l'ordre de la dizaine de Hertz.} dans le temps :
 \begin{equation}
-
+t
 \end{equation}
 
-En supposant les paramètres connus, le processus de synthèse est aisée à mettre en oeuvre avec les moyens computationels actuels\margninote{Dans le cas d'un nombre de sinusoide très grand des algorithmes de "pruning" peuvent être mis en place \cite{lagrangeDafx01}.}. Il est également aisé de mette en place des modifications du signal d'intérêt comme la translation, la transposition, ou encore l'étirement, simplement en manipulant les paramètres\marginnote{Ces transformations sont également à faible coût, les paramètres étant échantillonnés à une fréquence environ 1000 fois plus faible que le signal}. On est donc typiquement dans un compromis qui favorise la fidélité et la manipulabilité. Ceci se fait, on le verra par la suite, au détriment de la flexibilité, ce modèle étant applicable à un champ restreint de signaux sonores.
+En supposant les paramètres connus, le processus de synthèse est aisée à mettre en oeuvre avec les moyens computationels actuels\marginnote{Dans le cas d'un nombre de sinusoide très grand des algorithmes de "pruning" peuvent être mis en place \cite{lagrangeDafx01}.}. Il est également aisé de mette en place des modifications du signal d'intérêt comme la translation, la transposition, ou encore l'étirement, simplement en manipulant les paramètres\marginnote{Ces transformations sont également à faible coût, les paramètres étant échantillonnés à une fréquence environ 1000 fois plus faible que le signal}. On est donc typiquement dans un compromis qui favorise la fidélité et la manipulabilité. Ceci se fait, on le verra par la suite, au détriment de la flexibilité, ce modèle étant applicable à un champ restreint de signaux sonores.
 
 Dans notre étude des algorithmes d'estimation des paramètres long terme, on supposera que le signal analysé est composé d'une ou plusieurs sources dont une grande partie de leur énergie peut être correctement approximée par ce modèle. On fera état ici des approches dites de "restoration" de continuité, qui considèrent connu un modèle court terme du signal analysé mais dont la fiabilité n'est pas pré supposée\marginnote{Ce n'est bien entendu pas la seule approche possible. On peut notamment citer les travaux de Corentin Dubois qui a étudié l'application des techniques de filtrage particulaire pour l'estimation conjointe des paramètres court terme et long terme \cite{dubois2005tracking}, travail étendu à des modèles de sources harmoniques \cite{dubois2007joint}}.
 
 
 Dans l'article séminal de George Mac Aulay \& al, il est donc proposé "d'identifier" ces composantes long terme en reliant entre eux des atomes de trames successives. L'algorithme proposé est itératif. Supposant un ensemble de composantes long terme à la trame $t$, on va chercher à prolonger ces composantes à la trame $t+1$ en commençant par la composante de plus basse fréquence, tel que la différence entre $$ et $$ est minimale :
 \begin{equation}
-
+t
 \end{equation}
 Dans un principe d'allocation exclusif, cet atome est dès lors réservé, indisponible pour la suite du déroulement de l'algorithme. Chaque atome non réservé devient alors une composante long terme qui sera potentiellement prolongée aves des atomes de la trame suivante\marginnote{On note ici que la structure de données se complexifie sensiblement par rapport à la plupart de celles introduites avec des outils de traitement du signal canoniques, amenant une approche plus "informatique" à une problématique de traitement du signal. Cette modélisation plus "riche" a permis une flexibilité de manipulation qui a donner lieu à un large ensemble d'heuristiques qui ne seront pas étudiées ici, même si elles ont leur intérêt pour la qualité du rendu sonore de ce type d'approche.}.
 
@@ -203,7 +203,7 @@ EXPLICITER PLUS LES RAISONS ?
 
 S'il est clair que la décomposition fréquentielle est de première importance, la manière dont l'énergie module au court du temps au sein de ces bandes de fréquences l'est également \marginnote{On peut citer pour exemple le son éminement désagréable d'un moteur thermique deux temps (type mobylette) qui part le mouvement mécanique induit une modulation typique.}. L'importance perceptive de ce type de modulations est particulièrement bien exemplifiée par un exemple sonore produit par John Chowning où des sinusoides d'amplitude et fréquence au début constantes sont ensuite modulées par un signal synthétique composé d'une composante sinusoidale (pour le vibrato) et d'une composante stochastique. Ce signal modulant est ensuite mis à l'échelle pour chaque harmonique. Il est important de considérer que même si ce signal modulant a été judicieusement choisi, il n'est pas issu d'un processus d'estimation à partir de signaux réels.
 
-L'écoute montre clairement que le caractère naturel, voisé, est sensiblement plus élevé avec l'ajout de la modulation \marginnote{Ce stimuli est disponible ici \url{http://webpages.mcgill.ca/staff/Group2/abregm1/web/snd/Track24.mp3} pour écoute sur le site de Al Bregman dédié à l'ASA. Les spécificités techniques du porcessus de synthèse sont décrites ici : \url{http://webpages.mcgill.ca/staff/Group2/abregm1/web/downloadstoc.htm#24}}.}.
+L'écoute montre clairement que le caractère naturel, voisé, est sensiblement plus élevé avec l'ajout de la modulation \marginnote{Ce stimuli est disponible ici \url{http://webpages.mcgill.ca/staff/Group2/abregm1/web/snd/Track24.mp3} pour écoute sur le site de Al Bregman dédié à l'ASA. Les spécificités techniques du porcessus de synthèse sont décrites ici : \url{http://webpages.mcgill.ca/staff/Group2/abregm1/web/downloadstoc.htm\#24}.}.
 
 \subsection{Modèles perceptifs}
 
@@ -233,11 +233,39 @@ marseille \cite{conan2014synthesis}
 
 On se trouve ici à l'intersection entre modélisation statistique et modélisation physique, dans le sens où l'architecture du modèle de son suit un modèle de production .
 
-Les domaines d'application des approches modales comme celles décrites ici. Elles gardent à mon sens un intérêt historique pour mettre en perspective les approches modernes décrites dans la suite.
+Les domaines d'application des approches modales comme celles décrites ici.
+
+causalité
+
+filtrage
+
+Elles gardent à mon sens un intérêt historique pour mettre en perspective les approches modernes décrites dans la suite.
 
 \section{Approches temporelles (10)}
 
 \cite{wavenet}
+
+Les résultats obtenus en terme de qualité perceptuelle nous invite à étudier cette approche novatrice qui semble apporter des réponses à la problématique non résolue d'une méthode d'analyse synthèse multi résolution qui soit à la fois fidèle, expressive et flexible.
+
+présentation de l'architecture
+
+vocoder
+
+certains aspects peuvent trouver des fondements dans des modèles de sons existants
+
+causalité stricte
+
+source filtre
+
+conditionnement lent
+
+Certains aspects de l'architecture sont spécifiques.
+
+Le plus important étant que l'écoute montre l'absence d'artefacts typiques d'une chaîne de traitement spectral mono résolution comme la tfct.
+
+Egalement, l'architecture de traitement du signal est peu commune. En effet, il est courant dans les architectures de traitement du signal que "la mémoire suit le traitement", cela qui donnerait une réduction de la mémoire pour les couches supérieurs du réseau, ce qui n'est pas le cas du wavenet où toutes les couches sont à la même fréquence d'échantillonage.
+
+Ces points, et de nombreux autres comme l'impact des fonctions de non linéarité sur la qualité du signal généré sont des questions passionnantes, largement ouvertes en terme de compréhension scientifique.
 
 \section{Conclusion}
 
