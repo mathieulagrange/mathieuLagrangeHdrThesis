@@ -205,21 +205,6 @@ S'il est clair que la décomposition fréquentielle est de première importance,
 
 L'écoute montre clairement que le caractère naturel, voisé, est sensiblement plus élevé avec l'ajout de la modulation \marginnote{Ce stimuli est disponible ici \url{http://webpages.mcgill.ca/staff/Group2/abregm1/web/snd/Track24.mp3} pour écoute sur le site de Al Bregman dédié à l'ASA. Les spécificités techniques du porcessus de synthèse sont décrites ici : \url{http://webpages.mcgill.ca/staff/Group2/abregm1/web/downloadstoc.htm\#24}.}.
 
-\subsection{Modèles perceptifs}
-
-En regard des études physiologiques relativement anciennes sur la cochlée \cite{}, l'étude des éléments physiologiques en charge du traitement de ces modulations est relativement récente car probablement sensiblement plus difficile a investiguer. On a néanmoins une bonne confiance dans le fait que le système auditif des mammifères dispose d'éléments de traitement dédiés. On citera donc le modèle de Torsten Dau \cite{dau1997modeling} et celui de Shihab Shamma \cite{fritz2003rapid} qui étend le modèle de Dau en ajoutant une troisième dimension : l'échelle.
-
-Shihab Shamma a étudié certaines cellules du cortex auditif primaire du furet, plus particulièrement ce que l'on appelle leur champ de réponse spectro/temporels ("spectro-temporal receptive fields (strf)"). L'animal est contraint au niveau du crâne, et par opération chirugicale, une aiguille permettant de mesurer l'activité électrique est insérée dans le crâne de l'animal et judicieusement placée. Par exposition d'un ensemble de stimuli comportant des modulations, il est alors possible de mesurer ces strf. Au vu de ce type de réponses, Un modèle de traitement de signal est ensuite proposé.
-
-Dans ce modèle, le signal est donc tout d'abord décomposé sur l'axe fréquentiel. La sortie étant un équivalent du spectrogramme qui est ensuite décomposé une nouvelle fois fréquentiellement en temps et en fréquence grâce à des ondellettes bi-dimensionnelles paramétrées avec un facteur d'échelle. La dimension de l'échelle permet de définir le nombre de bandes qui sont conjointement utilisées pour effectuer cette seconde analyse fréquentielle \marginnote{Ces modèles sont bien entendu sujet à débat dans la communauté de neurophysiologie. Par exemple, le facteur d'échelle est pour Dau non nécessaire pour expliquer les données receuillies grâce à son protocole expérimental.}.
-
-\subsection{Scattering d'ondelettes}
-
-scattering temps temps/fréquence \cite{anden2014deep}
-
-modes de jeux
-
-
 
 \section{Approches modales (2)}
 
@@ -240,6 +225,45 @@ causalité
 filtrage
 
 Elles gardent à mon sens un intérêt historique pour mettre en perspective les approches modernes décrites dans la suite.
+
+\subsection{Modèles perceptifs}
+
+Complétons nos connaissances en prenant cette fois ci, non plus un point de vue physique mais physiologique. En regard des études physiologiques relativement anciennes sur la cochlée \cite{}, l'étude des éléments physiologiques en charge du traitement de ces modulations est relativement récente car probablement sensiblement plus difficile a investiguer. On a néanmoins une bonne confiance dans le fait que le système auditif des mammifères dispose d'éléments de traitement dédiés. On citera donc le modèle de Torsten Dau \cite{dau1997modeling} et celui de Shihab Shamma \cite{fritz2003rapid} qui étend le modèle de Dau en ajoutant une troisième dimension : l'échelle.
+
+Shihab Shamma a étudié certaines cellules du cortex auditif primaire du furet, plus particulièrement ce que l'on appelle leur champ de réponse spectro/temporels ("spectro-temporal receptive fields (strf)"). L'animal est contraint au niveau du crâne, et par opération chirugicale, une aiguille permettant de mesurer l'activité électrique est insérée dans le crâne de l'animal et judicieusement placée. Par exposition d'un ensemble de stimuli comportant des modulations, il est alors possible de mesurer ces strf. Au vu de ce type de réponses, Un modèle de traitement de signal est ensuite proposé.
+
+Dans ce modèle, le signal est donc tout d'abord décomposé sur l'axe fréquentiel. La sortie étant un équivalent du spectrogramme qui est ensuite décomposé une nouvelle fois fréquentiellement en temps et en fréquence grâce à des ondellettes bi-dimensionnelles paramétrées avec un facteur d'échelle. La dimension de l'échelle permet de définir le nombre de bandes qui sont conjointement utilisées pour effectuer cette seconde analyse fréquentielle \marginnote{Ces modèles sont bien entendu sujet à débat dans la communauté de neurophysiologie. Par exemple, le facteur d'échelle est pour Dau non nécessaire pour expliquer les données receuillies grâce à son protocole expérimental.}.
+
+\subsection{Scattering d'ondelettes}
+
+En prenant un point de vue mathématique cette fois ci, Stéphane Mallat a proposé un modèle conceptuellement proche du modèle computationel des STRF proposé par Shihab Shamma. En mathématiques appliquées, et plus particulièrement dans le domaine des sciences des données, on cherche à construire des représentations qui aient de bonnes propriétés d'invariance et de stabilité aux déformations.
+
+Précisons ces notions en prenant quelques exemples. Lorsque l'on cherche à reconnaitre l'instrument de musique qui a joué, on souhaite disposer d'une représentation du signal enregistré de cette performance qui soit invariante à certains aspects de la performance comme :
+\begin{enumerate}
+  \item un changement d'amplitude
+  \item une translation en temps
+  \item un étirement en temps
+\end{enumerate}
+En effet, pour la tâche pré-citée, que la note ait été jouée plus ou moins proche du microphone, à un instant donné ou quelques secondes plus tard, à une hauteur donnée ou une autre, pour une durée plus ou moins longue ne devrait pas modifier notre représentation.
+
+L'invariance au volume est obtenue de manière triviale en normalisant les signaux que l'on souhaité comparer. L'invariance à la translation en temps se traduit dans le domaine de Fourier en une invariance à la translation de phase par la prise du module. En ce qui concerne l'invariance à l'étirement temporel
+
+exemple des mels
+
+construction du scattering d'ondelettes
+
+equivalence au premier ordre
+
+
+
+scattering temps temps/fréquence \cite{anden2014deep}
+
+decomposition source / filtre ordre un et deux
+
+modes de jeux
+
+
+
 
 \section{Approches temporelles (10)}
 
