@@ -31,94 +31,85 @@ Factors:
 \end{lstlisting}
 La ligne 5 peut se lire comme suit, le facteur "height" n'est pertinent que pour l'étape 2 et les modalités 1 et 2 du facteur 1.
 
-Les deux étapes de traitement sont implantées comme suit :
+Les deux étapes de traitement sont implantées comme suit. Chaque étape dispose de la même signature, la variable \textsl{config} expose la configuration de l'expérimentation, la variable \textsl{setting} la condition expérimentale courante, et la variable \textsl{data} expose les données produite par l'étape précédente ou les données d'entrée pour la première étape.
+
+La première étape se charge du calcul de l'aire de la base de la forme géométrique. Pour les besoins de l'exemple, on suppose ici que $/pi$ n'est pas connu de manière précise, ce qui est simulé ici par l'ajout d'une certaine incertitude sur sa mesure.
+
 \begin{lstlisting}
+function [config, store, obs] = gesh1base(config, setting, data)
 
+uncertainty = randn(1, 100);
+switch setting.shape
+    case 'cylinder'
+        baseArea = (pi+uncertainty)*setting.radius^2;
+    otherwise
+        baseArea  = setting.width^2;
+end
+store.baseArea = baseArea;
+obs.area = baseArea;
 \end{lstlisting}
-Chaque étape dispose de la même signature, la variable variable \textsl{config} expose la configuration de l'expérimentation, la variable \textsl{data} expose les données produite par l'étape précédente ou les données d'entrée pour la première étape, et la variable \textsl{setting} la condition expérimentale courante. 
 
-\subsection{Implement processing steps}
+La seconde étape complète le calcul effectué par la première pour calculer le volume de la forme géométrique :
+\begin{lstlisting}
+function [config, store, obs] = gesh2space(config, setting, data)
 
-The first step is dedicated to the computation of the base area of the shape. The solution code is implemented in \mcode{gesh1base.m}, where we simulate that $\pi$ is estimated with a given precision, but 100 measurements have been made:
-\lstinputlisting[firstline=16, lastline=23]{../demo/geometricShape/gesh1base.m}
+switch setting.shape
+    case 'cube'
+       volume = data.baseArea*setting.width;
+    case 'cylinder'
+        volume = data.baseArea*setting.height;
+    case 'pyramid'
+        volume = data.baseArea*setting.height/3;
+end
 
-
-The second step builds upon the result of the first processing step to compute the volume (implemented in \mcode{gesh2volume.m}):
-\lstinputlisting[firstline=16, lastline=23]{../demo/geometricShape/gesh2space.m}
-
-\subsection{Define observations}
-
-Observations for the 2 processing steps are the following. First step:
-\lstinputlisting[firstline=24, lastline=24]{../demo/geometricShape/gesh1base.m}
-Second step:
-\lstinputlisting[firstline=25, lastline=26]{../demo/geometricShape/gesh2space.m}
+obs.baseArea = data.baseArea;
+obs.volume = volume;
+\end{lstlisting}
 
 \begin{marginfigure}
-\includegraphics[width=1.2\textwidth]{../demo/geometricShape/report/figures/factors}
+\includegraphics[width=1.2\textwidth]{figures/factors}
+La commande \mcode{geometricShape('f')} génère un diagrame où les éléments principaux de l'expérimentation sont visibles (étapes de traitement, facteurs, données sauvegardées, observations).
 \end{marginfigure}
 
-The command \mcode{geometricShape('f')} generates a diagram view of the experiment.
+Une fois l'implantation effectuée, le traitement est effectué avec la commande \mcode{'do'}. Par exemple, la commande \mcode{geometricShape('do', 1);} demande le calcul de l'étape 1 pour toutes les conditions expérimentales (qui sont au nombre de 18). Il est souvent nécessaire de ne pas effectuer le plan expérimental complet (étude spécifique, reprise sur erreur, ...), le mécanisme de masquage est alors utilisé. Par exemple, la commande \mcode{geometricShape('do', 0, 'mask', {[1 2] 0 1})} demande le calcul successif des deux étapes pour les cylindres de rayon 2 et toutes les pyramides.
 
-\subsection{Process}
+Après le traitement des deux étapes, le répertoire dédié au stockage des données de calcul et d'observations contient :
+\begin{tabular}{cc}
 
+\end{tabular}
+
+Ce n'est pas explicite dans cet exemple, mais les fichiers \mcode{_data} dédiés au stockage des données de calculs sont souvent de taille plus conséquente que les observations qui elle ont vocation à rester de taille raisonnable pour pouvoir être transférés des machines de calculs aux machines de visualisation et aisément analysées\marginnote{A noter également que pour toute expérimentation de taille raisonnable, les noms de fichiers peuvent être hashés pour ne pas dépasser les 250 caractères requis par la plupart des systèmes de gestions de fichiers.}.
+
+A la fin du traitement, les observations de la dernière étape de traitement sont affichés :
+
+
+La mise en forme précise de l'exposition de certaines observations est un élément nécessaire pour une expérimentation efficace. La plateforme expLanes dispose d'un grand nombre d'outils pour ce faire.
+
+Par exemple, ce dernier affichage peut être ré-obtenu grâce à la commande suivante :
 \begin{lstlisting}
-geometricShape('do', 1);
+geometricShape('display', 2, 'expose', '>', 'mask', {[1 2] 0 1});
 \end{lstlisting}
-run the base step over all 18 settings.
-\begin{lstlisting}
-geometricShape('do', 0, 'mask', {[1 2] 0 1});
-\end{lstlisting}
-runs successively each step over the cylinders of radius 2 and all the pyramids.
-
-\subsection{Expose observations}
-
-\begin{marginfigure}
-\includegraphics[trim={0 6cm 0 0},clip,width=1.2\textwidth]{../demo/geometricShape/report/figures/mtable}
-\end{marginfigure}
-
-Upon completion of the processing, the results of the last processing are displayed in the command window:
-
-This display can be obtained by issuing the following command:
-\begin{lstlisting}
-geometricShape('display', 2, 'expose', '>', ...
-	'mask', {[1 2] 0 1});
-\end{lstlisting}
-The exposition of relevant observations is important for efficient computational experimentation. \explanes provides many tools for this purpose, type \mcode{help expExpose} for quick reference.
-
-
-The command:
+La commande :
 \begin{lstlisting}
 geometricShape('display', 2, 'mask', {1 0 1},...
- 'expose', {'t', 'obs', 3, 'sort', 1});
+ 'expose', {'t', 'obs', 2});
 \end{lstlisting}
-
-displays the volume (observation 3) of the step volume (2) for each cylinder of radius 2 sorted according to the first on a table (t). Red color indicates best performance, and blue ones, performances which have not been found statistically different from the best one.
-\marginnote{For this example, even if the blue cylinder is bigger than the red one due to the uncertainty in the estimation of $\pi$, this difference is not significant, so the blue and red cylinders shall be considered of equivalent volume.}
-
-\subsection{Report}
+affiche les volumes (observations 2) de l'étape 2 pour chaque cylindre de rayon 2 triés par la première observation sélectionnée. La fonte rouge indique la plus haute valeur, et les valeurs bleues, celles qui ne sont pas statistiquement différentes, au sens d'un t-test par paires effectué entre les observations de la condition expérimentale et celle correspondant à la plus haute valeur.
 
 \begin{margintable}
-\caption{\latex table output.}
-\input{../demo/geometricShape/report/tables/geolTabular}
+\caption{Visualisation sous forme de table \LaTeX.}
+\begin{tabular}{llc}
+color & height & volume \\
+\hline
+blue & 2 &  26.12$\pm$9.30 \\
+blue & 4 & 52.23$\pm$18.60 \\
+blue & 6 & \textbf{\textcolor{red}{78.35$\pm$27.90}} \\
+red & 2 &  24.61$\pm$7.54 \\
+red & 4 & 49.23$\pm$15.07 \\
+red & 6 & \textbf{73.84$\pm$22.61} \\
+\end{tabular}
 \end{margintable}
 
-The file \mcode{<shortExperimentName>Report.m}, that is \mcode{geshReport.m} in this example, allows you to generate a report that compiles several expositions of observations: \LaTeX table (l), bar plot (b), and box plot (x).
+\marginnote{Dans notre exemple, même si le cylindre bleu est plus volumineux que le rouge, cette différence n'étant pas significative, on peut en conclure expérimentalement que la couleur n'influe pas sur le volume. Il est aisé ici d'isoler la cause de variabilité due à l'incertitude artificiellement ajoutée à la valeur de $\pi$. Dans un cas réel, cela peut être beaucoup plus difficile.}
 
-\lstinputlisting[firstline=13, lastline=19]{../demo/geometricShape/geshReport.m}
-
-\begin{marginfigure}
-\includegraphics[width=\textwidth]{../demo/geometricShape/report/figures/geob}
-\end{marginfigure}
-
-
-\begin{marginfigure}
-\includegraphics[width=\textwidth]{../demo/geometricShape/report/figures/geox}
-\end{marginfigure}
-
-
-Several reports can be handled for the same experiment using the key \mcode{'reportName'}, and if the name of the report contain the key \mcode{'Slides'}, a slide presentation layout is used. For example, the command:
-\begin{lstlisting}
-geometricShape('report', 'rcv', ...
-  'reportName', 'presentationSlides');
-\end{lstlisting}
-generates a report with base name \mcode{presentationSlides} in a slides presentation layout. For debug information about the compilation, please add the \mcode{'b'} flag to the \mcode{report} value.
+Une fois la phase d'analyse des résultats effectuée, nous pouvons alors communiquer les résultats grâce à la production de rapports d'expérimentation.
