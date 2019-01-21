@@ -8,10 +8,10 @@ Trois critères d'évaluation émergent alors pour ce modèle :
 \begin{enumerate}
   \item fidélité : est'il capable de ne pas produire d'artefacts ($Pe(s) \sim Pe(\tilde{s})$)
   \item expressivité : est'il capable de mettre à disposition des mécanismes de manipulation tels que $Pe(Sy(X')) \sim Pe'(Sy(X))$.
-  \item flexibilité : capacité du modèle à s'appliquer à tout type de signal sonore d'intérêt
+  \item flexibilité : capacité du modèle à s'appliquer à tout type de signal sonore d'intérêt, \textit{i.e.} les conditions 1 et 2 sont remplies pour tout signal $x$.
 \end{enumerate}
 
-L'intuition ici, largement suivie dans la communauté des sciences des données est que, pour tout processus observable, il existe un modèle de ce processus dans lequel des manipulations basé sur des opérateurs mathématiques simples "font sens". On jugera alors la qualité du modèle par sa capacité à proposer de nouvelles approximations de réalisations de ce processus qui soient plausibles (dans notre cas, valide perceptivement)\marginnote{Par exemple, en considérant le signal temporel, on peut aisément manipuler l'intensité perçue en multipliant tout les échantillons par une constante. Ce modèle ne permet par contre pas (sans grosses approximations) de manipuler la hauteur perçue}.
+L'intuition ici, largement suivie dans la communauté des sciences des données est que, pour tout processus observable, il existe un modèle de ce processus dans lequel des manipulations basé sur des opérateurs mathématiques simples "font sens". On jugera alors la qualité du modèle par sa capacité à proposer de nouvelles approximations de réalisations de ce processus qui soient plausibles (dans notre cas, valide perceptivement)\marginnote{Par exemple, en considérant le signal temporel, on peut aisément manipuler l'intensité perçue en multipliant tout les échantillons par une constante. Ce modèle ne permet par contre pas dans le cas général de manipuler la hauteur perçue.}.
 
 Cette approche se distingue clairement des approches dites "modèles physiques" qui modélisent explicitement le processus mécanique, la qualité du son étant alors censée être la résultante d'une bonne modélisation du système physique dont la mise en vibration est à l'origine du signal sonore.
 
@@ -29,9 +29,9 @@ phonemes.jpg
 
 \section{Typologie sonore}
 
-Il est bien entendu que même si l'on souhaite que notre modèle soit flexible, on ne souhaite pas nécessairement que notre modèle soit capable de modéliser tout les signaux possibles. On supposera donc que certaines propriétés d'invariance existent, cad que même si une seconde de son échantillonnée à 44kHz est représenté dans $R^44000$, les paramètres du modèles\marginnote{Ou variable latente, ou encore code} varient dans un espace de dimension bien plus réduit. J'adhère à cette supposition pour de simples raisons d'observations physiques. En prenant l'exemple du signal de parole, il est bien entendu que le son produit est le résultat d'une interaction complexe entre un ensemble d'éléments qui ont une certaine plasticité. Il en reste néanmoins évident que les déformations possibles de l'ensemble de ces éléments sont bornées.
+Il est bien entendu que même si l'on souhaite que notre modèle soit flexible, on ne souhaite pas nécessairement que notre modèle soit capable de modéliser tout les signaux possibles. On supposera donc que certaines propriétés d'invariance existent, cad que même si une seconde de son échantillonnée à 44kHz est représenté dans $R^44000$, les paramètres du modèles\marginnote{Ou variables latentes, ou encore code} varient dans un espace de dimension bien plus réduit. J'adhère à cette supposition pour de simples raisons d'observations physiques. En prenant l'exemple du signal de parole, il est bien entendu que le son produit est le résultat d'une interaction complexe entre un ensemble d'éléments qui ont une certaine plasticité. Il en reste néanmoins évident que les déformations possibles de l'ensemble de ces éléments sont bornées.
 
-On s'attachera ici à présenter succintement de grandes de signaux sonores que l'on considère d'intérêt, ainsi qu'une dichotomie présente dans toutes ces classes qui permettra d'assoir notre critique des outils de modélisation mis à notre disposition.
+On s'attachera ici à présenter succintement de grandes familles de signaux sonores que l'on considère d'intérêt, ainsi qu'une dichotomie présente dans toutes ces classes qui permettra d'assoir notre critique des outils de modélisation mis à notre disposition.
 
 \begin{itemize}
   \item parole : sons voisés <a>, <o> / sons plosifs <pe>, <qe>
@@ -39,13 +39,13 @@ On s'attachera ici à présenter succintement de grandes de signaux sonores que 
   \item musique : chant lyrique / percussions
   \item mécanique : ventilation / marteau piqueur
   \item environnementaux : vent faisant siffler des câbles / gouttes de pluie
-\end{itemize}\marginnote{Cette typologie est arbitraire, mais suffisante pour les besoins du propos. Elle est grossièrement ordonnée par période d'intérêt important de la communauté de traitement du signal. Le traitement de la parole ayant connu un essor dans les années 1970, la bio acoustique un peu plus tard, la musique dans les années 2000 et les signaux environnementaux dans les années 2010.}
+\end{itemize}\marginnote{Cette typologie est arbitraire, mais suffisante pour les besoins du propos. Elle est grossièrement ordonnée par période d'intérêt important de la communauté de traitement du signal, le traitement de la parole ayant connu un essor dans les années 1970, la bio acoustique un peu plus tard, la musique dans les années 2000 et les signaux environnementaux dans les années 2010.}
 
-On remarquera que les exemples donnés pour chaque classe sont judicieusement choisis. Sans rentrer dans les détails, on notera que l'on retrouve certains sons portant une structuration fréquentielle forte et d'autres une structuration temporelle forte et que la plupart des sons naturels sont une composition de ces deux types de structures. Il est donc néccessaire pour atteindre nos objectifs de disposer d'outils performants pour modéliser conjointement ces deux types de structures.
+On remarquera que les exemples donnés pour chaque classe sont choisis à dessein. Sans rentrer dans les détails, on notera que l'on retrouve certains sons portant une structuration fréquentielle forte et d'autres une structuration temporelle forte et que la plupart des sons naturels sont une composition de ces deux types de structures. Il est donc néccessaire pour atteindre nos objectifs de disposer d'outils performants pour modéliser conjointement ces deux types de structuration de l'énergie sur le plan temps/fréquence.
 
 \section{Approches temps / fréquence (1)}
 
-Lorsque l'on cherche à décrire un son, deux dimensions émergent : l'intensité et la hauteur \marginnote{Dans une optique écologique, pouvoir être averti de la puissante mise en vibration de larges volumes est un atout décisif pour la survie.}. Ces deux dimensions étant respectivement intimement liés au volume et à la fréquence, il est normal de constater que la plupart des modèles de son permettent de manipuler ces deux dernières quantités et ce, de manière dynamique \textit{i.e.} au cours du temps.
+Lorsque l'on cherche à décrire un son, deux dimensions émergent : l'intensité et la hauteur. Ces deux dimensions étant respectivement intimement liés au volume et à la fréquence, il est normal de constater que la plupart des modèles de son permettent de manipuler ces deux dernières quantités et ce, de manière dynamique \textit{i.e.} au cours du temps.
 
 En supposant le signal sonore stationnaire sur l'intervalle d'observation, l'outil privilégié pour ce faire est la transformée de Fourier discrète. Cette transformée projette le signal sur une base d'exponentielles complexes:
 \begin{eqnarray}
@@ -273,7 +273,7 @@ Même si ce type d'approche est utilisée de manière assez marginale, elle gard
 
 \cite{wavenet}
 
-techniques introduites initialement pixelrnn \marginnote{La précédence d'application de nouvelle technique entre le domaine de l'image et le domaine de l'audio est quasiment toujouts observée. C'est à mon avis du à deux facteurs, l'utilité et la facilité. Nombreuses sont les applications qui necessitent du traitement de l'image, notamment à cause de la prédominance du visuel dans notre approche du réel. La facilité vient de nombreux facteurs. Un premier est qu'il est plus facile d'approcher les dimensions spatiales qui sont cohérentes entre elles. Le temps est notoirement plus complexe à modéliser. Un second est que l'oeil est notoirement plus tolérant que l'oreille. On peut donner comme exemple sur ce dernier point le morphing. Une simple somme pondérée entre deux images judicieusement cadrée permet d'obtenir des résultats appréciables. Ce type de technique est ineffective en audio où le morphing est enocre un problème non résolu.}.
+techniques introduites initialement pixelrnn \marginnote{La précédence d'application de nouvelle technique entre le domaine de l'image et le domaine de l'audio est quasiment toujouts observée. C'est à mon avis du à deux facteurs, l'utilité et la facilité. Nombreuses sont les applications qui necessitent du traitement de l'image, notamment à cause de la prédominance du visuel dans notre approche du réel. La facilité vient de nombreux facteurs. Un premier est qu'il est plus facile d'approcher les dimensions spatiales qui sont cohérentes entre elles. Le temps est notoirement plus complexe à modéliser. Un second est que l'oeil est notoirement plus tolérant que l'oreille. On peut donner comme exemple sur ce dernier point le morphing. Une simple somme pondérée entre deux images judicieusement cadrée permet d'obtenir des résultats appréciables. Ce type de technique est ineffective en audio où le morphing est encore un problème non résolu.}.
 
 Les résultats obtenus en terme de qualité perceptuelle nous invite à étudier cette approche novatrice qui semble apporter des réponses à la problématique non résolue d'une méthode d'analyse synthèse multi résolution qui soit à la fois fidèle, expressive et flexible.
 
