@@ -205,27 +205,6 @@ S'il est clair que la décomposition fréquentielle est de première importance,
 
 L'écoute montre clairement que le caractère naturel, voisé, est sensiblement plus élevé avec l'ajout de la modulation \marginnote{Ce stimuli est disponible ici \url{http://webpages.mcgill.ca/staff/Group2/abregm1/web/snd/Track24.mp3} pour écoute sur le site de Al Bregman dédié à l'ASA. Les spécificités techniques du porcessus de synthèse sont décrites ici : \url{http://webpages.mcgill.ca/staff/Group2/abregm1/web/downloadstoc.htm\#24}.}.
 
-
-\section{Approches modales (2)}
-
-physique
-
-source / filtre
-
-sons de roulements \cite{LagrangeTasslp10}
-
-marseille \cite{conan2014synthesis}
-
-On se trouve ici à l'intersection entre modélisation statistique et modélisation physique, dans le sens où l'architecture du modèle de son suit un modèle de production .
-
-Les domaines d'application des approches modales comme celles décrites ici.
-
-causalité
-
-filtrage
-
-Elles gardent à mon sens un intérêt historique pour mettre en perspective les approches modernes décrites dans la suite.
-
 \subsection{Modèles perceptifs}
 
 Complétons nos connaissances en prenant cette fois ci, non plus un point de vue physique mais physiologique. En regard des études physiologiques relativement anciennes sur la cochlée \cite{}, l'étude des éléments physiologiques en charge du traitement de ces modulations est relativement récente car probablement sensiblement plus difficile a investiguer. On a néanmoins une bonne confiance dans le fait que le système auditif des mammifères dispose d'éléments de traitement dédiés. On citera donc le modèle de Torsten Dau \cite{dau1997modeling} et celui de Shihab Shamma \cite{fritz2003rapid} qui étend le modèle de Dau en ajoutant une troisième dimension : l'échelle.
@@ -236,34 +215,59 @@ Dans ce modèle, le signal est donc tout d'abord décomposé sur l'axe fréquent
 
 \subsection{Scattering d'ondelettes}
 
-En prenant un point de vue mathématique cette fois ci, Stéphane Mallat a proposé un modèle conceptuellement proche du modèle computationel des STRF proposé par Shihab Shamma. En mathématiques appliquées, et plus particulièrement dans le domaine des sciences des données, on cherche à construire des représentations qui aient de bonnes propriétés d'invariance et de stabilité aux déformations.
+En prenant un point de vue mathématique cette fois ci, Stéphane Mallat a proposé un modèle conceptuellement proche du modèle computationel des STRF proposé par Shihab Shamma. En mathématiques appliquées, et plus particulièrement dans le domaine des sciences des données, on cherche à construire des représentations qui aient de bonnes propriétés d'invariance et de stabilité aux déformations. C'est à dire que l'on souhaite que pour une représentation $\phi(x)$ d'un signal $x$ et d'un signal déformé $\tilde x$ :
+\begin{itemize}
+  \item invariance : $\phi(\tilde x) = \phi(x)$
+  \item stabilité : $ \vert \phi(\tilde x) - \phi(x) | < \epsilon $
+\end{itemize}
 
-Précisons ces notions en prenant quelques exemples. Lorsque l'on cherche à reconnaitre l'instrument de musique qui a joué, on souhaite disposer d'une représentation du signal enregistré de cette performance qui soit invariante à certains aspects de la performance comme :
+Précisons ces notions en prenant quelques exemples. Lorsque l'on cherche à reconnaitre l'instrument de musique qui a joué la note enregistrée, on souhaite généralement disposer d'une représentation du signal de cette performance qui soit invariante à certains aspects de la performance comme :
 \begin{enumerate}
   \item un changement d'amplitude
   \item une translation en temps
   \item un étirement en temps
 \end{enumerate}
-En effet, pour la tâche pré-citée, que la note ait été jouée plus ou moins proche du microphone, à un instant donné ou quelques secondes plus tard, à une hauteur donnée ou une autre, pour une durée plus ou moins longue ne devrait pas modifier notre représentation.
+En effet, pour la tâche pré-citée, que la note ait été jouée plus ou moins proche du microphone\marginnote{J'écarte ici pour la simplicité du discours les aspects de nuances qui ont une influence non négligeable sur le timbre.}, à un instant donné ou quelques secondes plus tard, à une hauteur donnée ou une autre, pour une durée plus ou moins longue ne devrait pas (trop) modifier notre représentation.
 
-L'invariance au volume est obtenue de manière triviale en normalisant les signaux que l'on souhaité comparer. L'invariance à la translation en temps se traduit dans le domaine de Fourier en une invariance à la translation de phase par la prise du module. En ce qui concerne l'invariance à l'étirement temporel
+L'invariance au volume est obtenue de manière triviale en normalisant les signaux que l'on souhaite comparer. L'invariance à la translation en temps se traduit dans le domaine de Fourier en une invariance à la translation de phase par la prise du module. On souhaite généralement que l'invariance au volume et à la translation soit complète. En ce qui concerne l'invariance à l'étirement temporel, on souhaite généralement plus que la représentation soit stable à la déformation.
 
-exemple des mels
+Il est clairement explicité dans \cite{anden2014deep} pourquoi le spectre de magnitude de Fourier n'est pas stable à même un petit étirement temporel. En effet, l'impact de l'étirement selon l'axe des fréquences n'est pas le même. Si un petit étirement déplacera d'une petite quantité les fréquences basses, les fréquences le seront beaucoup plus. Prenons le cas classique d'un signal harmonique de fréquence de fondamentale $440 Hz$, un étirement temporel va réduire la valeur de cette fréquence à disons $430 Hz$ pour un delta de $10 Hz$. Ce delta sera $n$ fois plus grand pour la $nième$ harmonique soit $100 Hz$ pour la dixième harmonique. Pour une transformée de Fourier avec des paniers d'une dizaine de Hertz, la différence entre les deux spectres va croitre très rapidement avec delta car l'énergie des harmoniques supérieures va très vite sortir des paniers où l'énergie des harmoniques se plaçait initialement.
 
-construction du scattering d'ondelettes
+Pour être plus stable à ce type de déformation, il convient alors de "délocaliser" les hautes fréquences de manière plus conséquente que les basses. Suivant les communautés, on obtient cette délocalisation progressive sur l'axe des fréquences avec des transformées à Q constant, de type tiers d'octave (acoustique), des Mels ou des Barks (parole)\marginnote{Cette étude est à mon sens d'importance, car elle permet de placer un cadre mathématique pour mieux expliquer ce qui a été empiriquement vérifié dans de nombreux domaines du traitement de l'audio et motivés jusqu'ici par des arguments essentiellement neuro mimétiques.}.
 
-equivalence au premier ordre
+En se plaçant dans le cadre des ondelettes, on obtient ce type de représentation en délocalisant en temps toutes les bandes de fréquence ce qui induit une perte d'information qu'il convient de compenser. Le principe du scattering permet de répondre élégement à ce problème en cascadant des opérations de décomposition et en utilisant chaque niveau de décomposition pour produire une représentation compacte et informative \marginnote{En dissociant ainsi décomposition et représentation, on peut préserver certaines propriétés d'intérêts comme par exemple l'inversibilité pour la décomposition et la stabilité pour la représentation.}.
+
+Le scattering au premier ordre est donc équivalent en termes conceptuels à une transformée à Q constant. En décomposant les sorties un banc de filtres en ondelettes avec un autre banc de filtres, on capte alors l'information de modulation, \textit{i.e.} comment l'énergie fluctue dans une même bande fréquence. On a vu l'importance de ce type de modulation pour la perception, voir \ref{}, il est donc opportun de d'étudier l'apport du second ordre pour une représentation riche du signal sonore\marginnote{Le processus de cascade. Le troisième ordre est conceptuellement difficile à appréhender et a encore été peu étudié, pour les raisons suivantes 1) pratique : l'énergie au troisième ordre est très faible, 2) neuro-mimétique : aucun modèle perceptif n'explicite un troisième ordre de traitement.}.
+
+L'apport du second ordre a été démontré expérimentalement pour des tâches de modélisation \cite{anden2014deep}.
+
+Nous avons complétés cette investigation en considérant une tâche pertinente pour notre propos : l'étude de la représentation des sons d'instruments de musique du répertoire en considérant des modes de jeux étendus. En effet, si la reconnaissance de l'instrument est considérée comme un problème résoluble par une représentation à Q constant \cite{}, la reconnaissance du mode de jeu\marginnote{et par la même d'une notion plus fine de la notion de timbre musical} comporte des éléments de modulations qui ne sont pas aisément capturés par une représentation à Q constant ou un scattering d'ondelettes à l'ordre un. On montre en effet que l'ajout de l'ordre 2 permet une bien meilleure identification du mode de jeu et permet de proposer au compositeur à la recherche d'un certain timbre, d'une investigation plus aisée d'une grande base de données de sons instrumentaux \cite{}.
+
+En terme d'architecture de décomposition, le scattering suit une organisation de type réceptive, fréquence d'abord et temps ensuite. On verra dans la partie suivante un modèle prenant une approche de type source / filtre donc temps et fréquence ensuite et qui est à ce titre plus directement tourné vers la synthèse.
+
+\section{Approches modales (2)}
+
+En se référant plutôt aux processus physiques de production sonore, les approches modales permettent de proposer des méthodes efficaces pour des outils de synthèse dédiés.
+
+Ces modèles se basent sur un modèle de production de type source / filtre, où la source est généralement décrite en terme de propriétés temporelles, et le filtre en terme de propriétés fréquentielles. Pour un signal de parole, on considèrera que la source peut être soit un train d'impulsions résultant de l'ouverture périodique de l'organe phonatoire nommé \marginnote{à tort} cordes vocales pour la production des sons voisés (voyelles) soit un signal stochastique résultant de la compression du flux respiratoire pour la production des sons plosives ou sifflants (consonnes).
+
+Le modèle source / filtre décorrèlle donc naturellement la contribution de l'excitateur et celle du résonateur, ce qui est particulièrement attrayant lorsque l'on recherche un modèle de son permettant une bonne capacité d'interaction. Pour peu que les modèles utilisés pour les deux parties (source et filtre) soit bien adaptés, on obtient des modèles de sons qui sont souvent fidèles et expressifs \cite{modalys, marseille}. La flexibilité reste malheureusement en deca, car le changement de structures pour la source et le filtre ainsi que leurs modes d'interactions nécessitera le plus souvent des adaptations d'ordre computationels si ces changement sont conséquents.
+
+Nous avons par exemple étudié ce type de modèle pour la synthèse de sons de roulements. Ces sons présentent un challenge pour ce type de synthèse car l'interaction entre la bille et la surface sur laquelle elle roule est complexe.
+
+ \cite{LagrangeTasslp10}
+
+ validation perceptive
+
+marseille \cite{conan2014synthesis}
+
+On se trouve ici à l'intersection entre modélisation statistique et modélisation physique, dans le sens où l'architecture du modèle de son suit un modèle de production.
 
 
 
-scattering temps temps/fréquence \cite{anden2014deep}
+On trouve avec ce type de modèle deux propriétés d'importance. En premier lieu, la causalité. Au niveau du modèle de synthèse, un échantillon est strictement considérée comme une composante des échantillons précédents.  En second, cette approche met l'accent sur les propriétés de filtrage des composantes modales, il ne s'agit pas ici de synthétiser un signal riche à partir d'une représentation complète du signal, mais plutôt d'exploiter un modèle source / filtre avec une implantation dédiée de ces deux modules en fonction de la tâche visée.
 
-decomposition source / filtre ordre un et deux
-
-modes de jeux
-
-
-
+Même si ce type d'approche est utilisée de manière assez marginale, elle garde à mon sens un intérêt historique pour mettre en perspective les approches modernes décrites dans la suite.
 
 \section{Approches temporelles (10)}
 
