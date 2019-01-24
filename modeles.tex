@@ -8,7 +8,7 @@ Trois critères d'évaluation émergent alors pour ce modèle :
 \begin{enumerate}
   \item fidélité : est'il capable de ne pas produire d'artefacts ($Pe(s) \sim Pe(\tilde{s})$)
   \item expressivité : est'il capable de mettre à disposition des mécanismes de manipulation tels que $Pe(Sy(X')) \sim Pe'(Sy(X))$.
-  \item flexibilité : capacité du modèle à s'appliquer à tout type de signal sonore d'intérêt, \textit{i.e.} les conditions 1 et 2 sont remplies pour tout signal $x$.
+  \item versatilité : capacité du modèle à s'appliquer à tout type de signal sonore d'intérêt, \textit{i.e.} les conditions 1 et 2 sont remplies pour tout signal $x$.
 \end{enumerate}
 
 L'intuition ici, largement suivie dans la communauté des sciences des données est que, pour tout processus observable, il existe un modèle de ce processus dans lequel des manipulations basé sur des opérateurs mathématiques simples "font sens". On jugera alors la qualité du modèle par sa capacité à proposer de nouvelles approximations de réalisations de ce processus qui soient plausibles (dans notre cas, valide perceptivement)\marginnote{Par exemple, en considérant le signal temporel, on peut aisément manipuler l'intensité perçue en multipliant tout les échantillons par une constante. Ce modèle ne permet par contre pas dans le cas général de manipuler la hauteur perçue.}.
@@ -29,7 +29,7 @@ phonemes.jpg
 
 \section{Typologie sonore}
 
-Il est bien entendu que même si l'on souhaite que notre modèle soit flexible, on ne souhaite pas nécessairement que notre modèle soit capable de modéliser tout les signaux possibles. On supposera donc que certaines propriétés d'invariance existent, cad que même si une seconde de son échantillonnée à 44kHz est représenté dans $R^44000$, les paramètres du modèles\marginnote{Ou variables latentes, ou encore code} varient dans un espace de dimension bien plus réduit. J'adhère à cette supposition pour de simples raisons d'observations physiques. En prenant l'exemple du signal de parole, il est bien entendu que le son produit est le résultat d'une interaction complexe entre un ensemble d'éléments qui ont une certaine plasticité. Il en reste néanmoins évident que les déformations possibles de l'ensemble de ces éléments sont bornées.
+Il est bien entendu que même si l'on souhaite que notre modèle soit versatile, on ne souhaite pas nécessairement que notre modèle soit capable de modéliser tout les signaux possibles. On supposera donc que certaines propriétés d'invariance existent, cad que même si une seconde de son échantillonnée à 44kHz est représenté dans $R^44000$, les paramètres du modèles\marginnote{Ou variables latentes, ou encore code} varient dans un espace de dimension bien plus réduit. J'adhère à cette supposition pour de simples raisons d'observations physiques. En prenant l'exemple du signal de parole, il est bien entendu que le son produit est le résultat d'une interaction complexe entre un ensemble d'éléments qui ont une certaine plasticité. Il en reste néanmoins évident que les déformations possibles de l'ensemble de ces éléments sont bornées.
 
 On s'attachera ici à présenter succintement de grandes familles de signaux sonores que l'on considère d'intérêt, ainsi qu'une dichotomie présente dans toutes ces classes qui permettra d'assoir notre critique des outils de modélisation mis à notre disposition.
 
@@ -273,11 +273,31 @@ Même si ce type d'approche est utilisée de manière assez marginale, elle gard
 
 \section{Approches temporelles (10)}
 
+Cette revue des modèles de sons nous a permis d'identifier deux verrous qu'il semble difficile de résoudre de manière conjointe.
+
+Rappelons ici les trois propriétés souhaités :
+\begin{enumerate}
+  \item
+  \item
+  \item versatile
+\end{enumerate}
+
+En suivant cet ordre, on peut procéder à la constitution d'un "cahier des charges" du modèle idéal qui serait le suivant :
+\begin{enumerate}
+  \item multirésolution
+  \item causal
+
+\end{enumerate}
+
 \cite{wavenet}
 
 techniques introduites initialement pixelrnn \marginnote{La précédence d'application de nouvelle technique entre le domaine de l'image et le domaine de l'audio est quasiment toujouts observée. C'est à mon avis du à deux facteurs, l'utilité et la facilité. Nombreuses sont les applications qui necessitent du traitement de l'image, notamment à cause de la prédominance du visuel dans notre approche du réel. La facilité vient de nombreux facteurs. Un premier est qu'il est plus facile d'approcher les dimensions spatiales qui sont cohérentes entre elles. Le temps est notoirement plus complexe à modéliser. Un second est que l'oeil est notoirement plus tolérant que l'oreille. On peut donner comme exemple sur ce dernier point le morphing. Une simple somme pondérée entre deux images judicieusement cadrée permet d'obtenir des résultats appréciables. Ce type de technique est ineffective en audio où le morphing est encore un problème non résolu.}.
 
-Les résultats obtenus en terme de qualité perceptuelle nous invite à étudier cette approche novatrice qui semble apporter des réponses à la problématique non résolue d'une méthode d'analyse synthèse multi résolution qui soit à la fois fidèle, expressive et flexible.
+Les résultats obtenus en terme de qualité perceptuelle nous invite à étudier cette approche novatrice qui semble apporter des réponses à la problématique non résolue d'une méthode d'analyse synthèse multi résolution qui soit à la fois fidèle, expressive et versatile.
+
+présentation du principe de traitement de l'information.
+
+réseaux neuronaux, présentation avec une optique traitement du signal (LIRE PAPIER MALLAT) \marginnote{neuromimétisme structurel pour les unités et les réseaux, question du conditionnnement chimique, et des mécanismes de prédiction et d'apprentissage. Mécanismes totalement distincts dans les modèles computationnels, pas d'équivalent en neuro sciences.}
 
 présentation de l'architecture
 
@@ -295,9 +315,13 @@ Certains aspects de l'architecture sont spécifiques.
 
 Le plus important étant que l'écoute montre l'absence d'artefacts typiques d'une chaîne de traitement spectral mono résolution comme la tfct.
 
-Egalement, l'architecture de traitement du signal est peu commune. En effet, il est courant dans les architectures de traitement du signal que "la mémoire suit le traitement", cela qui donnerait une réduction de la mémoire pour les couches supérieurs du réseau, ce qui n'est pas le cas du wavenet où toutes les couches sont à la même fréquence d'échantillonage.
+question du conditonnement
+
+
 
 Ces points, et de nombreux autres comme l'impact des fonctions de non linéarité sur la qualité du signal généré sont des questions passionnantes, largement ouvertes en terme de compréhension scientifique.
+
+De part la qualité du traitement et la versatilité de ces approches, leur étude constitue pour moi une opportunité pour la communauté traitement du signal. C'est d'autant plus important que la communauté d'apprentissage artificiel traverse actuellement une crise de sens. Ainsi, une vision fondée sur les principes du traitement de l'information, l'équilibre entre empirique et formalisme. Tout ces éléments qui constitue les fondements du traitement du signal sont à mon avis de grand intérêt pour répondre à des questions, qui au vu du champ d'application extrêmement vaste de ces outils, dépasse les problématiques de la seule communauté des sciences des données, pour devenir un enjeu de société.
 
 \section{Conclusion}
 
