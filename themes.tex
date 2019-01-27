@@ -42,62 +42,73 @@ A la fin du siècle dernier, les outils à disposition étant moins avancés qu'
 
 Pour le traitement du son, on s'accorde pour considérer que de nombreux éléments structurants sont communément utilisés par le sah pour inférer une représentation informative de la scène sonore auquel il est soumis. Pour les besoins de l'exemple, on représentera ici la sortie de la cochlée comme un spectrogramme\marginnote{C'est, du point de vue , une approximation très grossière, mais conceptuellement suffisante pour notre présent propos. Pour une présentation des différents modèles de référence, voir \cite{}}. La tâche du sah consiste alors à associer certains éléments du plan temps/fréquence à des sources données, et ce en fonction de certains critères.  On citera, dans l'ordre d'importance, l'harmonicité, la synchronicité, la proximité en fréquence, etc. L'importance de ces critères peut être modulée dans une certaine mesure par des processus descendants comme l'attention ou encore la pratique\marginnote{Helmhotlz se disait capable de dissocier les différentes harmoniques d'une note de violon grâce à l'écoute répétée du son de ses résonateurs.}.
 
-De nombreux autres indices ont été étudiés et de nombreux modèles de perception holistiques se basant sur les règles de la gestalt ont été proposés. En formalisant ces concepts dans une théorie unifiée, appuyée par de nombreuses expériences perceptives, Bregman a fondé
-L'analyse de scènes auditives \cite{bregman1994auditory}. Ces travaux ont suscités un élan d'intérêt dans la communauté traitement du signal et plusieurs modèles computationels ont été proposés \cite{ellis}.
+De nombreux autres indices ont été étudiés et de nombreux modèles de perception holistiques se basant sur les règles de la gestalt ont été proposés. En formalisant ces concepts dans une théorie unifiée, appuyée par de nombreuses expériences perceptives, Bregman a fondé l'analyse de scènes auditives (ASA) \cite{bregman1994auditory}. Ces travaux ont suscités un élan d'intérêt dans la communauté traitement du signal et plusieurs modèles computationels ont été proposés comme celui de Dan Ellis\cite{ellis}, pionnier dans ce domaine communément appelé CASA, pour "Computational Auditory Scene Analysis".
 
+En considérant le spectrogramme comme notre représentation de départ\marginnote{On néglige ici la notion de phase, comme cela est effectué dans la plupart des méthodes de séparation de sources.} en simplifiant un peu les choses, on peut considérer que le problème CASA consiste à attribuer une couleur à chacun des paniers temps/fréquence, couleur correspondant à chacune des sources d'intérêts, chaque coloriage formant un masque.
 
-Mieux comprendre comment une
+La figure \ref{}, montre le cas du masque binaire idéal\cite{}. Les zones vertes correspondent aux zones du plan temps/fréquence où la. Ces masques sont idéaux parce qu'ils sont calculés grâce à la comparaison avec les spectrogrammes des sources avant mélange. Le masque binaire idéal est donc communément utilisé comme référence dite "oracle", car elle constitue une borne supérieure.
 
-thèse, vic, houle
+Séduit par l'aspect neuro-inspiré et la grande diversité algorithmique des approches CASA, j'ai  poursuivi pendant quelques années cet effort de recherche en proposant plusieurs méthodes basés sur des algorithmes de regroupement d'objets, "clustering" en Anglais.
 
-modeles de sons presentés dans le chapitre , on se concentrera ici sur les mécanisme de structuration
+ensemble d'objets
 
-prendre une approche modèle de structuration
+critère
 
-\subsection{"Vanilla CASA"}
+un grand nombre d'approches algorithmiques sont disponible pour résoudre ce problème, le plus connu pour les problèmes de grande taille en nombre d'objets et d'un nombre de classe petit devant le nombre d'objet etant le kmeans classique dont l'efficacite reside dans le fait que la fonction de cout se base sur un produit scalaire.
 
-masque binaire ideal
+Cet algorithme doit sa popularité à son efficace, mais s'avère inopérant dans notre cas, les relations casa n'étant pas exprimables sous forme de produit scalaire.
 
-quelques méthodes citer dan ellis
+l'algorithme des normalized cuts, popularisé en traitement d'image \cite{shi-malik}, permet de résoudre le problème du regroupement d'objets dont seules les relations entretenues entre ces objets sont connues, plus précisément que leur dissimilarité soit non pas une distance mais un noyau.
 
-\subsection{"Normalized cuts"}
+Muni d'un tel outil, il reste à spécifier les relations entretenues par les objets considérés. Pour la segmentation d'image, la relation utilisée dans consiste en une couleur avec contrainte de localité :
+\begin{equation}
 
-modele sinuoisdal court terme
+\end{equation}
+Dans une première étude menée à l'Université de Victoria en collaboration avec George Tzanetakis, j'ai considéré le problème suivant. Soit une version compacte du spectrogramme (un modèle sinusoidal à court terme, voir la Section \ref{} qui lui est dédiée.), comment définir mathématiquement quelques relations ASA et les combiner entre elles, avec pour objectif d'isoler la partie mélodique d'un enregistrement musical polyphonique. Dans le cas d'une mélodie, la relation la plus importante consiste en la relation harmonique qui lie les différents composantes de la source mélodique, voir Figure \ref{}.
 
-critères
+Cette première approche a reçu un bon accueil de la communauté\cite{conf, lagrangeTaslp08}, et son implantation a été diffusée dans le cadre computationel Marsyas \cite{}. Dans le cadre d'une ANR JCJC Houle \url{}, j'ai, au sein de l'Ircam, et en collaboration avec Mathias Rossignol, tenté d'améliorer cette approche en prenant le postulat suivant : toute segmentation est effectuée sur la base de contraintes de localité dans deux espaces disjoints, une espace analogue à l'espace/temps, et un autre relatif à notre forme. Ces deux types d'espaces induisent respectivement des relations de proximité et de similarité. Prenons l'exemple d'une cuillère à café placée dans une tasse et une cuillère à soupe placée plus loin sur une table. La cuillère à café étant dans la tasse, elle est proche spatialement de la tasse, et elle est également similaire à la cuillère à soupe située un peu plus loin.
 
-algo de clustering
+Dans le cas de la segmentation d'une image, Shi et al ont implanté la notion de similarité par une différence de colorimétrie entre les deux pixels comparés. La notion de proximité est implanté par un seuil, voir Equation \ref{eq-shi}.
 
-\cite{lagrangeTaslp08}
+En partant d'objets élémentaire comme le pixel d'une image ou le panier temps fréquence d'un spectrogramme, il est évident que la notion de proximité doit prédominer, car la notion de similarité se base sur une quantité d'information assez faible.  En revanche, plus on considère des objets complexes, plus l'importance de la similarité devient grande devant la notion de localité. Fort de ce constat, nous avons donc chercher à concevoir un algorithme de structuration hiérarchique basé sur l'alternance d'expression de ces deux critères.
 
-\subsection{ALC}
+Mais avant cela, nous devions disposer d'un algorithme de clustering alternatif aux normalized cuts. Cet algorithme est en effet couteux, principalement à cause de l'étape de décomposition en valeurs singulières ce qui contraint l'horizon temporel exploitable. Il nécessite également un noyau pour garantir sa convergence, ce qui n'est pas le cas en général.
 
-modelèe hierarchiques
+Brian Kullis montre en  l'objectif des coupures normalisées peut êtee formuler comme une fonction de cout optimisable par un algorithme à noyau, ce qui permet d'approcher le problème du clustering avec une complexité considérablement réduite. Il reste que la convergence de ce type d'approche n'est vérifiée que dans le cas où la matrice de dissimilarité est semi définie positive. Les relations CASA étant complexes, il nous a paru important de lever cette contrainte\marginnote{Il est possible de manipuler la matrice pour la rendre semi définie positive \cite{} mais l'impact de cette manipulation sur le regroupement obtenu est difficile à contrôler.}.
 
-\cite{rossignolhal-01122006}
+Nous avons donc développé un algorithme de clustering dont la convergence est assuré pour tout type de matrice de dissimilarité, pour peut qu'elle soit symétrique. Cette approche, même si elle considère des relations bien connues, n'avait, à notre connaissance, pas été formalisée complètement en un algorithme effectif. Son évaluation sur un large ensemble de corpus \cite{keogh} montre des performances équivalentes aux méthodes à noyau, avec un coût de calcul et une empreinte mémoire plus faible, ce qui la rend intéressante pour des problèmes de grande taille\cite{rossignolKaverages}.
 
-parler de la production de similarite Bof / scarce events comme motivation
+A partir de cet algorithme adapté à nos besoins, nous avons proposé un algorithmique de segmentation de scènes sonores basé sur le principe de regroupement alterné similarité/proximité\cite{rossignolhal-01122006}.
 
+présenter alc
 
-L'analyse
+Ces années d'exploration des approches casa m'a permis de parcourir de larges champs d'expertise scientifiques, de l'informatique au traitement du signal, de la psycho-percpetion aux neurosciences, mais cela a surtout été pour moi l'occasion de mieux saisir certaines problématiques fondamentales en sciences des données.
+\begin{enumerate}
+  \item Comment dévoiler la structure intrinsèque aux données à partir d'observations bruitées ?
+  \item Comment exploiter l'approche compositionnelle de notre compréhension du monde ?
+  \item Quel rôle peut jouer la notion de mémoire dans les processus pré cités ?
+\end{enumerate}
+Ces questions continuent de nourrir mes recherches car les solutions auxquelles j'ai contribué ne sont, à mon sens, en aucun cas satisfaisantes. La traduction algorithmique de contraintes de structuration est un art difficile, car elle nécessite un effort important pour fiabiliser les algorithmes. La gestion de l'interaction entre les différentes contraintes de structuration l'est aussi. L'utilisation d'un schéma alterné dans l'algorithme alc a permit de mieux contrôler cette interaction mais cela reste au fond arbitraire.
 
-synthèse
-
-méthodologie expérimentale voir Chapitre \ref{}
+Au delà de ces problématiques propres aux appproches casa, les approches de séparation de sources se basent généralement sur un traitement en deux temps : 1) représentation type spectrogramme, 2) segmentation. On verra dans le chapitre \ref{}, dédié aux modèles de sons les limites ce que cela impose à la performance de ces approches.
 
 \section{La synthèse pour l'écoute artificielle (5)}
 
-Cette dernière étude a été l'occasion de réfléchir au protocole d'évaluation, et en particulier aux données utilisées pour évaluer les algorithmes proposés. Il est évident que les données constituant la référence dans le domaine des sciences des données, son influence sur la structure algorithmique résultante est déterminante. Cette question est donc cruciale.
+Cette dernière étude a également été pour moi l'occasion de réfléchir au protocole d'évaluation, et en particulier aux données utilisées pour évaluer les algorithmes proposés. Il est évident que les données constituant la référence dans le domaine des sciences des données, son influence sur la structure algorithmique résultante est déterminante. Cette question est donc cruciale.
 
-Dans le domaine du traitement du signal, on fait souvent la différence entre des signaux "réels" et des signaux "synthétiques". Les signaux réels sont issus d'un processus d'acquisition, plus ou moins maitrisé, on parle souvent aussi de données brutes. La seule manipulation que l'on puisse alors faire pour mieux contrôler ces données, c'est de réduire la taille du corpus. Cette réduction peut se faire selon les différents axes de structuration de ce corpus\marginnote{Dans le cas d'un corpus structuré sous forme de classes par exemple, on peut choisir de supprimer une ou plusieurs classes, ou de supprimer des éléments dans chaque classes de manière à obtenir un corpus balancé, \textit{i.e.} avec un même nombre d'éléments par classe.}. Elle peut se faire également de manière globale, pour enlever des données aberrantes par exemple. Dans tout les cas, il est important de considérer que ces procédures sont délicates car difficile à motiver\marginnote{Le risque du "cherry picking", qui consiste à trouver les données qui fonctionnent bien avec l'approche algorithmique défendue est toujours présent}.
+Dans le domaine du traitement du signal, on fait souvent la différence entre des signaux "réels" et des signaux "synthétiques". Les signaux réels sont issus d'un processus d'acquisition, plus ou moins maîtrisé, on parle souvent aussi de données brutes. La seule manipulation que l'on puisse alors faire pour mieux contrôler ces données, c'est de réduire la taille du corpus. Cette réduction peut se faire selon les différents axes de structuration de ce corpus\marginnote{Dans le cas d'un corpus structuré sous forme de classes par exemple, on peut choisir de supprimer une ou plusieurs classes, ou de supprimer des éléments dans chaque classes de manière à obtenir un corpus balancé, \textit{i.e.} avec un même nombre d'éléments par classe.}. Elle peut se faire également de manière globale, pour enlever des données aberrantes par exemple. Dans tout les cas, il est important de considérer que ces procédures sont délicates car difficile à motiver\marginnote{Le risque du "cherry picking", qui consiste à trouver les données qui fonctionnent bien avec l'approche algorithmique défendue est toujours présent}.
 
-Les signaux synthétiques sont , eux, totalement contrôlés. La contribution défendue par les auteurs propose un modèle de signal donné, et en utilisant ce modèle de signal donné pour générer des exemples, on montre que la méthode d'estimation proposée conjointement avec ce modèle de signal est effective.
+Les signaux synthétiques sont, eux, totalement contrôlés. Les auteurs proposent un modèle de signal, et en utilisant ce modèle de signal pour générer des exemples, on montre que la méthode d'estimation proposée conjointement à ce modèle est effective.
+
+Dans le cadre de l'analyse de
 
 simulé middle ground
 
+description modèle de scènes
 
 
-\marginnote{Je n'évoquerai pas ici la question importante de la représentativité du corpus et division du corpus complet en corpus d'entrainement, de test, et de validation. Le lecteur peut se référer à l'excellent cours de Stéphane Mallat sur la notion de risque en sciences des données pour de plus amples détails.}.
+
+\marginnote{Je n'évoquerai pas ici la question importante de la représentativité du corpus et de la division du corpus complet en corpus d'entrainement, de test, et de validation. Le lecteur peut se référer à l'excellent cours de Stéphane Mallat sur la notion de risque en apprentissage pour de plus amples détails sur le sujet.}.
 
 dcase 2013 \cite{stowellhal-01253912}
 
@@ -117,7 +128,7 @@ si la question est d'ordre pratique, est-ce problématique si les réponses ne s
 
 Même si, comme je l'ai explicité dans l'introduction de ce chapitre, je situe mon centre de gravité thématique dans le domaine des sciences des données, j'ai eu le plaisir de contribuer également dans le domaine de la psychologie expérimentale avec Grégoire Lafay et Nicolas Misdariis. Nous avons souhaités questionner la notion d'agrément sonore en zone urbaine, sujet d'une grande importance sanitaire \cite{europe}.
 
-Pour cela, le modèle de scènes décrit précédemment", de part son réalisme et sa simplicité de manipulation s'est révélé être un outil pertinent pour questionner d'une manière nouvelle des notions de psycho perception comme l'agrément. L'étude de référence sur le sujet de l'agrément sonore en zone urbaine \cite{guastavino} considère un paradigme expérimental classique fondé sur la description faite par le sujet de l'objet d'étude. Chaque sujet est invité à verbaliser les propriétés d'un environnement sonore idéal ou non idéal. Ces descriptions textuelles sont ensuite traitées par une analyse psycho linguistique, des invariants dans les descriptions données par les sujets sont dégagés qui permettent alors de conclure quand aux propriétés de ces environnements.
+Pour cela, le modèle de scènes décrit précédemment, de part son réalisme et sa simplicité de manipulation s'est révélé être un outil pertinent pour questionner d'une manière nouvelle des notions de psycho perception comme l'agrément. L'étude de référence sur le sujet de l'agrément sonore en zone urbaine \cite{guastavino} considère un paradigme expérimental classique fondé sur la description faite par le sujet de l'objet d'étude. Chaque sujet est invité à verbaliser les propriétés d'un environnement sonore idéal ou non idéal. Ces descriptions textuelles sont ensuite traitées par une analyse psycho linguistique, des invariants dans les descriptions données par les sujets sont dégagés qui permettent alors de conclure quand aux propriétés de ces environnements.
 
 On note ici que ces environnements sont pensés par le sujet, puis décrit, ce qui place l'étude dans de la cadre de la théorie classique de la cognition, à savoir que les percepts subissent une étape de transduction en informations amodales que l'on peut questionner par le langage. Des théories alternatives existent, comme la théorie ancrée \cite{barsalou2010grounded} dont le propos est de ne pas distinguer perception et cognition en terme d'objets manipulés, mais en terme d'objectifs. Elle met à ce titre l'accent sur le contexte et la notion d'expérience, d'"embodiement". Dans cette théorie, les percepts sont le fondement, la matière brute des constructions cognitives qui en découlent. La cognition n'est plus en charge d'une transduction mais d'une extraction d'invariants qui serviront à construire des représentation de plus en plus abstraite. Notre proposition s'inscrit dans ce schéma de pensée, en demandant non plus au sujet de verbaliser son image mentale mais de "construire" une représentation de l'image mentale que le sujet a d'un environnement sonore idéal\marginnote{Les scènes produites par les sujets sont disponibles ici \url{}. Comme on peut s'en rendre compte à l'écoute, les scènes construites par les sujets sont plausibles mais ne sont pas pour autant réalistes au sens stricte du terme. On notera que l'on cherche ici, et ce avec un certain nombre de contraintes (durée de la scène, choix des éléments de base, paradigme de séquencement), en quelque sorte à exemplifier ces images mentales de haut niveau. Sans parler de caricatures, le côté pittoresque des scènes produites, notamment pour les scènes idéales, inscrit donc bien le protocole proposé dans la théorie ancrée de la perception.}.
 
