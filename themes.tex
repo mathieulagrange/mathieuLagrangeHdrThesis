@@ -136,21 +136,20 @@ Dans le domaine du traitement du signal, on fait souvent la différence entre de
 \marginnote{Je n'évoquerai pas ici la question importante de la représentativité du corpus et de la division du corpus complet en corpus d'entrainement, de test, et de validation. Le lecteur peut se référer à l'excellent cours de Stéphane Mallat sur la notion de risque en apprentissage pour de plus amples détails sur le sujet.}.
 
 
-Les signaux synthétiques sont, eux, totalement contrôlés. Les auteurs proposent un modèle de signal, et en utilisant ce modèle de signal pour générer des exemples, on montre que la méthode d'estimation proposée conjointement à ce modèle est effective sur ces exemples. Cela permet de faire une démonstration de faisabilité du modèle, mais n'est pas suffisante pour démontrer l'applicabilité de ce modèle pour des cas pratiques.
+Les signaux synthétiques sont, eux, totalement contrôlés. Les auteurs proposent un modèle de signal, et en utilisant ce modèle de signal pour générer des exemples, on montre que la méthode d'estimation proposée conjointement à ce modèle est effective sur ces exemples. Cela permet de faire une démonstration de faisabilité du modèle, mais n'est pas suffisante pour démontrer l'applicabilité de ce modèle à des problématiques concrètes.
 
-La méthode couramment prise est donc d'estimer cette applicabilité
+La méthode couramment prise est donc d'estimer ce niveau d'applicabilité
+en considérant les performances obtenues par le système en considérant des données brutes. Le principal risque de cette foi aveugle dans les résultats obtenus en utilisant les données brutes, est précisément que nous disposons souvent d'un contrôle très faible sur ces données, et ce qui à permis de les obtenir, \texit{i.e.} le processus d'aquisition, le processus d'annotation, etc.
 
-Le principale risque de cette foi aveugle dans les résultats obtenus en utilisant les données brutes, est précisément que nous disposons d'un contrôle très faible
-
-suposons le calcul d'une statistique telle que la moyenne, un ensemble d'outil nous permet de valider la pertinence de cette statistique, distribution, ecart à la médiane quartiles, etc.
+Prenons l'exemple du calcul d'une statistique telle que la moyenne, un ensemble d'outil nous permet de valider la pertinence de cette statistique, distribution, écart à la médiane, quartiles, etc.
 
 Pour un modèle avec plusieurs millions de paramètres libres comme c'est le cas pour les architecrtures de traitement de l'information telles que les réseaux de neurones profonds, les outils d'inspection sont nettement plus ardu à mettre en place. La valeur de la métrique de qualité obtenue par le système doit donc être appréciée avec beaucoup plus de mesure.
 
 Le modèle proposé est'il pertinent ? Est ce que l'information captée par la méthode d'estimation se rapporte à des phénomènes d'intérêts ? Pour tout problème qui sort de la trivialité, nous ne disposons pas à l'heure actuelle d'outils qui permettent de répondre à ces questions.
 
-La revue par les pairs\marginnote{Dans une forme moderne incluant la notion de recherche reproductible comme celle dévelopée dans le Chapitre \ref{}} constitue probablement la seule approche  à l'heure actuelle.
+La revue par les pairs\marginnote{Dans une forme moderne incluant la notion de recherche reproductible comme celle dévelopée dans le Chapitre \ref{}} constitue probablement la seule approche efficace à l'heure actuelle. Précisons ce propos avec deux exemples.
 
-Précisons le propos avec deux exemples. La communauté d'acoustique environmentale se base principalement sur l'étude de mesures acoustiques tels que le Laeq. De nombreuses études issues de cette communauté montrent néanmoins que ces mesures ne corrèlent pas toujours avec des jugements perceptifs.
+La communauté d'acoustique environmentale se base principalement sur l'étude de mesures acoustiques tels que le Laeq. De nombreuses études issues de cette communauté montrent néanmoins que ces mesures ne corrèlent pas toujours avec des jugements perceptifs.
 
 Le fait que l'on puisse reconnaitre l'ambience sonore et l'affecter à une typologie de lieu a été très bien recue par la communauté et pris pour fait acquis, en partie parce que cette étude appliquait des techniques mal connues par les membres de cette communauté.
 
@@ -165,20 +164,24 @@ La base de données GTZAN proposée par George Tzanetakis a longtemps été une 
 
 Egalement, les algorithmes d'apprentissage exploitent des informations présentes dans les bandes de fréquences inférieures à 20 Hz. Sur une version où les bandes fréquences de fréquence inférieures à 20Hz sont fortement atténuées, les performances se réduisent de 15 \% environ\marginnote{L'oreille ne percevant pas les signaux en dessous de 50 Hz, on peut dire que le système d'apprentissage se focalise sur des composantes inaudibles pour l'être humain}.
 
-Ces deux exemples montrent combien il est difficile d'apprécier la performance d'un algorithme de traitement de données. Dans une posture particulièrement sceptique, Bob Sturm désigne tout ces algorithmes comme des "horses" potentiels \marginnote{Cette métaphore fait référence à "Clever Hans", un cheval supposément capable de compter. Une personne lui donnait une opération mathématique à résoudre, et Hans tapait du sabot au sol et s'arétait de taper quand le compte de coups de sabot correspondait à la solution de l'opération. Confronté par un protocole rigoureux, il s'est avéré que Hans n'était capable de donner la bonne réponse que si la personne qui lui posait la question connaissait la réponse. En ce sens, Hans faisait preuve d'une intelligence sensible extrêmement fine pour pouvoir détecter les subtiles modifications de posture à l'approche du bon nombre de coups de sabots qui indiquait à Hans l'approche de sa récompense, mais cette intelligence n'était assurément pas de type mathématique.}.
+Ces deux exemples montrent combien il est difficile d'apprécier la performance d'un algorithme de traitement de données. Dans une posture particulièrement sceptique, Bob Sturm désigne tout ces algorithmes comme des "horses" potentiels \marginnote{Cette métaphore fait référence à "Clever Hans", un cheval supposément capable de compter. Une personne lui donnait une opération mathématique à résoudre, et Hans tapait du sabot au sol et s'arrêtait de taper quand le compte de coups de sabot correspondait à la solution de l'opération. Confronté par un protocole rigoureux, il s'est avéré que Hans n'était capable de donner la bonne réponse que si la personne qui lui posait la question connaissait la réponse. En ce sens, Hans faisait preuve d'une intelligence sensible extrêmement fine pour pouvoir détecter les subtiles modifications de posture à l'approche du bon nombre de coups de sabots qui indiquait à Hans l'approche de sa récompense, mais cette intelligence n'était assurément pas de type mathématique.}.
 
-Néanmoins, le fait d'utiliser une corrélation fortuite entre différentes informations présentes dans les données, n'est pas forcément dommageable\cite{lagrange:hal-01635373}. Il est également extrêmement courant d'optimiser une fonction de coût donnée que l'on estime\marginnote{Pour des raisons axiomatiques concernant le type des données, ou empiriques} corrélée avec l'objectif principal. Dans la mesure. Il est par contre fondamental d'avoir conscience de ces problématiques pour être à même d'apprécier avec un regard suffisament critique les mesures de performance dérivées de tel ou tel algorithme ou protocole expérimental.
+Néanmoins, le fait d'utiliser une corrélation fortuite entre différentes informations présentes dans les données, n'est pas forcément dommageable\cite{lagrange:hal-01635373}. Il est également extrêmement courant d'optimiser une fonction de coût donnée que l'on estime\marginnote{Pour des raisons axiomatiques concernant le type des données, ou empiriques} corrélée avec l'objectif principal. Dans la mesure. Il est par contre fondamental d'avoir conscience de ces problématiques pour être à même d'apprécier avec un regard suffisamment critique les mesures de performance dérivées de tel ou tel algorithme ou protocole expérimental.
 
-On a donc vu que l'usage de données synthétiques ne permettait qu'une validation du concept, et que l'usage de données brutes doivent être encadrées avec soin et que, même si le but d'un algorithme de traitement de données est d'être capable \textit{in fine} de traiter des données brutes, le niveau de contrôle est extrêmement faible, ce qui réduit drastiquement la confiance que l'on peut avoir des métriques de performance obtenues.
+On a donc vu que l'usage de données synthétiques ne permettait qu'une validation du concept, et que l'usage de données brutes doivent être encadrées avec soin et que, même si le but d'un algorithme de traitement de données est d'être capable \textit{in fine} de traiter des données brutes, le niveau de contrôle est extrêmement faible, ce qui réduit drastiquement la confiance que l'on peut avoir des métriques de performance obtenues\marginnote{Je ne détaillerai pas ici le problème de l'annotation des données brutes qui se pose également, et qui, dans le cas de certaines tâches peut s'avérer particulièrement problématique. Deux exemples permettront de nous fixer les idées. Comment spécifier le genre d'un morceau de musique comme "" ? Comment annoter la fin d'un évènement sonore dans une scène sonore complexe ?}.
 
-Dans le but de mitiger ces problèmes, il me semble convenable d'adopter une approche intermédiaire en considérant ce que j'appelle des données "simulées".
+Dans le but de mitiger ces problèmes, il semble convenable de complémenter ces deux approches par une approche intermédiaire en considérant ce que j'appellerai des données "simulées". On verra dans la suite que, même si ces données simulées ne constituent pas une validation en soi, elles sont un outil particulièrement efficace pour une approche méthodologique mieux contrôlée, car fondée sur un questionnement scientifique.
 
+Prenons le cas de la tâche de détection d'évènements sonores dans des scènes sonores complexes. Ces scènes sonores sont composées d'évènements sonores qui peuvent être présent de manière simultanés ou non, un bruit de fond plus ou moins élevé est présent. On souhaite que le système soit capable :
+\begin{enumerate}
+  \item d'être robuste à la présence du bruit de fond, \textit{i.e.} ne pas détecter d'évènements quand il n'y a que du bruit de fond dans l'intervalle d'observation et ne pas se tromper de classes d'évènements lorsque le bruit de fond se superpose avec l'évènement  dans l'intervalle d'observation;
+  \item d'être capable de gérer la diversité intra classe de chaque classe d'évènements sonores et de type de bruit de fond,  \textit{i.e.} dans le cas de la classe "clavier d'ordinateur", le système doit être capable de gérer une grande diversité de marques de claviers et de styles de frappes
+  \item être robuste aux changements de conditions d'enregistrements,  \textit{i.e.} le type de microphone, la qualité de l'enregistrement et les propriétés de réverbération de la pièce doivent pouvoir changer sans influer sur les performances du système.
+\end{enumerate}
 
-/////////
+Evaluer ces éléments nécessite d'avoir a disposition des corpus séparés avec dans le premier cas, un niveau de bruit de fond qui augmente, dans le deuxième cas, une diversité qui augmente, et dans le troisième cas des conditions d'enregistrements qui changent. Bien entendu, la prise de son et l'annotation de scènes sonores brutes pour chacune de ces conditions expérimentales est possible mais particulièrement difficile à mettre en place pour obtenir le niveau de précision souhaité.
 
-De la cadre de notre étude sur les environnements sonores, le modèle proposé se présente comme suit :
-
-En considérant $s$, une scène composée de $z$ classes de sons, le modèle de $s$ se définit comme suit:
+Nous avons considéré un modèle de scènes sonores qui permet d'aisément contrôler ces paramètres\marginnote{Une implantation de ce modèle dédiée à l'évaluation a été réalisée en Matlab \url{}. Un outil aux fonctionnalités proches a été développé en Python par Justin Salamon \url{}.}. Le modèle proposé se présente comme suit. Pour une scène $s$ composée de $z$ classes de sons, on a :
 
 \begin{equation}
 s(n)=\sum_{i=1}^{z}p_i(n)
@@ -222,10 +225,10 @@ où, par convention, $n^i_0=u^i$ et $p_i(n)=0$ si $n>v^i$.
 
 Les paramètres du modèle sont, $\mu_a^i$, $\sigma_a^i$, $\mu_t^i$, $\sigma_t^i$, $u^i$ et $v^i$, et doivent être fixés pour chaque piste $p_i$. La figure~\ref{fig:modelSequence} offre une illustration de l'action des paramètres introduits.
 
-Pour les textures, deux distinctions sont à observer avec le modèle défini précédemment:
+Pour les bruits de fonds, deux distinctions sont à observer avec le modèle défini précédemment:
 
 \begin{enumerate}
-\item afin d'éviter toute sensation de discontinuité, deux échantillons de texture sont concaténés en considérant un recouvrement fixé, sur lequel est appliqué un fondu enchaîné (\emph{cross-fade}) à valeur d'énergie constante entre les échantillons, afin de donner l'illusion de continuité;
+\item afin d'éviter toute sensation de discontinuité, deux échantillons de texture sont concaténés en considérant un recouvrement fixé, sur lequel est appliqué un fondu enchaîné (\emph{cross-fade}) à valeur d'énergie constante entre les échantillons, afin de réduire les discontinuités;
 \item il n'y a qu'un facteur d'amplitude par piste ($A^i \textrm{ : } \mathcal{N}(\mu_a^{i},\sigma_a^{i})$), sa valeur s'appliquant à tous les échantillons.
 \end{enumerate}
 
@@ -235,8 +238,6 @@ Pour les textures, deux distinctions sont à observer avec le modèle défini pr
         \input{figures/controlParameters2.pdf_tex}
        \caption{Représentation schématisée des pistes du modèle de scènes sonores.}\label{fig:modelSequence}
 \end{figure}
-
-////////
 
 dcase 2013 \cite{stowellhal-01253912}
 
@@ -250,7 +251,7 @@ Dcase  \cite{mesa} Data augmentation
 
 importance de la question
 
-si la question est d'ordre pratique, est-ce problématique si les réponses ne sont que techniques. Non, encore faut t'il que ces réponses aient un intérêt pour la communauté. Pour cela, la poursuite d'une méthode rigoureuse d'investigation reste d'importance, mais elle ne doit pas être confondue avec une approche d'investigation scientifique qui elle se base sur une question. De la question nait un corpus d'observation qui sert ensuite de base à l'investigation. Cette investigation technique peut comporte une partie technique, mais elle reste au service.
+si la question est d'ordre pratique, est-ce problématique si les réponses ne sont que techniques. Non, encore faut t'il que ces réponses aient un intérêt pour la communauté. Pour cela, la poursuite d'une méthode rigoureuse d'investigation reste d'importance, mais elle ne doit pas être confondue avec une approche d'investigation scientifique qui elle se base sur une question. De la question nait un corpus d'observation qui sert ensuite de base à l'investigation. Cette investigation technique peut comporte une partie technique, mais elle reste au service d'un questionnement qui lui est, par essence, scientifique.
 
 modèle valeur d'étude, controle, replicabilite.
 
