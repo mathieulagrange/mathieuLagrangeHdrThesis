@@ -139,7 +139,7 @@ Dans le domaine du traitement du signal, on fait souvent la différence entre de
 Les signaux synthétiques sont, eux, totalement contrôlés. Les auteurs proposent un modèle de signal, et en utilisant ce modèle de signal pour générer des exemples, on montre que la méthode d'estimation proposée conjointement à ce modèle est effective sur ces exemples. Cela permet de faire une démonstration de faisabilité du modèle, mais n'est pas suffisante pour démontrer l'applicabilité de ce modèle à des problématiques concrètes.
 
 La méthode couramment prise est donc d'estimer ce niveau d'applicabilité
-en considérant les performances obtenues par le système en considérant des données brutes. Le principal risque de cette foi aveugle dans les résultats obtenus en utilisant les données brutes, est précisément que nous disposons souvent d'un contrôle très faible sur ces données, et ce qui à permis de les obtenir, \texit{i.e.} le processus d'aquisition, le processus d'annotation, etc.
+en considérant les performances obtenues par le système en considérant des données brutes. Le principal risque de cette foi aveugle dans les résultats obtenus en utilisant les données brutes, est précisément que nous disposons souvent d'un contrôle très faible sur ces données, et ce qui à permis de les obtenir, \textit{i.e.} le processus d'aquisition, le processus d'annotation, etc.
 
 Prenons l'exemple du calcul d'une statistique telle que la moyenne, un ensemble d'outil nous permet de valider la pertinence de cette statistique, distribution, écart à la médiane, quartiles, etc.
 
@@ -155,8 +155,7 @@ Le fait que l'on puisse reconnaitre l'ambience sonore et l'affecter à une typol
 
 Intrigué par ces excellent résultats qui contrastaient avec les résultats obtenus dans d'autres études, j'ai entrepris de répliquer ces travaux. Cette tentative de réplication, effectuée en collaboration avec les auteurs, à été fructueuse et m'a permis de comprendre que les bons résultats obtenus étaient dus au protocole expérimental\cite{lagrange2015}. Les scènes présentes dans le corpus ont été enregistrées durant une période longue (environ une heure) et découpées en tronçons d'une minute. Etant donné la stationnarité de ce type de scènes sonores en terme de composition, deux tronçons successifs sont la plupart du temps quasiment identiques en terme de contenu. Le protocole expérimental n'empêchant pas que l'algorithme d'apprentissage exploite des tronçons d'une scène donnée pour prédire le label d'un tronçon de cette même scène, le problème s'en trouvait, dans son incarnation numérique, considérablement simplifié. \marginnote{Ce phénomène est similaire à l'effet "album" en musique. Les conditions d'enregistrements (microphones, mixage, mastering) sont souvent spécifique à l'album enregistré, spécificité que les algorithmes d'apprentissage exploitent pour minimiser leur erreur de prédiction. Pour minimiser cet effet, il convient alors de ne pas permettre d'avoir des chansons d'un même album dans les corpus d'apprentissage et de test.}.
 
-
-Le scattering d'ondelettes, modèle de signal particulèrement interessant qui sera evoqué dans la Section \ref{} a été utilisé dans le cadre de la classification de genre musical. Le scattering est en charge de produire une représentation du signal sonore qui soit informative mais de faible dimensionalité. Cette représentation est ensuite utilisé par algorithme de classification supervisée prédire quel genre parmi une typologie déterminé, est associé à un morceau de musique ou une partie de ce morceau}.
+Le scattering d'ondelettes, modèle de signal particulèrement interessant qui sera evoqué dans la Section \ref{} a été utilisé dans le cadre de la classification de genre musical. Le scattering est en charge de produire une représentation du signal sonore qui soit informative mais de faible dimensionalité. Cette représentation est ensuite utilisé par algorithme de classification supervisée prédire quel genre parmi une typologie déterminé, est associé à un morceau de musique ou une partie de ce morceau.
 
 Dans une étude de réplication et d'analyse de la robustesse de système de prédiction du genre musical\cite{rodriguez2016analysing}, Rodriguez et Sturm montrent que les bonnes performances des méthodes de l'état de l'art se basent (au moins en partie) sur 1) une base de données mal structurée, et 2) la disponibilité d'informations inaudible pour l'être humain.
 
@@ -166,16 +165,16 @@ Egalement, les algorithmes d'apprentissage exploitent des informations présente
 
 Ces deux exemples montrent combien il est difficile d'apprécier la performance d'un algorithme de traitement de données. Dans une posture particulièrement sceptique, Bob Sturm désigne tout ces algorithmes comme des "horses" potentiels \marginnote{Cette métaphore fait référence à "Clever Hans", un cheval supposément capable de compter. Une personne lui donnait une opération mathématique à résoudre, et Hans tapait du sabot au sol et s'arrêtait de taper quand le compte de coups de sabot correspondait à la solution de l'opération. Confronté par un protocole rigoureux, il s'est avéré que Hans n'était capable de donner la bonne réponse que si la personne qui lui posait la question connaissait la réponse. En ce sens, Hans faisait preuve d'une intelligence sensible extrêmement fine pour pouvoir détecter les subtiles modifications de posture à l'approche du bon nombre de coups de sabots qui indiquait à Hans l'approche de sa récompense, mais cette intelligence n'était assurément pas de type mathématique.}.
 
-Néanmoins, le fait d'utiliser une corrélation fortuite entre différentes informations présentes dans les données, n'est pas forcément dommageable\cite{lagrange:hal-01635373}. Il est également extrêmement courant d'optimiser une fonction de coût donnée que l'on estime\marginnote{Pour des raisons axiomatiques concernant le type des données, ou empiriques} corrélée avec l'objectif principal. Dans la mesure. Il est par contre fondamental d'avoir conscience de ces problématiques pour être à même d'apprécier avec un regard suffisamment critique les mesures de performance dérivées de tel ou tel algorithme ou protocole expérimental.
+Néanmoins, le fait d'utiliser une corrélation fortuite entre différentes informations présentes dans les données, n'est pas forcément dommageable\cite{lagrangehal-01635373}. Il est également extrêmement courant d'optimiser une fonction de coût donnée que l'on estime\marginnote{Pour des raisons axiomatiques concernant le type des données, ou empiriques} corrélée avec l'objectif principal. Dans la mesure. Il est par contre fondamental d'avoir conscience de ces problématiques pour être à même d'apprécier avec un regard suffisamment critique les mesures de performance dérivées de tel ou tel algorithme ou protocole expérimental.
 
-On a donc vu que l'usage de données synthétiques ne permettait qu'une validation du concept, et que l'usage de données brutes doivent être encadrées avec soin et que, même si le but d'un algorithme de traitement de données est d'être capable \textit{in fine} de traiter des données brutes, le niveau de contrôle est extrêmement faible, ce qui réduit drastiquement la confiance que l'on peut avoir des métriques de performance obtenues\marginnote{Je ne détaillerai pas ici le problème de l'annotation des données brutes qui se pose également, et qui, dans le cas de certaines tâches peut s'avérer particulièrement problématique. Deux exemples permettront de nous fixer les idées. Comment spécifier le genre d'un morceau de musique comme "" ? Comment annoter la fin d'un évènement sonore dans une scène sonore complexe ?}.
+On a donc vu que l'usage de données synthétiques ne permettait qu'une validation du concept, et que l'usage de données brutes doivent être encadrées avec soin et que, même si le but d'un algorithme de traitement de données est d'être capable \textit{in fine} de traiter des données brutes, le niveau de contrôle est extrêmement faible, ce qui réduit drastiquement la confiance que l'on peut avoir des métriques de performance obtenues\marginnote{Je ne détaillerai pas ici le problème de l'annotation des données brutes qui se pose également, et qui, dans le cas de certaines tâches peut s'avérer particulièrement problématique. Deux exemples permettront de nous fixer les idées. Comment spécifier le genre d'un morceau de musique comme "Psyché Rock" de Pierre Henry ? Comment annoter la fin d'un évènement sonore dans une scène sonore complexe ?}.
 
 Dans le but de mitiger ces problèmes, il semble convenable de complémenter ces deux approches par une approche intermédiaire en considérant ce que j'appellerai des données "simulées". On verra dans la suite que, même si ces données simulées ne constituent pas une validation en soi, elles sont un outil particulièrement efficace pour une approche méthodologique mieux contrôlée, car fondée sur un questionnement scientifique.
 
 Prenons le cas de la tâche de détection d'évènements sonores dans des scènes sonores complexes. Ces scènes sonores sont composées d'évènements sonores qui peuvent être présent de manière simultanés ou non, un bruit de fond plus ou moins élevé est présent. On souhaite que le système soit capable :
 \begin{enumerate}
   \item d'être robuste à la présence du bruit de fond, \textit{i.e.} ne pas détecter d'évènements quand il n'y a que du bruit de fond dans l'intervalle d'observation et ne pas se tromper de classes d'évènements lorsque le bruit de fond se superpose avec l'évènement  dans l'intervalle d'observation;
-  \item d'être capable de gérer la diversité intra classe de chaque classe d'évènements sonores et de type de bruit de fond,  \textit{i.e.} dans le cas de la classe "clavier d'ordinateur", le système doit être capable de gérer une grande diversité de marques de claviers et de styles de frappes
+  \item d'être capable de gérer la diversité intra classe de chaque classe d'évènements sonores et de type de bruit de fond,  \textit{i.e.} dans le cas de la classe "frappe sur clavier d'ordinateur", le système doit être capable de gérer une grande diversité de marques de claviers et de styles de frappes;
   \item être robuste aux changements de conditions d'enregistrements,  \textit{i.e.} le type de microphone, la qualité de l'enregistrement et les propriétés de réverbération de la pièce doivent pouvoir changer sans influer sur les performances du système.
 \end{enumerate}
 
@@ -232,6 +231,8 @@ Pour les bruits de fonds, deux distinctions sont à observer avec le modèle dé
 \item il n'y a qu'un facteur d'amplitude par piste ($A^i \textrm{ : } \mathcal{N}(\mu_a^{i},\sigma_a^{i})$), sa valeur s'appliquant à tous les échantillons.
 \end{enumerate}
 
+Note sur la qualité acoustique qui nous poussera à investiguer des aspects de perception avec ref à la section suivante
+
 \begin{figure}[t]
         \graphicspath{{figures/}}
         \def\svgwidth{\linewidth}
@@ -239,9 +240,38 @@ Pour les bruits de fonds, deux distinctions sont à observer avec le modèle dé
        \caption{Représentation schématisée des pistes du modèle de scènes sonores.}\label{fig:modelSequence}
 \end{figure}
 
-dcase 2013 \cite{stowellhal-01253912}
+Nous avons mis en application ce modèle dans la première édition du challenge dcase\marginnote{Ce challenge, soutenu par la société IEEE ASSP, se propose de promouvoir l'activité scientifique et technique autour de la détection de scènes et d'évènements dans un contexte sonore environnemental.}. Dans ce cadre, une tâche de détection d'évènements sonores dédiée à l'approche par simulation a été proposée\cite{stowellhal-01253912} à partir d'un un corpus de scènes simulées grâce à l'outil simScene. Ce corpus utilisait des échantillons sonores et des bruits de fonds enregistrés à l'université de Queen Mary (qmul). Ce corpus sera nommée \emph{testQ}.
 
-questionnement sur la généralisation \cite{lafayhal-01111381}
+Nous avons ensuite voulu tester la capacité de généralisation de ces algorithmes, \textit{i.e.}~leur aptitude à maintenir des performances de détection similaires sur plusieurs corpus de scènes présentant des conditions expérimentales différentes. Pour ce faire, nous avons considéré un autre corpus d'échantillons sonores et de bruits de fonds  cette fois ci enregistrés à l'irccyn, Nantes. Avec la permission des auteurs des différents systèmes soumis au challenge, ces derniers sont évalués sur les corpus de scènes simulées, en utilisant les mêmes serveurs de calcul que ceux utilisés pour le challenge dcase 2013\marginnote{De nombreuses métriques sont disponibles pour évaluer ce type de système. On se concentrera ici sur la métrique $Fcw_{eb}$, une F-mesure, calculée en prenant en compte les débuts des événements, et en normalisant les résultats par classe.}.
+
+NOTE: on generait des corpus d'apprentissage ou non ?
+
+La capacité de généralisation est considérée suivant trois angles :
+\begin{enumerate}
+\item robustesse à la diversité des échantillons: évaluer la capacité de généralisation sur des corpus de scènes possédant les mêmes caractéristiques structurelles (intensité sonore des échantillons, positionnement des échantillons), mais composés d'une sélection de échantillons différents.
+\item robustesse à la diversité structurelle: évaluer la capacité de généralisation sur des corpus de scènes composés des mêmes échantillons, mais dont les caractéristiques structurelles (intensité sonore des échantillons, positionnement/espacement moyen des échantillons) diffèrent;
+\item robustesse au niveau du bruit de fond. Ce niveau est mesuré en termes relatifs, avec la mesure ebr (pour "event to background ratio"), exprimée en déciBels.
+\end{enumerate}
+
+Dans le premier cas, on considère une structure de scène de référence (correspondant aux annotations effectuées sur \emph{testQ} pour générer deux nouveaux corpus \emph{insQ}, et \emph{insI}. Le premier est généré à partir d'échantillons enregistrés à qmul, le second à partir d'échantillons enregistrés à l'irccyn. Le premier a une structure et un contenu sonore équivalent à \emph{testQ}, une certaine équivalence des performances est attendue. Comme on peut le voir sur la Figure \ref{} c'est globalement le cas, sauf pour deux méthodes qui se retrouvent avec des performances drastiquement réduites\marginnote{Une analyse d'erreur a montrée que ces changements de comportements étaient dûs à des phénomènes de sur-apprentissage\cite{lafayhal-01111381}.}, ce qui valide le protocole expérimental. Le second corpus (\emph{insI}) permet d'évaluer la capacité de généralisation aux types d'échantillons. On voit sur la Figure \ref{fig:irccyn} que, à l'exception de le système SCS, tout les autres ne sont pas capable de généraliser et se retrouvent avec des performances équivalentes à la référence ("Baseline").
+
+Dans le deuxième cas, on considère le modèle de génération de scènes précédemment décrit pour générer deux corpus avec une certaine diversité structurelle. Le premier considère des échantillons enregistrés à qmul et le second à l'irccyn. Les paramètres du modèle ($\mu_a$, $\sigma_a$, $\mu_t$, $\sigma_t$, ...) sont estimés à partir des annotations du corpus \emph{testQ}. Les résultats montrent une fiable dépendance des algorithmes à la structure temporelle des scènes analysées.
+
+Dans le troisième cas, on considère quatre corpus, avec la même structure temporelle, les mêmes échantillons sonores, mais avec un niveau relatif de bruit de fond différent. L'ebr varie de -12 dB à 6 dB, le niveau de référence (équivalent à celui mesuré sur le corpus \emph{testQ})  étant de 0 dB. Les résultats, affichés sur la Figure \ref{fig:ebr}, montrent une forte sensibilité au niveau d'ebr pour toute les systèmes, sauf pour le système SCS, doté d'un algorithme de gestion du bruit de fond particulièrement efficace.
+
+\begin{figure}[t]
+\includegraphics[width=1\columnwidth]{figures/dcase2013_1}
+\caption{Performances des systèmes évalués dans le cadre du challenge DCASE 2013 sur les corpus QMUL et IRCCYN en considérant la métrique $Fcw_{eb}$.}
+\label{fig:irccyn}
+\end{figure}
+
+\begin{figure}[t]
+\begin{center}
+\includegraphics[width=1\columnwidth]{figures/dcase2013_2}
+\caption{Performances des systèmes évalués dans le cadre du challenge DCASE 2013 sur les corpus \emph{instance-QMUL} simulés avec différents $EBR$ ($6$, $0$, $-6$ et $-12dB$).}
+\label{fig:ebr}
+\end{center}
+\end{figure}
 
 dcase 2016 controle fin de la complexité
 
@@ -249,13 +279,9 @@ analyse poussée des résultats \cite{lafayhal-01635414}
 
 Dcase  \cite{mesa} Data augmentation
 
-importance de la question
+Je terminerai par une réflexion issue d'un panel organisé lors du Workshop dcase 2018. Le constat était fait pour une large communauté de chercheur sur le fait les approches d'apprentissage profond et les méthodes ensemblistes\marginnote{Au sens ensemble de classifieurs forts.} apportent certes des performances élevées, mais finalement peu d'éléments de réflexions et compréhensions.
 
-si la question est d'ordre pratique, est-ce problématique si les réponses ne sont que techniques. Non, encore faut t'il que ces réponses aient un intérêt pour la communauté. Pour cela, la poursuite d'une méthode rigoureuse d'investigation reste d'importance, mais elle ne doit pas être confondue avec une approche d'investigation scientifique qui elle se base sur une question. De la question nait un corpus d'observation qui sert ensuite de base à l'investigation. Cette investigation technique peut comporte une partie technique, mais elle reste au service d'un questionnement qui lui est, par essence, scientifique.
-
-modèle valeur d'étude, controle, replicabilite.
-
-Etonnanement qualité sonore eprcetuelle qui sera exploiter dans le cadre de la psychologie expérimentale.
+A mon avis, si la question posée est d'ordre pratique, ce n'est pas problématique que les réponses données ne soient que techniques. Encore faut t'il que ces réponses aient un intérêt pour la communauté. Pour cela, la poursuite d'une méthode rigoureuse d'investigation reste d'importance, mais elle ne doit pas être confondue avec une approche d'investigation scientifique qui doit à mon avis, elle se baser sur une question. De la question nait un corpus d'observation qui peut servir ensuite de base à l'investigation. Cette investigation peut comporter une partie technique, mais elle reste au service d'un questionnement qui lui est, par essence, scientifique. Il est donc du devoir de celui qui propose une tâche, si il y a lieu, de réfléchir à la pertinence de cette tâche au vu d'un certain questionnement pertinent pour la communauté.
 
 \section{La synthèse pour la psychologie expérimentale}
 
