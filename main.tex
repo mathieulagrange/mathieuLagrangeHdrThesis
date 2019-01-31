@@ -23,11 +23,11 @@
 
 %\bibliographystyle{IEEETran}
 \newcites{journals,conferences,chapters,workshops,software,patents}{%
-        Revues à comité de lecture, %
-	Actes de colloques à comité de lecture, %
-	Chapitre d'ouvrage,
-        S\'eminaires,Logiciels,
-	Brevets}
+Revues à comité de lecture, %
+Actes de colloques à comité de lecture, %
+Chapitre d'ouvrage,
+S\'eminaires,Logiciels,
+Brevets}
 
 
 \newcommand{\latex}{\LaTeX\xspace}
@@ -48,37 +48,37 @@
 \providecommand{\bibname}{Bibliography}
 \providecommand{\refname}{References}
 \@ifpackageloaded{natbib}
-  {\renewcommand{\bibsection}{%
-    \@ifundefined{chapter}
-    {\subsection*{\refname \markboth{\refname}{\bibname}%
-    \addcontentsline{toc}{subsection}{\refname}}
-    }
-    {\section*{\refname \markboth{\refname}{\bibname}%
-    \addcontentsline{toc}{section}{\refname}}
-    }
-  }}
-  {\@ifundefined{chapter}
-    {\patchcmd{\thebibliography}{\section*{\refname}}{%
-      \subsection*{\refname}
-      \addcontentsline{toc}{subsection}{\refname}
-      }{}{}
-    }
-    {\patchcmd{\thebibliography}{\chapter*{\bibname}}{%
-      \section*{\refname}
-      \addcontentsline{toc}{section}{\refname}
-      }{}{}
-    }
-  }
+{\renewcommand{\bibsection}{%
 \@ifundefined{chapter}
-  {\newcommand{\bibliographies}{%
-  \section*{\bibname}
-  \if@FMB@addtotoc\addcontentsline{toc}{section}{\bibname}\fi}}
-  {\newcommand{\bibliographies}{%
-  \chapter*{\bibname}
-  \if@FMB@addtotoc\addcontentsline{toc}{chapter}{\bibname}\fi}}
+{\subsection*{\refname \markboth{\refname}{\bibname}%
+\addcontentsline{toc}{subsection}{\refname}}
+}
+{\section*{\refname \markboth{\refname}{\bibname}%
+\addcontentsline{toc}{section}{\refname}}
+}
+}}
+{\@ifundefined{chapter}
+{\patchcmd{\thebibliography}{\section*{\refname}}{%
+\subsection*{\refname}
+\addcontentsline{toc}{subsection}{\refname}
+}{}{}
+}
+{\patchcmd{\thebibliography}{\chapter*{\bibname}}{%
+\section*{\refname}
+\addcontentsline{toc}{section}{\refname}
+}{}{}
+}
+}
+\@ifundefined{chapter}
+{\newcommand{\bibliographies}{%
+\section*{\bibname}
+\if@FMB@addtotoc\addcontentsline{toc}{section}{\bibname}\fi}}
+{\newcommand{\bibliographies}{%
+\chapter*{\bibname}
+\if@FMB@addtotoc\addcontentsline{toc}{chapter}{\bibname}\fi}}
 \makeatother
 
-\title{}
+\title{Modélisation long terme du signal sonore}
 
 \author{Mathieu Lagrange}
 
@@ -88,24 +88,19 @@
 
 \tableofcontents
 
+\input{notice}
 
+\input{themes}
 
-  \input{notice}
+\input{modeles}
 
-  \input{themes}
+\input{meta}
 
-  \input{modeles}
+\input{academic}
 
-  \input{meta}
+\bibliographystyle{plainnat}
+\nobibliography{biblio/journals,references}
 
-  \input{academic}
+\input{biblio}
 
-
-  \bibliographystyle{plainnat}
-  \nobibliography{biblio/journals,references}
-
-  \chapter{Notice bibliographique}
-
-  \input{biblio}
-
-  \end{document}
+\end{document}
