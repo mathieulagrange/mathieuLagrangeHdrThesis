@@ -14,13 +14,7 @@
 \usepackage{multibib}
 \usepackage{mcode}
 %\usepackage{a4wide}
-
-\definecolor{violet}{rgb}{0.5, 0, 0.8}
-\definecolor{green}{rgb}{0.2 ,0.5, 0.7}
-\definecolor{blue}{rgb}{0.3, 0 ,0.6}
-
-
-
+\graphicspath{{figures/}}
 %\bibliographystyle{IEEETran}
 \newcites{journals,conferences,chapters,workshops,software,patents}{%
 Revues à comité de lecture, %
@@ -29,18 +23,8 @@ Chapitre d'ouvrage,
 S\'eminaires,Logiciels,
 Brevets}
 
-
 \newcommand{\latex}{\LaTeX\xspace}
 \newcommand{\explanes}{\textsf{expLanes}\xspace}
-
-%\usepackage[pdftex,
-%             linktocpage,%
-%             bookmarks=true,%
-%             colorlinks=true,%
-%             linkcolor=violet,%
-%             citecolor=green,%
-%             urlcolor=blue,%
-%             ]{hyperref}
 
 \usepackage{etoolbox}
 
@@ -79,28 +63,21 @@ Brevets}
 \makeatother
 
 \title{Modélisation long terme du signal sonore}
-
 \author{Mathieu Lagrange}
 
 \begin{document}
 
 %\maketitle
-
 \tableofcontents
 
 \input{notice}
-
 \input{themes}
-
 \input{modeles}
-
-\input{meta}
-
+\input{methode}
 \input{academic}
 
 \bibliographystyle{plainnat}
-\nobibliography{biblio/journals,references}
-
+\nobibliography{biblio/journals,biblio/conferences,bib}
 \input{biblio}
 
 \end{document}
