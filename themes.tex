@@ -69,14 +69,16 @@ Dans le principe de formation de sources de l'asa, on peut considérer que le pr
 
 \begin{marginfigure}
   \includegraphics{ibm}.
-  \caption{Masque binaire idéal d'un mélange d'une source percussive et d'une source harmonique. La partie jaune (structure verticale) correspond à la source percussive. La partie bleue}
+  \caption{Masque binaire idéal d'un mélange d'une source percussive (batterie) et d'une source harmonique (piano). La partie noire (structure verticale) correspond à la source percussive. La partie blanche (structure horizontale) correspond à la source harmonique.}
 \end{marginfigure}
 
-La figure \ref{fig:ibm}, montre le cas du masque binaire idéal dans le cas d'un mélange de deux sources sonores. Les zones vertes correspondent aux zones du plan temps/fréquence où la première source est dominante. Inversement, les zones rouges correspondent aux zones du plan temps/fréquence où la seconde source est dominante. Ces masques sont dits idéaux parce qu'ils sont calculés grâce à la comparaison avec les spectrogrammes des sources avant mélange. Le masque binaire idéal est donc communément utilisé comme référence dite \og oracle \fg, car elle constitue une borne supérieure.
+La figure \ref{fig:ibm}, montre le cas du masque binaire idéal dans le cas d'un mélange de deux sources sonores. Ces masques sont dits idéaux parce qu'ils sont calculés grâce à la comparaison avec les spectrogrammes des sources avant mélange. Le masque binaire idéal est donc communément utilisé comme référence dite \og oracle \fg, car elle utilise des connaissances dont le système casa  que nous cherchons à évaluer ne dispose pas.
 
-Séduit par l'aspect neuro-inspiré et la grande diversité algorithmique des approches CASA, j'ai  poursuivi pendant quelques années cet effort de recherche en proposant plusieurs méthodes de segmentation du spectrogramme basés sur des algorithmes de regroupement d'objets, ou "clustering" en Anglais.
+\subsection{Algorithmes de partitionnement}
 
-Le problème du regroupement peut se formaliser comme un problème de partitionnement de graphe. Soit un ensemble d'objets $o_n$, un nombre de classes $C$ et une notion de dissimilarité entre objets $d(o_i, o_j)$, le propos de ces algorithmes est de trouver une partition de cet ensemble en $K$ classe qui minimise la dissimilarité intra classe moyenne aux classes. On notera
+Séduit par l'aspect neuro-inspiré et la grande diversité algorithmique des approches casa, j'ai  investi mon effort de recherche dans ce domaine en proposant plusieurs méthodes de segmentation du spectrogramme basés sur des algorithmes de regroupement d'objets, ou "clustering" en Anglais.
+
+Le problème du regroupement peut se formaliser comme un . Soit un ensemble d'objets $o_n$, un nombre de classes $C$ et une notion de dissimilarité entre objets $d(o_i, o_j)$, le propos de ces algorithmes est de trouver une partition de cet ensemble en $K$ classe qui minimise la dissimilarité intra classe moyenne aux classes. On notera
 
 $N$ is the number of objects to cluster and $C$ the number of clusters; $N_c$ is the number of objects in cluster $c$, and $\mu_c$ is the centroid of that cluster. $z_{cn}$ is the membership function, whose value is $1$ if object $o_n$ is in class $c$, $0$ otherwise. In the folowing equations, $\mu_c$ and $o_n$ are assumed to be column vectors of equal dimension.
 
@@ -99,6 +101,8 @@ MISSING A CHERCHER DANS PLOS
 
 Un grand nombre d'approches algorithmiques sont disponible pour résoudre ce problème. L'algorithme K-means constitue la référence pour les problèmes de grande taille en nombre d'objets et d'un nombre de classe petit devant le nombre d'objet. La condition d'utilisation est que les objets doivent être représentables sous forme de vecteurs dans $mathcal{R}^n$,  car son efficacité réside dans le fait que la fonction de cout se base sur un produit scalaire. Les relations casa étant pas exprimables sous forme de produit scalaire, cet algorithme n'est pas adapté.
 
+On peut problème de partitionnement de graphe
+
 L'algorithme des "normalized cuts", popularisé en traitement d'image \cite{shi2000normalized}, permet de résoudre le problème du regroupement d'objets dans le cas
 
 Pour la segmentation d'image, la relation utilisée dans consiste en une couleur avec contrainte de localité :
@@ -107,6 +111,8 @@ w() &=& \frac{}{} \\
 &&
 \label{eq:shi}
 \end{eqnarray}
+
+\subsection{Propositions}
 
 Dans une première étude menée à l'Université de Victoria en collaboration avec George Tzanetakis, j'ai considéré le problème suivant. Soit une représentation sinusoïdale à court terme d'un signal sonore\marginnote{Une représentation sinusoïdale à court terme peut être considérée ici comme une version compacte du spectrogramme, voir la Section \nameref{sec:sct} pour plus de détails.}, comment définir mathématiquement quelques relations asa et les combiner entre elles ? On se fixe ici pour objectif d'isoler la partie mélodique d'un enregistrement musical polyphonique. Dans le cas d'une mélodie, la relation la plus importante consiste en la relation harmonique qui lie les différents composantes de la source mélodique, voir Figure \ref{}.
 
@@ -157,6 +163,8 @@ Segmentation du morceau de Deep Purple \emph{Smoke on the Water} (\emph{Machine 
 La Figure~\ref{fig:smoke} présente la segmentation de l'introduction du célèbre morceau de
 Deep Purple \emph{Smoke on the Water}. La même phrase musicale est répétée deux fois avec quelques variations d'interprétation. Des motifs émergent à partir du niveau 4 où les motifs élémentaire du riff sont révélés.
 
+\subsection{Constat}
+
 Ces années d'exploration des approches casa m'a permis de parcourir de larges champs d'expertise scientifiques, de l'informatique au traitement du signal, de la psycho-percpetion aux neurosciences, mais cela a surtout été pour moi l'occasion de mieux saisir certaines problématiques fondamentales en sciences des données.
 \begin{enumerate}
   \item Comment dévoiler la structure intrinsèque aux données à partir d'observations bruitées ?
@@ -165,7 +173,7 @@ Ces années d'exploration des approches casa m'a permis de parcourir de larges c
 \end{enumerate}
 Ces questions continuent de nourrir mes recherches car les solutions auxquelles j'ai contribué ne sont, à mon sens, en aucun cas satisfaisantes. La traduction algorithmique de contraintes de structuration est un art difficile, car elle nécessite un effort important pour fiabiliser les algorithmes. La gestion de l'interaction entre les différentes contraintes de structuration l'est aussi. Enfin, la notion de mémoire est ici exploitée de manière implicite en considérant la redondance d'information dans la scène observée. Avec les horizons temporels considérés à l'époque pour rendre l'approche tractable, cette approche s'est révélé insuffisant.  %L'utilisation d'un schéma alterné dans l'algorithme alc a permit de mieux contrôler cette interaction mais cela reste au fond arbitraire.
 
-Au delà de ces problématiques propres aux approches casa, les approches de séparation de sources se basent généralement sur un traitement en deux temps : 1) représentation du signal audio sous forme de spectrogramme, 2) segmentation. On verra dans le chapitre \ref{}, dédié aux modèles de sons les limites ce que cela impose à la performance de ces approches.
+Au delà de ces problématiques propres aux approches casa, les approches de séparation de sources se basent généralement sur un traitement en deux temps : 1) représentation du signal audio sous forme de spectrogramme, 2) segmentation. On verra dans le chapitre \ref{sec:modeles}, dédié aux modèles de sons les limites ce que cela impose à la performance de ces approches.
 
 \section{La synthèse pour l'écoute artificielle} \label{sec:dcase}
 
