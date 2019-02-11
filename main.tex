@@ -57,6 +57,17 @@
 \if@FMB@addtotoc\addcontentsline{toc}{chapter}{\bibname}\fi}}
 \makeatother
 
+\newcommand{\lnameref}[1]{%
+\bgroup
+\let\nmu\MakeLowercase
+\nameref{#1}\egroup}
+\newcommand{\fnameref}[1]{%
+\bgroup
+\def\nmu{\let\nmu\MakeLowercase}%
+\nameref{#1}\egroup}
+
+\newcommand{\nmu}{}
+
 \title{Modélisation long terme du signal sonore}
 \author{Mathieu Lagrange}
 

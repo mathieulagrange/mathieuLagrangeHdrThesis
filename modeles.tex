@@ -1,6 +1,6 @@
-\chapter{Modélisation des signaux sonores} \label{sec:modeles}
+\chapter{\nmu Modélisation  de signaux sonores} \label{sec:modeles}
 
-\section{Introduction}
+\section{ \nmu Introduction }
 
 On considèrera ici qu'un signal sonore est un signal réel discret, échantillonné à une fréquence de 40 kHz. Ce signal peut provenir d'une version quantifié, mais on supposera que le pas de quantification est suffisamment réduit pour introduire une dégradation qui soit négligeable. On notera ce signal $s[n]$, il peut être observé sur un intervalle de temps donné, correspondant à un certain nombre d'échantillons temporels $s[n], 0<n<N-1$ souvent appelé intervalle d'observation, support ou champ réceptif. Je n'évoquerai pas ici la version continue du signal, l'expression $f(x)$ devant donc se comprendre comme l'application d'une fonction plus ou moins bien définie à un signal $x$ ou une représentation particulière de ce signal.
 
@@ -29,7 +29,7 @@ Retrieved from Ladefoged (2006), A Course In Phonetics http://www.cog.jhu.edu/co
 
 phonemes.jpg
 
-\section{Typologie sonore} \label{sec:typologie}
+\section{ \nmu Typologie sonore} \label{sec:typologie}
 
 Il est bien entendu que même si l'on souhaite que notre modèle soit versatile, on ne souhaite pas nécessairement que notre modèle soit capable de modéliser tout les signaux possibles. On supposera donc que certaines propriétés d'invariance existent, cad que même si une seconde de son échantillonnée à 44kHz est représenté dans $R^44000$, les paramètres du modèles\marginnote{Ou variables latentes, ou encore code.} varient dans un espace de dimension bien plus réduit. J'adhère à cette supposition pour de simples raisons d'observations physiques. En prenant l'exemple du signal de parole, il est bien entendu que le son produit est le résultat d'une interaction complexe entre un ensemble d'éléments qui ont une certaine plasticité. Il en reste néanmoins évident que les déformations possibles de l'ensemble de ces éléments sont bornées.
 
@@ -43,9 +43,9 @@ On s'attachera ici à présenter succintement de grandes familles de signaux son
   \item environnementaux : vent faisant siffler des câbles / gouttes de pluie
 \end{itemize}\footnote{Cette typologie est arbitraire, mais suffisante pour les besoins du propos. Elle est grossièrement ordonnée par période d'intérêt important de la communauté de traitement du signal, le traitement de la parole ayant connu un essor dans les années 1970, la bio acoustique un peu plus tard, la musique dans les années 2000 et les signaux environnementaux dans les années 2010.}
 
-On remarquera que les exemples donnés pour chaque classe sont choisis à dessein. Sans rentrer dans les détails, on notera que l'on retrouve certains sons portant une structuration fréquentielle forte et d'autres une structuration temporelle forte et que la plupart des sons naturels sont une composition de ces deux types de structures. Il est donc néccessaire pour atteindre nos objectifs de disposer d'outils performants pour modéliser conjointement ces deux types de structuration de l'énergie sur le plan temps/fréquence.
+On remarquera que les exemples donnés pour chaque classe sont choisis à dessein. Sans rentrer dans les détails, on notera que l'on retrouve certains sons portant une structuration fréquentielle forte et d'autres une structuration temporelle forte et que la plupart des sons naturels sont une composition de ces deux types de structures. Il est donc nécessaire pour atteindre nos objectifs de disposer d'outils performants pour modéliser conjointement ces deux types de structuration de l'énergie sur le plan temps/fréquence.
 
-\section{Approches temps / fréquence} \label{sec:tf}
+\section{ \nmu Temps / fréquence} \label{sec:tf}
 
 Lorsque l'on cherche à décrire un son, deux dimensions émergent : l'intensité et la hauteur. Ces deux dimensions étant respectivement intimement liés au volume et à la fréquence, il est normal de constater que la plupart des modèles de son permettent de manipuler ces deux dernières quantités et ce, de manière dynamique \textit{i.e.} au cours du temps.
 
@@ -123,7 +123,7 @@ En tout état de cause, dans le domaine de l'audio, la grande majorité des syst
 
 On considère donc ici que dans l'intervalle d'observation, une source sonore est dominante et que le type de source est structurée soit de manière temporelle soit de manière spectrale. Dans le cas d'un contenu polyphonique avec une structure saillante à la fois en temps et en fréquence, cette approche se révèle bien entendu inefficace. La définition d'une méthode d'analyse/synthèse multirésolution reste donc, avec les éléments présentés ici, un problème encore largement ouvert.
 
-\section{Modélisation sinusoïdale court terme}  \label{sec:sct}
+\section{ \nmu Sinusoïdes à court terme}  \label{sec:sct}
 
 Lorsque l'on observe un spectrogramme un instrument de musique tonal (FIGURE), il apparait clairement que l'énergie est concentrée en un ensemble réduit de zones fréquentielles. On dit que ces signaux sont parcimonieux en fréquence. C'est, dans une certaine mesure le cas de la parole\marginnote{En tout cas, il est clair que la \og charge sémantique \fg est portée par cette partie du signal de la parole. En supposant que le récepteur (l'oreille) est capable de décomposer les sons sur l'axe fréquentiel, il fait sens écologiquement de procéder ainsi. Comme le montre les exemples de "sine-wave speech", quelques sinusoïdes (3 ou 4) judicieusement placées aux zones de résonances formantiques suffisent à rendre le signal intelligible \url{http://webpages.mcgill.ca/staff/Group2/abregm1/web/downloadstoc.htm\#23}.}.
 
@@ -167,7 +167,7 @@ A ce titre, on se trouve donc avec un compromis de modèle favorisant la fidéli
 
 Ces approches, comme la transformée en ondelettes, ont trouvés application plutôt dans le domaine du traitement de l'image, où le caractère hautement non stationnaire des transitions entre objets sont très mal approximé par des fonctions régulières comme celle de Fourier.
 
-\section{Approches sinusoïdales long terme}  \label{sec:slt}
+\section{ \nmu Sinusoïdes à long terme}  \label{sec:slt}
 
 \cite{mcaulay}
 
@@ -201,7 +201,7 @@ Certaines approches, dites hybrides, consistant à combiner un modèle long term
 
 EXPLICITER PLUS LES RAISONS ?
 
-\section{Approches temps / fréquence / modulations}  \label{sec:tfm}
+\section{ \nmu Temps / fréquence / modulations}  \label{sec:tfm}
 
 S'il est clair que la décomposition fréquentielle est de première importance, la manière dont l'énergie module au court du temps au sein de ces bandes de fréquences l'est également \marginnote{On peut citer pour exemple le son éminement désagréable d'un moteur thermique deux temps (type mobylette) qui part le mouvement mécanique induit une modulation typique.}. L'importance perceptive de ce type de modulations est particulièrement bien exemplifiée par un exemple sonore produit par John Chowning où des sinusoides d'amplitude et fréquence au début constantes sont ensuite modulées par un signal synthétique composé d'une composante sinusoidale (pour le vibrato) et d'une composante stochastique. Ce signal modulant est ensuite mis à l'échelle pour chaque harmonique. Il est important de considérer que même si ce signal modulant a été judicieusement choisi, il n'est pas issu d'un processus d'estimation à partir de signaux réels.
 
@@ -247,7 +247,7 @@ Nous avons complétés cette investigation en considérant une tâche pertinente
 
 En terme d'architecture de décomposition, le scattering suit une organisation de type réceptive, fréquence d'abord et temps ensuite. On verra dans la partie suivante un modèle prenant une approche de type source / filtre donc temps et fréquence ensuite et qui est à ce titre plus directement tourné vers la synthèse.
 
-\section{Approches modales}
+\section{ \nmu Synthèse modale}
 
 En se référant plutôt aux processus physiques de production sonore, les approches modales permettent de proposer des méthodes efficaces pour des outils de synthèse dédiés.
 
@@ -274,7 +274,7 @@ On trouve avec ce type de modèle deux propriétés d'importance. En premier lie
 Même si ce type d'approche est utilisée de manière assez marginale, elle garde à mon sens un intérêt historique pour mettre en perspective les approches modernes décrites dans la suite.
 
 
-\section{Conclusion}
+\section{ \nmu Conclusion}
 
 POSER LES PROBLEMATIQUES
 

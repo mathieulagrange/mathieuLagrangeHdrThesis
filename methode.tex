@@ -1,46 +1,41 @@
-\chapter{La méthode scientifique en sciences des données} \label{sec:methode}
+\chapter{ \nmu La méthode scientifique en sciences des données} \label{chap:methode}
 
-%\section{Un constat critique}
+%Dans les communautés scientifiques auxquelles j'ai eu le plaisir de contribuer et plus largement dans ce que l'on appelle aujourd'hui \og les sciences des données \fg, j'ai pu observer des phénomènes récurrents qui sont, à mon sens, néfastes pour le bon accroissement de la connaissance.
 
-Dans les communautés auxquelles j'ai contribuer (Mir) et plus largement dans ce que l'on appelle aujourd'hui \og les sciences des données \fg, j'ai pu observer des phénomènes récurrents qui sont, à mon sens, néfastes pour le bon accroissement de la connaissance.
-
-Cette quinzaine d'années de tâtonnement et d'exploration de différentes approches algorithmiques en sciences des données m'ont amener a identifier deux problèmes récurrents qui se retrouvent pour la plupart des productions\marginnote{Y compris les miennes.} :
+Cette quinzaine d'années de tâtonnement et d'exploration de différentes approches algorithmiques en sciences des données m'ont amener à identifier deux problèmes qui se retrouvent dans de nombreuses productions de recherche\footnote{Y compris celles auxquelles j'ai contribué.} :
 \begin{enumerate}
-  \item l'absence de formalisme expérimental canonique et rigoureux qui permet d'orienter et de justifier son effort de recherche à peu de frais;
-  \item l'ajustement aux données, que ce soit par des approches algorithmiques de types série de peignes, ou de méta paramétrisation qui amène le plus souvent à la production de données quantitatives coïncidentes et des conclusions qualitatives dont les bases expérimentales sont fragiles.
+  \item l'absence de formalisme expérimental canonique et rigoureux; ce qui permet d'orienter et de justifier son effort de recherche à peu de frais;
+  \item l'ajustement aux données, que ce soit par des approches algorithmiques de types série de peignes, ou de méta paramétrisation; ce qui amène le plus souvent à la production de données quantitatives coïncidentes et des conclusions qualitatives dont les bases expérimentales sont fragiles.
 \end{enumerate}
 
-empilage de données
-approche inductive pure
-discussion qualitative permettant de mettre en lumière certaines observations lors de la phase expérimentale
+\marginnote{Il n'est pas question d'accuser l'ensemble de la communauté de \og piper les dés \fg de manière ouverte. Ce sont des problèmes profonds qui ont leurs sources dans le fait que la recherche est effectuée par des être humains dans un contexte social donné, des moyens qui sont ce qu'ils sont et qui sont alloués de la manière qu'ils sont alloués. Par exemple, la manière qu'un chercheur doit se comporter pour être reconnu et gérer sa carrière dans le contexte actuel me paraît particulièrement problématique. J'aborderai cette question dans la section dédiée à \lnameref{sec:pairs}.}
 
-\marginnote{A titre critique, Bob Sturm poursuit depuis plusieurs années un travail \og d'auscultation \fg  des travaux effectués en mir et organise un séminaire intitulé "Horse" en référence à Clever Hans (edition 2014 \url{} et 2018 \url{}).}
-
-Ce n'est bien entendu pas le cas de toutes les productions scientifiques et il n'est pas question d'accuser la communauté de \og piper les dés \fg de manière ouverte. Ce sont des problèmes qui ont leurs sources dans la manière qu'un chercheur peut être reconnu dans le contexte actuel, problématique que j'aborderai en Section \ref{}.
-
-On peut par exemple citer le travail remarquable de YLan Boureau dans le domaine hautement compétitif du traitement de l'image \cite{boureau2010learning}. Son étude, basée sur un protocole expérimental rigoureux étudie l'importance des différentes composants d'une chaîne de traitement, en particulier les étapes de codage et d'union. "While much research has been devoted to devising
+Certains chercheurs font néanmoins l'effort de se conformer à un protocole expérimental rigoureux, pour mener une étude quantitative complète d'une chaîne de traitement donnée. J'aimerais citer ici pour exemple le travail remarquable de YLan Boureau dans le domaine du traitement de l'image \cite{boureau2010learning}. Son étude étudie rigoureusement l'importance des différentes composants d'une chaîne de traitement, en particulier les étapes de codage et d'union. La conclusion de cette étude tient en deux phrases :  "While much research has been devoted to devising
 the best possible coding module, our results show that with
 linear classification, switching from average to max pooling
 increases accuracy more than switching from hard quantization to sparse coding. These results could serve as guidelines for the design of future architectures."
 
-Dans une première approche, on peut considérer qu'il est nécessaire de pouvoir comparer simplement et efficacement de nombreuses approches différentes dans un même formalisme expérimental.
+Pour bien comprendre l'importance de cette conclusion, il est important de placer un peu de contexte. Nous sommes en 2010, le terme de parcimonie fait couler beaucoup d'encre et de nombreuses approches utilisant ce terme comme étendard sont proposées. Cet engouement est le résultat d'une combinaison complexe de biais cognitifs, de structures sociales et idéologiques, qui amènent incidemment à concentrer l'effort de recherche d'une communauté vers ce qui semble être la bonne marche à suivre. Ce fait étant considéré comme acquis, combien d'études ne font même plus l'effort de se comparer
 
-Les deux questions qui se posent alors, auquelles je vais essayer de répondre à la lumière de ma participation à l'organisation de challenges
+Les travaux expérimentaux de synthèse comme celui de YLan sont rares, car ils sont extrêmement coûteux en temps et finalement assez peu \fg excitants \og, pour celle ou celui qui conduit l'étude, mais surtout pour la communauté à qui ces travaux sont destinés. Avoir à remettre en question ses orientations de recherche, ses inclinaisons, ses biais ne sont pas une tâche facile, ni agréable\footnote{Ceci peut amener des difficultés considérable pour l'expression du chercheur. Je citerai ici pour exemple la réponse d'un éditeur associé d'un journal donné à la soumission d'une étude de réplication effectuée par Bob Sturm et ses collègues; réplication d'une étude publiée dans ce même journal. La réponse disait en essence que cette étude de réplication était rigoureuse et non criticable sur le fond, mais que le journal ne souhaitait pas publier des études qui critiquait des études publiées dans ce même journal.}.
 
- mais est ce suffisant ?
+On peut donc supposer qu'il est nécessaire de pouvoir comparer simplement et efficacement de nombreuses approches différentes dans un même formalisme expérimental. Les deux questions qui se posent alors, auxquelles je vais essayer de répondre à la lumière de ma participation à l'organisation de challenges, sont les suivantes :
+\begin{itemize}
+  \item est ce suffisant ?
+  \item quelles sont les précautions à prendre ?
+\end{itemize}
 
-Et est-ce finalement si important ?
+Pour répondre rapidement, je dirais que non, ce n'est pas suffisant, car la question du sens est toujours présente et doit être traitée avec des outils méthodologiques qui relèvent du questionnement scientifique. Sans prendre conscience de ce dernier point, on risque de perdre toute opportunité de faire croître la connaissance.
 
+Les challenges tels qu'ils sont pratiqués aujourd'hui sont néanmoins une avancée incontestable par rapport à l'approche \fg mon problème, ma base de données, mon algorithme, ma métrique \og qui peu avoir son intérêt dans des phases de défrichage thématique mais qui ne peuvent être raisonnablement considérée une fois la problématique bien identifiée. Malheureusement, la mise en compétition met en exergue l'approche \og la fin justifie les moyens \fg \footnote{Ce qui, au vu des objectifs d'un challenge, est tout à fait de bon aloi.}.
 
+Pour répondre à la deuxième question, je prendrais l'exemple du mir où il est troublant de constater qu'une infime partie des publications font état de travaux effectués conjointement avec des musicologues. Or, qui connait mieux la matière que ceux qui la questionne depuis des centaines d'années ? Certes, un dialogue est nécessaire car les deux communautés sont assez disjointes, autant en terme d'objectifs, que de vocabulaire et de temporalité\footnote{Cette dernière étant, dans mon expérience, la plus difficile à mitiger lorsque q'un chercheur en ingéniérie cherche à collaborer avec des spécialistes de la perception ou de la cognition}. Il est à mon avis néanmoins critique pour l'avenir de toute discipline portant sur la science des données de ne pas oublier d'ou viennent ces données et que des savoirs vivants sont à notre disposition\footnote{Pour combien de temps encore ?} qui peuvent nous permettre de poser des questions qui ont du sens et d'apporter des réponses qui auront encore un intérêt dans une dizaine d'année.
 
-Les challenges tels qu'ils sont pratiqués aujourd'hui sont une certes une avancées par rapport à l'approche 'mon problème, ma base de données, mon algorithme, ma métrique' qui peu avoir son intérêt dans des phases de défrichage thématique mais qui ne peuvent être raisonablement considérée une fois la problématique bien identifiée. Ils  ne sont en aucun cas satisfaisant pour une démarche expérimentale rigoureuse visant à répondre à une problématique scientifique. La principale raison étant la domination de l'approche \og ingénieur \fg qui vise à répondre à une application pratique par un procédé plus ou moins automatisable et non d'améliorer les connaissances dans un domaine scientifique bien identifié\marginnote{La domination actuelle des méthodes ensembliste montrent pour la limite de la technique de mise en compétition qui est un élément neccéssaire à l'accroissement structuré de la connaissance mais oh combien non suffisant.}.
+Au vu de ces arguments, la question de savoir si la conduite d'un protocole expérimental rigoureux suffit à amener de la connaissance de qualité, la réponse est négative. Elle constitue néanmoins une condition nécessaire pour laquelle un bagage solide de connaissances étaient à ma disposition pour améliorer la qualité de mes productions.
 
+Il m'est donc apparu comme important, au delà de mon implication dans l'interface sciences des données / perception, cognition, de revenir aux bases de la méthode scientifique pour étudier la faisabilité d'une recherche expérimentale qui soit plus rigoureuse.
 
-Pour répondre à la deuxième question, je prendrais l'exemple du mir où il est troublant de constater qu'une infime partie des publications font état de travaux effectués conjointement avec des musicologues. Or, qui connais mieux la matière que ceux qui la questionnent depuis des centaines d'années ? Certes, un dialogue est nécessaire car les deux communautés sont assez disjointes, autant en terme d'objectifs, que de vocabulaire et de temporalité\marginnote{Cette dernière étant, dans mon expérience, la plus difficile à mitiger lorsque q'un chercheur en ingéniérie cherche à collaborer avec des spécialistes de la perception ou de la cognition}. Il est à mon avis néanmoins critique pour l'avenir de toutes disciplines portant sur la science des données de ne pas oublier d'ou viennent ces données et que des savoirs vivants sont à notre disposition\marginnote{Pour combien de temps encore ?} qui peuvent nous permettre de poser des questions qui ont du sens et d'apporter des réponses qui auront encore un intérêt dans une dizaine d'année.
-
-Au vue de toutes ces considérations, il m'est apparu comme important, au delà de mon implication dans l'interface sciences des données / perception, cognition, de revenir aux bases de la méthode scientifique pour étudier la faisabilité d'une recherche expérimentale qui soit plus rigoureuse.
-
-\section{Méthodologie expérimentale en sciences des données} \label{sec:xp}
+\section{ \nmu Méthodologie expérimentale en sciences des données} \label{sec:xp}
 
 La définition d'une problématique scientifique pour étudier un sujet particulier est régie dans ses grandes lignes par la méthode scientifique. Issue de pionniers comme Francis bacon (cite novum organum), elle permet de faire une étape importante dans la qualité de notre appréhension du monde. L'apport des penseurs grecs et romains qui est parvenu jusqu'a nous porte essentiellement sur la nature et la définition de la vérité et finalement assez peu sur la bonne manière de l’obtenir.
 
@@ -65,25 +60,27 @@ Cette traduction contient pour moi deux éléments importants : 1) son exposé s
 
 Reste donc que c'est l'observation minutieuse et l'analyse rigoureuse qui va régir cette prise de décision. Il est donc capital de disposer de protocoles solides pour fonder nos expériences. Il est pour cela important de prendre conscience que la manière dont on considère une pratique impacte nécessairement cette pratique. Cet aller et retour entre (i) pratique expérimentale et (ii) observation critique de cette pratique, constitue pour moi un fondement de la recherche moderne.
 
-Cela s'incarne très bien dans la relation encadré / encadrant, par exemple dans le cas d'une thèse de doctorat. Le doctorant, poussé par la force de la jeunesse dispose d'un élan conséquent et d'un enthousiasme qui lui permet d'avancer malgré les nombreuses déconvenues qui sont le quotidien du chercheur. Sans vision globale de l'état des connaissances de la communauté et sans vision critique, de haut niveau, du travail effectué, il y a de fortes chances pour que les échecs soient les conclusions de ses efforts. C'est la fonction importante de l'encadrant que de mettre en perspective le travail effectué et de le placer judicieusement pour ajouter de la connaissance dans la communauté visée.
+Cela s'incarne très bien dans la relation encadré / encadrant, par exemple dans le cas d'une thèse de doctorat. Le doctorant, poussé par la force de la jeunesse dispose d'un élan conséquent et d'un enthousiasme qui lui permet d'avancer malgré les nombreuses déconvenues qui sont le quotidien du chercheur. Sans vision globale de l'état des connaissances de la communauté et sans vision critique, de haut niveau, du travail effectué, il y a de fortes chances pour que les échecs soient les conclusions de ces efforts. C'est la fonction importante de l'encadrant que de mettre en perspective le travail effectué et de le placer judicieusement pour ajouter de la connaissance dans la communauté visée.
 
-Néanmoins, il est à mon sens important que l'encadrant soit, sur d'autres projets l'encadré et qu'il garde un contact avec l'expérimentation, car sans cela, ses connaissances critiques resterons en arrière par rapport aux avancées de la pratique expérimentale\marginnote{C'est l'apanage des chercheurs confirmés que de pouvoir tenir ces deux rôles. Je trouve personnellement plus irche et plus efficace de mettre en place des structures d'encadrement informelles lorsque je suis en charge d'une investigation.}.
+Néanmoins, il est à mon sens important que l'encadrant soit, sur d'autres projets l'encadré et qu'il garde un contact avec l'expérimentation, car sans cela, ses connaissances critiques resterons en arrière par rapport aux avancées de la pratique expérimentale\footnote{C'est l'apanage des chercheurs confirmés que de pouvoir tenir ces deux rôles. Je trouve personnellement plus riche et plus efficace de mettre en place des structures d'encadrement informelles lorsque je suis en charge d'une investigation.}.
 
-C'est bien connu, acquérir des connaissances sur une pratique peut se faire en pratiquant, si possible avec des personnes reconnues dans cette pratique. Il est sans doute vain de vouloir formaliser complètements ces savoirs, néanmoins, ne serais ce que peut être pour mieux les maîtriser et les transmettre, je me suis intéressé a ce problème pendant plusieurs années.
+C'est bien connu, acquérir des connaissances sur une pratique peut se faire en pratiquant, si possible avec des personnes reconnues dans cette pratique. Il est sans doute vain de vouloir formaliser complètements ces savoirs, néanmoins, ne serais ce que peut être pour mieux les maîtriser et les transmettre, je me suis intéressé à ce problème pendant plusieurs années.
 
-Je discuterai ici dans le cadre de la méthode scientifique moderne qui se définit comme un processus itératif et cyclique dans lequel nos connaissances sont continuellement révisées à l'aide d'un processus comprenant les composants suivants:
+Plaçons nous dans le cadre de la méthode scientifique moderne. Elle constitue un processus itératif et cyclique dans lequel nos connaissances sont continuellement révisées à l'aide d'un algorithme constitué des composants suivants:
 \begin{itemize}
-  \item \textbf{Caractérisations}: observations, définitions et mesures
-  \item \textbf{Hypothèses}: explications théoriques ou hypothèses d'observations
-  \item \textbf{Prédictions} : raisonnement inductif et déductif à partir de l'hypothèse ou de la théorie
-  \item \textbf{Expériences} : évaluation de la pertinence de chacun des éléments précédents
+  \item \textbf{Caractérisations}: observations, définitions et mesures;
+  \item \textbf{Hypothèses}: explications théoriques ou hypothèses d'observations;
+  \item \textbf{Prédictions} : raisonnement inductif et déductif à partir de l'hypothèse ou de la théorie;
+  \item \textbf{Expériences} : évaluation de la pertinence de chacun des éléments précédents.
 \end{itemize}
 
-Il est difficile de produire des recommandations qui soient pertinente pour l'intégralité des étapes de la méthode scientifique. En effet, les trois premiers composants relèvent de l'état des connaissances dans la communauté et des \og directions \fg thématiques prises par cette communauté. Chaque communauté scientifique doit réfléchir aux axes à privilégier, à l'allocation de ressources, etc. J'ai donc fait le choix de consacrer ma réflexion à la partie expérimentale de la méthode scientifique, les autres relevant plus d'un choix ou d'une inclinaison culturelle et politique\marginnote{Je n'exclu pas qu'il soit possible de produire des recommandations dans ces domaines, je pense simplement n'être pas assez expérimenté pour cela. La tentative serait pourtant d'intérêt, car de nombreuses personnes se retrouvent aujourd'hui à des postes décisionnaires sans nécessairement être assuré du recul et des connaissances suffisantes pour faire des choix éclairés, ou au moins explicitement motivés.}.
+Il est difficile de produire des recommandations qui soient pertinente pour l'intégralité des étapes de la méthode scientifique. En effet, les trois premiers composants relèvent de l'état des connaissances dans la communauté et des \og directions \fg thématiques prises par cette communauté. Chaque communauté scientifique doit réfléchir aux axes à privilégier, à l'allocation de ressources, etc. J'ai donc fait le choix de consacrer ma réflexion à la partie expérimentale de la méthode scientifique, les autres relevant plus d'un choix ou d'une inclinaison culturelle et politique\marginnote{Je n'exclue pas qu'il soit possible de produire des recommandations dans ces domaines, je pense simplement n'être pas assez expérimenté pour cela. La tentative serait pourtant d'intérêt, car de nombreuses personnes se retrouvent aujourd'hui à des postes décisionnaires sans nécessairement être assuré du recul et des connaissances suffisantes pour faire des choix éclairés, ou au moins explicitement motivés.}.
 
 On dispose par contre pour la partie expérimentale d'un ensemble assez solide et fourni de méthodes et d'outils pour mener à bien cette étape. Ces connaissances nous proviennent essentiellement de la science du vivant (médecine et biologie) où les conclusions tirées des études effectuées ont, depuis longtemps, un impact important pour l'humanité. L'impact grandissant qu'auront les sciences des données dans les décennies qui viennent, nous incitent fortement à faire de même.
 
-Même si la tâche de systématisation est moins ambitieuse pour le composant expérimental, il est bien entendu illusoire de pouvoir proposer à la communauté un environment d'expérimentation qui soit suffisament flexible pour permettre toutes les expériences utiles à la communauté. C'est néanmoins par ce biais que j'ai approché la question, en suivant le paradigme du \textsl{faire pour apprendre}. Durant plusieurs années j'ai donc développé l'outil \textsl{expLanes}\cite{explanes} que j'utilise avec bonheur pour mes besoins propres et ceux des personnes que j'encadrent. Cette plateforme expérimentale est basée sur une formalisation que je présenterai ici. Elle n'est probablement pas la plus élégante qui puisse être conçue, mais elle a l'immense avantage d'être rompue à la pratique, où les besoins en expressivité sont dominants.
+Même si la tâche de systématisation est moins ambitieuse pour le composant expérimental, il est bien entendu illusoire de pouvoir proposer à la communauté un environment d'expérimentation qui soit suffisamment flexible pour permettre toutes les expériences utiles à la communauté. C'est néanmoins par ce biais que j'ai approché la question, en suivant le paradigme du \textsl{faire pour apprendre}. Durant plusieurs années j'ai donc développé l'outil \textsl{expLanes}\cite{explanes} que j'utilise avec bonheur pour mes besoins propres et ceux des personnes que j'encadrent. Cette plateforme expérimentale est basée sur une formalisation que je présenterai ici. Elle n'est probablement pas la plus élégante qui puisse être conçue, mais elle a l'immense avantage d'être rompue à la pratique, où les besoins en expressivité sont dominants.
+
+READ UP TO HERE
 
 image d p s
         o
@@ -130,7 +127,7 @@ L'étape d'exécution va produire un ensemble généralement grand d'observation
 
 La maîtrise du temps de calcul est un point crucial de toute planification expérimentale. Cela se fait par le contrôle du temps de calcul nécessaire pour une condition expérimentale donnée, ainsi que le contrôle du nombre de conditions expérimentales.
 
-\section{Explanes} \label{sec:explanes}
+\section{ \nmu Explanes} \label{sec:explanes}
 
 Le projet expLanes est né d'une frustration grandissante de l'auteur au sujet 2) du coût de dévelopement nécessaire à la mise en place d'un protocole expérimental de qualité, 2) l'absence de canons dans ce domaine, et 3) du risque élevé d'erreurs durant l'implantation de ce protocole expérimental compromettant gravement la validité des résultats obtenus. La version actuelle, écrite pour l'environnement Matlab, a nécéssité trois de dévelopement et est maintenant stabilisée et utilisé en production.
 
@@ -180,12 +177,9 @@ La plateforme expLanes permet grace a ces modules de proposer des interfaces nor
 
 \input{shapeExample}
 
-traduire l'exemple des figures geométriques
+\footnote{Cet exemple étant a visée pédagogique, le lecteur trouvera des exemples plus avancés sur le site de la plateforme expLanes. La plupart de mes productions scientifiques s'accompagnent d'une publication de l'expérimentation expLanes qui a permis de générer les données, comme ce travail de réplication\cite{lagrange2015}.}
 
-
-\marginnote{Cet exemple étant a visée pédagogique, le lecteur trouvera des exemples plus avancés sur le site de la plateforme expLanes. La plupart de mes productions scientifiques s'accompagnent d'une publication de l'expérimentation expLanes qui a permi de générer les données, comme ce travail de réplication \cite{lagrange2015}.}
-
-\section{La revue par les pairs} \label{sec:pairs}
+\section{\nmu La revue par les pairs} \label{sec:pairs}
 
 Outil indispensable à la communauté scientifique, elle comporte néanmoins des risques pour le chercheur, c'est en effet à ce moment que les fruits de son travail sont exposés, à la critique, à l'utilisation abusive, ... C'est aussi une formidable opportunité pour voir son travail servir de base pour la recherche future.
 
