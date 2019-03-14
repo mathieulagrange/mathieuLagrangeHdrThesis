@@ -23,14 +23,14 @@ Dans la communauté traitement du signal, on parle souvent de modèle paramétri
 
 Précisons maintenant l'intervalle temporel dénommé par \og long terme \fg. Cela désigne pour moi une durée à partir de laquelle le signal sonore ne peut plus raisonnablement être considérée comme stationnaire.
 
-De par nos connaissances sur les propriétés physiques de l'organe phonatoire, il est par exemple commun de considérer que le signal de parole est localement stationnaire sur un intervalle de 25 ms. Comme on peut le voir sur la Figure \ref{fig:speech}, il est bien entendu que dès que l'on considère des consonnes, ou lorsque la prosodie évolue de manière conséquente, le signal sonore produit par l'organe vocal n'est plus stationnaire. Il me paraît donc plus juste de motiver ce choix par l'assertion suivante : \fg il est raisonnable d'approximer le signal de parole avec un modèle stationnaire par morceaux à partir du moment où ces morceaux sont d'une durée inférieure à 25ms \og.
+De par nos connaissances sur les propriétés physiques de l'organe phonatoire, il est par exemple commun de considérer que le signal de parole est localement stationnaire sur un intervalle de 25 ms. Comme on peut le voir sur la Figure \ref{fig:speech} montrant des spectrogrammes de vocalisations humaines\cite{ladefoged2014course}, il est bien entendu que dès que l'on considère des consonnes, ou lorsque la prosodie évolue de manière conséquente, le signal sonore produit par l'organe vocal n'est plus stationnaire. Il me paraît donc plus juste de motiver ce choix par l'assertion suivante : \og il est raisonnable d'approximer le signal de parole avec un modèle stationnaire par morceaux à partir du moment où ces morceaux sont d'une durée inférieure à 25ms \fg.
 
 \begin{marginfigure}
   \includegraphics[width=\textwidth]{phonemes.jpg}
-  \caption{Spectrogrammes de vocalisations humaines tirés de \cite{ladefoged2014course}.} % Issue de l'ouvrage "A Course In Phonetics" de Ladefoged publié en 2006,  http://www.cog.jhu.edu/courses/325-f2004/ladefoged/course/chapter8/figure8.html
+  \caption{Spectrogrammes de vocalisations humaines.} % Issue de l'ouvrage "A Course In Phonetics" de Ladefoged publié en 2006,  http://www.cog.jhu.edu/courses/325-f2004/ladefoged/course/chapter8/figure8.html
 \end{marginfigure}
 
-La dénomination \og long terme\og  étant dépendante du degré de stationarité du signal étudié, il n'est donc pas possible de fixer une durée pour tout type de signaux sonores à partir de laquelle la dénomination \og long terme \fg est appropriée. On considérera néanmoins dans les études discutées dans ce document qu'un intervalle de temps  \og long terme \fg désigne un intervalle de temps supérieur ou égal à la seconde.
+La dénomination \og long terme \fg  étant dépendante du degré de stationarité du signal étudié, il n'est donc pas possible de fixer une durée pour tout type de signaux sonores à partir de laquelle la dénomination \og long terme \fg est appropriée. On considérera néanmoins dans les études discutées dans ce document qu'un intervalle de temps  \og long terme \fg désigne un intervalle de temps supérieur ou égal à la seconde.
 
 \section{ \nmu Typologie sonore} \label{sec:typologie}
 
@@ -74,7 +74,7 @@ Les paramètres d'amplitude et de fréquence de cette composante s'estiment ais�
 \end{eqnarray}
 avec
 \begin{equation}
-  M = \argmin_m | S_s[m] |.
+  M = \argmax_m | S_s[m] |.
 \end{equation}
 
 Dans le cas de plusieurs sinusoïdes, on remplacera le max de l'équation \ref{eq:sin_toy} par une sélection de maxima dans le spectre de puissance et on considèrera l'usage d'une fenêtre de type co-sinusoïdale (hamming, hann, ...) pour améliorer la localité fréquentielle de la transformée \cite{harris1978use}. En effet, considérer le signal sur un intervalle de temps fixé par la largeur de la trame revient implicitement à fenêtrer le signal par une fenêtre rectangulaire qui a des propriétés spectrales non désirables. On observe sur la Figure \ref{fig:hanning} qu'avec des fenêtres cosinusoidales, le lobe principal s'élargit, d'où une perte locale de résolution, mais permet de réduire considérablement l'importance des lobes secondaires, ce qui s'avère indispensable dans un contexte multi composantes.
@@ -105,11 +105,11 @@ Pour palier au caractère non stationnaire à long terme de la plupart des signa
 \begin{equation}
 X[m, t] = \sum_{n = - \infty}^{\infty} x[n] w[n-t] e^{\frac{-2 j  \pi m n}{N}}
 \end{equation}
-En prenant le spectre de magnitude de la TFCT, on obtient le bien connu spectrogramme, un outil de manipulation et de visualisation qui trouve son utilité dans de très nombreux domaines d'application. L'espoir ici est que les erreurs de modélisation des non stationarités du signal seront négligeables du fait du faible support temporel des fenêtres sur lesquels on applique la DFT. \footnote{Dans le cas classique où les fenêtres se recouvrent de moitié, on peut utiliser la MDCT pour conserver un échantillonnage critique \cite{princen1986analysis}.} 
+En prenant le spectre de magnitude de la TFCT, on obtient le bien connu spectrogramme, un outil de manipulation et de visualisation qui trouve son utilité dans de très nombreux domaines d'application. L'espoir ici est que les erreurs de modélisation des non stationarités du signal seront négligeables du fait du faible support temporel des fenêtres sur lesquels on applique la DFT. \footnote{Dans le cas classique où les fenêtres se recouvrent de moitié, on peut utiliser la MDCT pour conserver un échantillonnage critique \cite{princen1986analysis}.}
 
 En considérant la TFCT, il est alors possible de construire un estimateur \og spectral \fg de la position temporelle de notre dirac :
 \begin{equation}
-\hat{n_d} = \argmax{t} \sum_m X(m, t)
+\hat{n_d} = \argmax_t \sum_m X(m, t)
 \end{equation}
 A condition d'utiliser une fenêtre \fg à rampe \og, on peut améliorer la précision temporelle de cet estimateur en réduisant le recouvrement entre fenêtres. La encore, il s'agit d'une amélioration de la précision et non de la résolution. Seule la réduction de l'intervalle d'observation permettant de résoudre la position temporelle de deux diracs proches.
 
@@ -142,7 +142,7 @@ parler de stabilite à la déformation mel et redressement implicite
 
 lewicki ??
 
-Ceci pourrait expliquer pourquoi cette transformée à plutôt pris son essor dans le domaine du traitement d'image, où les discontinuités sont beaucoup plus fortes que pour les signaux sonores. Chaque contour d'un objet amène une discontinuité importante dans l'espace couleur, qui, dans le cas de la reconnaissance apporte des éléments d'interprétation très importants, et, dans le cas du codage, se doit d'être représenté en détail, sous peine d'engendrer des artéfacts de type \og lissage \fg très pénalisant.}
+Ceci pourrait expliquer pourquoi cette transformée à plutôt pris son essor dans le domaine du traitement d'image, où les discontinuités sont beaucoup plus fortes que pour les signaux sonores. Chaque contour d'un objet amène une discontinuité importante dans l'espace couleur, qui, dans le cas de la reconnaissance apporte des éléments d'interprétation très importants, et, dans le cas du codage, se doit d'être représenté en détail, sous peine d'engendrer des artéfacts de type \og lissage \fg très pénalisant.
 
 Une seconde, finalement peut être plus déterminante, peut avoir trait à l'interprétabilité et à la manipulabilité de la transformée. L'interprétation du spectrogramme est intuitive et permet une analyse fine du contenu spectral d'un signal audio, ceci avec peu d'expertise. L'interprétation du scaleogram (l'équivalent pour la transformée en ondelettes) reste bien. En ce qui concerne la manipulabilité, l'échantillonage non régulier en temps et en fréquence ne simplifie pas l'expression des transformations que l'ont souhaitent généralement opérer (transposition, étirement, ...).
 
