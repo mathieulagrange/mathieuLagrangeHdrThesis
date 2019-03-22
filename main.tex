@@ -5,7 +5,7 @@
 \usepackage[T1]{fontenc}
 %\usepackage[applemac]{inputenc}
 \usepackage[french]{babel}
-\usepackage{euscript,amsmath,amssymb,amsfonts,amsthm,epsfig,subfigure,color}
+\usepackage{euscript,amsmath,amssymb,amsfonts,amsthm,epsfig,color}
 \usepackage{latexsym}
 \usepackage{graphicx}
 \usepackage{tikz,pgf}
@@ -25,7 +25,7 @@
 
 \DeclareMathOperator*{\argmax}{argmax}
 \DeclareMathOperator*{\argmin}{argmin}
-
+%
 \makeatletter
 \providecommand{\bibname}{Bibliography}
 \providecommand{\refname}{References}
@@ -60,6 +60,7 @@
 \if@FMB@addtotoc\addcontentsline{toc}{chapter}{\bibname}\fi}}
 \makeatother
 
+% \newcommand{\lnameref}[1]{\nameref{#1}}
 \newcommand{\lnameref}[1]{%
 \bgroup
 \let\nmu\MakeLowercase
@@ -84,9 +85,9 @@
 \input{modeles}
 \input{methode}
 \input{academic}
-
+%
 \bibliographystyle{plainnat}
-\nobibliography{biblio/journals,biblio/conferences,bib}
+\nobibliography{biblio/strings,biblio/journals,biblio/conferences,bib}
 \input{biblio}
 
 \end{document}
