@@ -1,0 +1,27 @@
+
+\begin{center}
+\begin{tikzpicture}[node distance=3cm]
+\node (1) [stepBlock]
+{\textbf{generate}
+\nodepart{two}\tabular{@{}l}
+\texttt{nbClasses} \\
+\texttt{nbDimensions} \\
+\texttt{spread} \\
+\endtabular
+
+\nodepart{three}\tabular{@{}l}
+\texttt{nbRealizations} = 5\\
+\texttt{nbElementsPerClass} = 10\\
+\endtabular};
+\node (2) [stepBlock, right=of 1]
+{\textbf{compute}
+\nodepart{two}\tabular{@{}l}
+\texttt{distance} \\
+\endtabular
+
+\nodepart{three}\tabular{@{}l}
+\endtabular};
+\draw[obsArrow]   (2.south) -- (2.south) node[midway,text width=3cm,text centered,below] {\textit{map\\precision}} ;
+\draw[stepArrow]   (1.east) -- (2.west) node[midway,text width=3cm,text centered,below] {\textbf{class\\elements}} ;
+\end{tikzpicture}
+\end{center}                                                                                                                                                         
