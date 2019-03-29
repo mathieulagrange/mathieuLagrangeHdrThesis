@@ -1,9 +1,9 @@
 \chapter{ \nmu La méthode scientifique en sciences des données} \label{chap:methode}
 
 
-Le canon en matière de méthodologie pour l'étude d'un sujet particulier nous est offert par la méthode scientifique. Issue de pionniers comme Francis bacon\cite{bacon1878novum}, elle permet, par son bon usage, de faire une étape importante dans la qualité de notre appréhension du monde.
+Le canon en matière de méthodologie pour l'étude d'un sujet particulier nous est offert par la méthode scientifique. Issue de pionniers comme Roger Bacon\cite{bacon1878novum}, elle permet, par son bon usage, de faire une étape importante dans la qualité de notre appréhension du monde.
 
-Si l'on cherche à remonter plus loin dans le passé, il est remarquable de constater que l'apport des penseurs grecs et romains qui est parvenu jusqu'à nous porte essentiellement sur la nature et la définition de la vérité et finalement assez peu sur la bonne manière de l’obtenir. On trouve par contre des éléments en Orient sur cette période, comme le rapporte ce dialogue attribué à Bouddha et un de ses disciples \marginnote{ Question : "Maître, comment savoir si quelque chose est vrai ou faux ? \\
+Si l'on cherche à remonter plus loin dans le passé, il est remarquable de constater que l'apport des penseurs grecs et romains qui est parvenu jusqu'à nous porte essentiellement sur la nature et la définition de la vérité et finalement assez peu sur la bonne manière de l’obtenir. On trouve par contre des éléments en Orient sur cette période, comme le rapporte ce dialogue attribué à Bouddha et un de ses disciples \marginnote{Question : "Maître, comment savoir si quelque chose est vrai ou faux ? \\
 Comment savoir ce qu'il faut croire ?" \\
 Réponse : "Ne croyez pas en quelque chose simplement parce que
 vous l'avez entendu. \\
@@ -71,119 +71,106 @@ Plaçons nous dans le cadre de la méthode scientifique moderne. Elle constitue 
   \item \textbf{Hypothèses} : explications théoriques ou hypothèses d'observations;
   \item \textbf{Prédictions} : raisonnement inductif et déductif à partir de l'hypothèse ou de la théorie;
   \item \textbf{Expériences} : évaluation de la pertinence de chacun des éléments précédents.
+  \item \textbf{Revue} : mise à disposition  de la communauté des ressources nécessaires à la compréhension et la capacité de réplication des expériences.
 \end{itemize}
 
 Il est difficile de produire des recommandations qui soient pertinente pour l'intégralité des étapes de la méthode scientifique. En effet, les trois premiers composants relèvent de l'état des connaissances dans la communauté et des \og directions \fg thématiques prises. Chaque communauté scientifique doit réfléchir aux axes à privilégier, à l'allocation de ressources, etc. J'ai donc fait le choix de consacrer ma réflexion à la partie expérimentale de la méthode scientifique, les autres relevant plus d'un choix ou d'une inclinaison culturelle et politique\marginnote{Je n'exclue pas qu'il soit possible de produire des recommandations dans ces domaines, je pense simplement n'être pas assez expérimenté pour cela. La tentative serait pourtant d'intérêt.}.
 
 On dispose par contre pour la partie expérimentale d'un ensemble assez solide et fourni de méthodes et d'outils pour mener à bien cette étape. Ces connaissances nous proviennent essentiellement de la science du vivant (médecine et biologie) où les conclusions tirées des études effectuées ont, depuis longtemps, un impact important pour l'humanité. L'impact grandissant qu'auront les sciences des données dans les décennies qui viennent, nous incitent fortement à faire de même.
 
+Même si la tâche de systématisation est moins ambitieuse pour le composant expérimental, il est bien entendu illusoire de pouvoir proposer à la communauté un environment d'expérimentation qui soit suffisamment flexible pour permettre toutes les expériences utiles à la communauté. C'est néanmoins par ce biais que j'ai approché la question, en suivant le paradigme du \textsl{faire pour apprendre}. Durant plusieurs années j'ai donc développé l'outil \explanes \marginnote{\includegraphics{logoExpLanes}\\\url{http://mathieulagrange.github.io/explanes}} que j'utilise au quotidien pour mes besoins propres et ceux des personnes que j'encadrent. Cette plateforme expérimentale est basée sur une formalisation que je présenterai ici. Elle n'est probablement pas la plus élégante qui puisse être conçue, mais elle a l'avantage d'être rompue à la pratique, où les besoins en expressivité sont dominants.
 
-Même si la tâche de systématisation est moins ambitieuse pour le composant expérimental, il est bien entendu illusoire de pouvoir proposer à la communauté un environment d'expérimentation qui soit suffisamment flexible pour permettre toutes les expériences utiles à la communauté. C'est néanmoins par ce biais que j'ai approché la question, en suivant le paradigme du \textsl{faire pour apprendre}. Durant plusieurs années j'ai donc développé l'outil \textsl{expLanes}\marginnote{\includegraphics{logoExpLanes}\\\url{http://mathieulagrange.github.io/expLanes}} que j'utilise au quotidien pour mes besoins propres et ceux des personnes que j'encadrent. Cette plateforme expérimentale est basée sur une formalisation que je présenterai ici. Elle n'est probablement pas la plus élégante qui puisse être conçue, mais elle a l'avantage d'être rompue à la pratique, où les besoins en expressivité sont dominants.
-
-\input{expStep1}
-image d p s
-        o
+\input{exp/expStep1}
 
 En sciences des données comme dans d'autres domaines, le principe est d'étudier la sortie $s$ d'un processus $p$ en fonction de certaines données d'entrée $d$. On souhaite que $s$ soit la meilleure possible, en fonction d'un ensemble de critères mesurables, que l'on appellera ici des \textsl{observations} ($o$).
 
 A des fins de reproducibilité, on supposera que $d$ est pérenne, \textit{i.e.} n'est pas modifié par $p$. $s$ et $o$ sont non volatils, \textit{i.e.} stockés sur disque. $p$ peut éventuellement être segmenté en plusieurs étapes de traitement, qui appliquées de manière séquentielle, permettent de produire le même résultat ($s_2=s$ et $o_2=o$).
 
-\input{expStep2}
-%image d p_1 s_1 p_2 s_2
-%         o_1     o_2
+\input{exp/expStep2}
 
-Ce découpage peut se faire de manière analytique en considérant l'architecture algorithmique de $p$. Néanmoins, en pratique, ce découpage se fait de manière à optimiser le temps nécessaire à la production de $s$ et $o$.
+Ce découpage peut se faire de manière analytique en considérant l'architecture algorithmique de $p$. En pratique, ce découpage se fait de manière à optimiser le temps nécessaire à la production de $s$ et $o$. En effet, le but de la découpe en sous tâches est de réduire le temps de calcul associé à la production de $s$ et $o$. Choisir de segmenter en deux étapes dépend d'un compromis entre le temps de calcul nécessaire à la production de $s_1$ et $o_1$ et leurs accès. En effet, si le temps nécessaire pour stocker et rapatrier $s_1$ et $o_1$ est supérieur au temps de calcul nécessaire à leur production, ce découpage n'est pas pertinent.
 
 Le but de l'expérimentation est la confrontation de plusieurs alternatives concernant l'architecture de $p$. Nous nommerons \textsl{facteur}, un élément de design de $p$. Chacun de ces facteurs peut prendre plusieurs valeurs, que nous nommerons \textsl{modalités}. Nous nommerons également \textsl{condition expérimentale} l'ensemble des modalités nécessaires à la  paramétrisation de $p$. Pour déterminer la condition menant à la meilleure solution, l'exploration d'un plan expérimental est pour cela nécessaire. néanmoins, dès que l'étude dépasse la trivialité, le coût d'exécution du plan complet, \textit{i.e.} toutes les conditions expérimentales, devient prohibitif.
 
-Il convient alors de judicieusement choisir les conditions qui nous permettent de maximiser notre connaissances de l'influence des différents facteurs, et en particulier leurs interactions. En effet, supposer que tout les facteurs sont indépendants permet de linéariser l'exploration des conditions. Malheureusement, cette indépendance est rarement complètement vérifiée de manière expérimentale. Il convient alors de savoir juger ce degré d'interaction pour faire des choix éclairés.
+Il convient alors de judicieusement choisir les conditions qui nous permettent de maximiser notre connaissances de l'influence des différents facteurs, et en particulier leurs interactions. En effet, supposer que tout les facteurs sont indépendants permet de linéariser l'exploration des conditions en considérant un plan expérimental en étoile. Malheureusement, cette indépendance est rarement complètement vérifiée de manière expérimentale. Il convient alors de savoir juger ce degré d'interaction pour faire des choix éclairés. On peut pour cela utiliser des plans à facteurs réduits suivi d'une analyse de corrélations pour identifier l'importance de chaque facteur ainsi que les corrélations éventuelles entre facteurs.
 
-Plan a facteurs anova, etc
+Considérons un plan expérimental avec 4 facteurs $f_1$, $f_2$, $f_3$, $f_4$ ayant chacun 10 modalités ${1, 2, ..., 10}$ et un processus ayant une sortie $s=f_1*f_2+f_3+\mathbb{N}$, où $\mathbb{N}$ désigne une valeur aléatoire issue d'une loi normale standard. On considère pour simplifier ici que la sortie constitue notre observation $o=s$. Déterminer "à l'aveugle"\footnote{En considérant le processus computationel comme une boîte noire comme c'est souvent le cas.} la meilleure condition expérimentale par l'exploration du plan complet va nécessiter l'évaluation de $10^4=10000$ conditions. On cherche donc à réduire ce nombre d'évaluation nécessaire. Pour cela, on va réduire le nombre de modalités pour chaque facteur aux deux extrémums. L'exploration de ce plan expérimental va donc nécessiter l'évaluation de $2^4 = 16$ conditions expérimentales. Une analyse factorielle multivariée va permettre d'identifier l'importance des différents facteurs ainsi que leurs interactions et indique\marginnote{sans surprise}, une interaction entre les facteurs $f_1$ et $f_2$ et une influence nulle de $f_4$. Cette connaissance nous permet de déterminer la meilleure condition avec $2^4+10^2+10=126$ évaluations.
+
+\begin{margintable}
+\begin{tabular}{ccccc}
+  & $f_1$ & $f_2$ & $f_3$ & $f_4$ \\
+$f_1$  &  + & + & & \\
+$f_2$  & + & + & & \\
+$f_3$  & & & + & \\
+$f_4$  & & & & \\
+\end{tabular}
+\caption{Analyse de variance du plan d'expérience réduit. Le signe $+$ indique une valeur-p inférieure à $.05$.}
+\label{tab:anova}
+\end{margintable}
 
 Une autre technique consiste à effectuer l'intégralité du plan expérimental mais en simplifiant le problème à résoudre, souvent en réduisant la taille de $d$ (nombres d'exemples ou dimensions). Cette approche est risquée car elle peut amener à des choix de conception algorithmique qui ne généralisent pas correctement si le jeu de données réduit n'est pas représentatif\marginnote{Condition difficile à vérifier en pratique.}.
 
-La littérature en factorial design
-
-exemple du designOfExperiment \marginnote{Voir la documentation de expLanes pour une mise en pratique de cet exemeple}
-
 \subsection{Les étapes de l'expérimentation}
 
-On considérera que l'expérimentation se compose de trois grandes étapes :
+La poursuite d'une expérimentation peut de décomposer en trois grandes étapes :
 \begin{enumerate}
-  \item \textbf{le design} : conception et implantation de $p$, mise en place du plan expérimental, paramétrisation de l'environnement d'execution, execution de tests de conformité
+  \item \textbf{la conception} : conception et implantation de $p$, mise en place du plan expérimental, paramétrisation de l'environnement d'exécution, exécution de tests de conformité
   \item \textbf{l'exécution} : exécution des conditions expérimentales choisies
-  \item \textbf{la réduction} : conversion des observations générer par chaque paramétrisation
+  \item \textbf{la réduction} : conversion des observations générées par chaque condition expérimentale
 \end{enumerate}
 
-Comme tout processus computationel, on peut mesurer l'accès aux ressources en terme de
-\begin{itemize}
-  \item calcul
-  \item d'accès disque
-\end{itemize}
+Chacune de ces étapes a ses besoins propres en terme de ressources. L'étape de design nécessite une capacité élevée d'interaction avec l'implantation de $p$. Il est souhaitable que $p$ puisse être exécuté localement, éventuellement avec une version réduite de $d$ pour assurer au maximum la qualité du développement de $p$ avant l'étape d'exécution et un cycle d'essai / modification qui soit le plus réduit possible.
 
-local / distant
+L'étape d'exécution a pour but de réaliser la plus grande partie possible du plan expérimental demandé. L'interaction avec $p$ étant alors minimale, on peut déporter le calcul sur des machines distantes. Des possibilités d'analyse \textit{a posteriori} du déroulement de l'exécution de cette étape sont cruciales. En effet, même avec une implantation de $p$ vérifiée et validée, il est rare que cette implantation ait le comportement souhaité pour toutes les conditions expérimentales. Il est donc crucial que cela n'impacte pas le bon déroulement des autres conditions et pouvoir accéder facilement aux conditions expérimentales qui mettent en défaut l'implantation courante de $p$.
 
-Chacune de ces étapes a ses besoins propres en terme de ressources. L'étape de design nécessite une capacité élevée d'interaction avec $p$. Il est souhaitable que $p$ puisse être exécuté localement, éventuellement avec une version réduite de $d$ pour assurer au maximum la qualité du développement de $p$ avant l'étape d'exécution.
+L'étape d'exécution va produire un ensemble généralement grand d'observations qu'il sera nécessaire de réduire pour produire un ensemble de données réduit permettant de nous informer sur le comportement de $p$ lorsqu'il est soumis à $d$. Même si le nombre d'observations est trop grand pour être appréhendé directement pour un être humain, on supposera que le volume de données est suffisamment faible pour pouvoir être manipulé localement.
 
-L'étape d'exécution a pour but de réaliser la plus grande partie possible du plan expérimental demandé. L'interaction avec $p$ étant alors minimale, on peut déporter le calcul sur des machines distantes. Des possibilités d'analyse de l'exécution de cette étape sont cruciales pour optimiser le temps nécessaire a ce que cette étape.
+%La maîtrise du temps de calcul est un point crucial de toute planification expérimentale. Cela se fait par le contrôle du temps de calcul nécessaire pour une condition expérimentale donnée, ainsi que le contrôle du nombre de conditions expérimentales.
 
-L'étape d'exécution va produire un ensemble généralement grand d'observations qu'il sera necessaire de réduire pour produire un ensemble de données réduit permettant de nous informer sur le comportement de $p$ lorsqu'il est soumis à $d$. Même si le nombre d'observations est trop grand pour être apréhender directement pour un être humain, on supposera que le volume de données est suffisament faible pour pouvoir être manipuler localement.
+\section{\nmu expLanes} \label{sec:explanes}
 
-La maîtrise du temps de calcul est un point crucial de toute planification expérimentale. Cela se fait par le contrôle du temps de calcul nécessaire pour une condition expérimentale donnée, ainsi que le contrôle du nombre de conditions expérimentales.
+Le projet \explanes est né d'une frustration grandissante de l'auteur au sujet 2) du coût de développement nécessaire à la mise en place d'un protocole expérimental de qualité, 2) l'absence de canons dans ce domaine, et 3) du risque élevé d'erreurs durant l'implantation de ce protocole expérimental compromettant gravement la validité des résultats obtenus. La version actuelle, écrite pour l'environnement Matlab, a nécessité trois ans de développement et est maintenant stabilisée et utilisé en production.
 
-\section{ \nmu Explanes} \label{sec:explanes}
-
-Le projet expLanes est né d'une frustration grandissante de l'auteur au sujet 2) du coût de dévelopement nécessaire à la mise en place d'un protocole expérimental de qualité, 2) l'absence de canons dans ce domaine, et 3) du risque élevé d'erreurs durant l'implantation de ce protocole expérimental compromettant gravement la validité des résultats obtenus. La version actuelle, écrite pour l'environnement Matlab, a nécéssité trois de dévelopement et est maintenant stabilisée et utilisé en production.
-
-Je présenterai cette plateforme expLanes à des fins d'illustration des concepts introduits precedemment et pour introduire des éléments nécessaire à la présentation des choix aritecturaux présentés ci après\marginnote{Pour des informations plus complètes, la documentation est dipsonible sur le site web dédié : \url{}.}.
+Je présenterai cette plateforme à des fins d'illustration des concepts déjà introduits et pour introduire des éléments nécessaire à la présentation des choix architecturaux présentés ci après.
 
 \subsection{Architecture}
 
-Le principe d'expLanes est de fournir un environnement complet permettant d'aisément mettre en place un protocole expérimental destiner à répondre à des questionnements relevants des sciences des données. En particulier, il allège et systématise certaines étapes incontournables de ce type de protocole de manière à accélérer le processus de production, réduire les risques d'erreurs, et faciliter la maintenance à long terme.
+Le principe d'\explanes est de fournir un environnement complet permettant d'aisément mettre en place un protocole expérimental destiné à répondre à des questionnements relevants des sciences des données. En particulier, il allège et systématise certaines étapes incontournables de ce type de protocole de manière à accélérer le processus de production, réduire les risques d'erreurs, et faciliter la maintenance à long terme.
 
 Son architecture logicielle se compose de quatre composants principaux :
 \begin{enumerate}
-  \item un module de commande
-  \item un module de planification
-  \item un module d'exécution
-  \item un module de réduction
+  \item un module de \textbf{commande}
+  \item un module de \textbf{planification}
+  \item un module d'\textbf{exécution}
+  \item un module de \textbf{réduction}
 \end{enumerate}
 
-Le module de commande permet de configurer l'environnement logiciel et matériel dans lequel sera exécuté la commande transmise par l'utilisateur. Toutes les commandes disponibles sont présentes à l'état statique dans un fichier de configuration qui est spécifique à chacun des utilisateurs. On peut, par l'intermédiaire de l'interpréteur modifier les valeurs de ces commandes ou en ajouter d'autres. Au sein du code de chaque étape de l'expérimentation, cette configuration est disponible via l'objet \texttt{config}.
+Le module de \textbf{commande} permet de configurer l'environnement logiciel et matériel dans lequel sera exécuté la commande transmise par l'utilisateur. Toutes les commandes disponibles sont présentes à l'état statique dans un fichier de configuration qui est spécifique à chacun des utilisateurs. On peut, par l'intermédiaire de l'interpréteur modifier les valeurs de ces commandes ou en ajouter d'autres. Au sein du code de chaque étape de l'implantation du processus, cette configuration est disponible via l'objet \texttt{config}.
 
-Le module de planification permet de gérer le plan d'expérience. A partir d'un fichier de description de ce plan, il génère efficacement une version manipulable. L'utilisateur peut alors aisément sélectionner les conditions expérimentales qu'il souhaite exécuter ou visualiser grâce à un mécanisme de masquage. Supposons un plan expérimental composé de 4 facteurs de 4 modalités chacune, le masque suivant $${2 0 1}$$ spécifie que la commande associée doit s'appliquer aux conditions expérimentales avec la seconde modalité du premier facteur et la première modalité du troisième facteurs. Le plan expérimental correspondant comprend alors 16 conditions au lieu de  $256$ pour le plan complet.
+Le module de \textbf{planification} permet de gérer le plan d'expérience. A partir d'un fichier de description de ce plan, il génère efficacement une version manipulable. L'utilisateur peut alors aisément sélectionner les conditions expérimentales qu'il souhaite exécuter ou visualiser grâce à un mécanisme de masquage. Supposons un plan expérimental composé de 4 facteurs de 4 modalités chacune, le masque ${2 0 1}$ spécifie que la commande associée doit s'appliquer aux conditions expérimentales avec la seconde modalité du premier facteur et la première modalité du troisième facteur. Le plan expérimental correspondant comprend alors 16 conditions au lieu de  $256$ pour le plan complet.
 
-exécution
+Le module d'\textbf{exécution} se charge, en fonction de la commande d'exécution donnée par l'utilisateur, de :
+\begin{itemize}
+  \item séquencement des conditions expérimentales
+  \item chargement des données nécessaires et stockage des données produites
+  \item enregistrement de la progression des calculs
+  \item enregistrement des conditions expérimentales générant des erreurs
+\end{itemize}
 
-séquencement des calculs
-chargement et stockage des résultats
-mesure de progression des calculs
-récupération des conditions expérimentales générant des erreurs
+Une fois les calculs terminés, le module d\textbf{réduction} permet, pour les conditions expérimentales sélectionnées par l'utilisateur, de :
+\begin{itemize}
+  \item récupérer les observations correspondantes
+  \item visualiser, par de nombreux moyens graphiques, ces observations
+  \item produire, à partir de ces visualisations, un rapport d'étude.
+\end{itemize}
 
-réduction
+\subsection{\nmu Exemple d'usage}
 
-récupération des observations correspondant aux conditions expérimentales spécifiées par le masque
-visualisation de ces observations
-production du rapport
+\input{exp/shapeExample}
 
+\footnote{Cet exemple étant a visée pédagogique, le lecteur trouvera des exemples plus avancés sur le site de la plateforme \explanes.}
 
-\subsection{Eléments de contrôle utilisateur}
-
-La plateforme expLanes permet grace a ces modules de proposer des interfaces normalisée pour toutes les étapes de l'expérimentation telles que :
-
-\begin{enumerate}
-  \item la conception : création ou modification des étapes de traitement
-  \item la planification : définition des facteurs, de leurs modalités et des règles d'exclusion
-  \item l'implantation : implantation de chaque étape de $p$ dans des fichiers dédiés
-  \item la configuration : définition de l'environnement matériel où sera exécuter le
-  \item l'exposition : choix des conditions expérimentales d'intérêt et définition du mode d'exposition utilisé
-\end{enumerate}
-
-\input{shapeExample}
-
-\footnote{Cet exemple étant a visée pédagogique, le lecteur trouvera des exemples plus avancés sur le site de la plateforme expLanes. La plupart de mes productions scientifiques s'accompagnent d'une publication de l'expérimentation expLanes qui a permis de générer les données, comme ce travail de réplication\cite{lagrange2015}.}
-
-Je me suis attaché à décrire ici une contribution personnelle à une problématique d'importance. Je présente dans la section suivante des éléments de réflexion concernant la fragile et dernière étape de la méthode scientifique.
+Je me suis attaché à décrire ici une contribution personnelle à une problématique d'importance qui, sans prétendre visée à l'universalité, propose une systématisation de l'étape d'expérimentation de la méthode scientifique. Je présente dans la section suivante des éléments de réflexion concernant la fragile et dernière étape de la méthode.
 
 \section{\nmu La revue par les pairs} \label{sec:pairs}
 
@@ -221,4 +208,4 @@ Il reste que, bien souvent, une maintenance régulière du code par les auteurs 
 
 Garantir une reproducibilité complète pour un temps long de toutes ses productions est un défi probablement trop coûteux pour le chercheur. Il convient néanmoins de réfléchir en amont à cette problématique et d'allouer l'énergie nécessaire aux projets qui trouvent intérêt dans la communauté\marginnote{Les plateformes de développement collaboratif comme gitHub sont à ce titre particulièrement adaptées car elles permettent d'être informé de l'intérêt que porte la communauté aux travaux publiés et d'assister les collègues lors des tentatives de réplication.}.
 
-Il est par contre aisé que les données expérimentales soient publiques et stockées de manière pérenne. Ceci doit être encouragé par la communauté\footnote{Les plateformes de type archive (\url{https://archive.org}) ou zenodo (\url{https://zenodo.org}) sont de bons candidats.}. Même si l'implémentation particulière n'a pas vocation à être pérenne, il est bien évident que si les auteurs ont suivi un protocole expérimental canonique avec un effort de clarté et de concision dans l'implémentation, la réplication sera bien plus accessible. L'utilisation de cadres computationnels comme expLanes pour mettre en place ce protocole expérimental est d'intérêt car ils permettent d'encourager de bonnes pratiques.
+Il est par contre aisé que les données expérimentales soient publiques et stockées de manière pérenne. Ceci doit être encouragé par la communauté\footnote{Les plateformes de type archive (\url{https://archive.org}) ou zenodo (\url{https://zenodo.org}) sont de bons candidats.}. Même si l'implémentation particulière n'a pas vocation à être pérenne, il est bien évident que si les auteurs ont suivi un protocole expérimental canonique avec un effort de clarté et de concision dans l'implémentation, la réplication sera bien plus accessible. L'utilisation de cadres computationnels comme \explanes pour mettre en place ce protocole expérimental est d'intérêt car ils permettent d'encourager de bonnes pratiques.
