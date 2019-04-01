@@ -82,7 +82,8 @@ Même si la tâche de systématisation est moins ambitieuse pour le composant ex
 
 \input{exp/expStep1}
 
-En sciences des données comme dans d'autres domaines, le principe est d'étudier la sortie $s$ d'un processus $p$ en fonction de certaines données d'entrée $d$. On souhaite que $s$ soit la meilleure possible, en fonction d'un ensemble de critères mesurables, que l'on appellera ici des \textsl{observations} ($o$).
+En sciences des données comme dans d'autres domaines, le principe est d'étudier la sortie $s$ d'un processus $p$ en fonction de certaines données d'entrée $d$. On souhaite que $s$ soit la meilleure possible, en fonction d'un ensemble de critères mesurables, que l'on appellera ici des \textsf
+{observations} ($o$).
 
 A des fins de reproducibilité, on supposera que $d$ est pérenne, \textit{i.e.} n'est pas modifié par $p$. $s$ et $o$ sont non volatils, \textit{i.e.} stockés sur disque. $p$ peut éventuellement être segmenté en plusieurs étapes de traitement, qui appliquées de manière séquentielle, permettent de produire le même résultat ($s_2=s$ et $o_2=o$).
 
@@ -90,7 +91,10 @@ A des fins de reproducibilité, on supposera que $d$ est pérenne, \textit{i.e.}
 
 Ce découpage peut se faire de manière analytique en considérant l'architecture algorithmique de $p$. En pratique, ce découpage se fait de manière à optimiser le temps nécessaire à la production de $s$ et $o$. En effet, le but de la découpe en sous tâches est de réduire le temps de calcul associé à la production de $s$ et $o$. Choisir de segmenter en deux étapes dépend d'un compromis entre le temps de calcul nécessaire à la production de $s_1$ et $o_1$ et leurs accès. En effet, si le temps nécessaire pour stocker et rapatrier $s_1$ et $o_1$ est supérieur au temps de calcul nécessaire à leur production, ce découpage n'est pas pertinent.
 
-Le but de l'expérimentation est la confrontation de plusieurs alternatives concernant l'architecture de $p$. Nous nommerons \textsl{facteur}, un élément de design de $p$. Chacun de ces facteurs peut prendre plusieurs valeurs, que nous nommerons \textsl{modalités}. Nous nommerons également \textsl{condition expérimentale} l'ensemble des modalités nécessaires à la  paramétrisation de $p$. Pour déterminer la condition menant à la meilleure solution, l'exploration d'un plan expérimental est pour cela nécessaire. néanmoins, dès que l'étude dépasse la trivialité, le coût d'exécution du plan complet, \textit{i.e.} toutes les conditions expérimentales, devient prohibitif.
+Le but de l'expérimentation est la confrontation de plusieurs alternatives concernant l'architecture de $p$. Nous nommerons \textsf
+{facteur}, un élément de design de $p$. Chacun de ces facteurs peut prendre plusieurs valeurs, que nous nommerons \textsf
+{modalités}. Nous nommerons également \textsf
+{condition expérimentale} l'ensemble des modalités nécessaires à la  paramétrisation de $p$. Pour déterminer la condition menant à la meilleure solution, l'exploration d'un plan expérimental est pour cela nécessaire. néanmoins, dès que l'étude dépasse la trivialité, le coût d'exécution du plan complet, \textit{i.e.} toutes les conditions expérimentales, devient prohibitif.
 
 Il convient alors de judicieusement choisir les conditions qui nous permettent de maximiser notre connaissances de l'influence des différents facteurs, et en particulier leurs interactions. En effet, supposer que tout les facteurs sont indépendants permet de linéariser l'exploration des conditions en considérant un plan expérimental en étoile. Malheureusement, cette indépendance est rarement complètement vérifiée de manière expérimentale. Il convient alors de savoir juger ce degré d'interaction pour faire des choix éclairés. On peut pour cela utiliser des plans à facteurs réduits suivi d'une analyse de corrélations pour identifier l'importance de chaque facteur ainsi que les corrélations éventuelles entre facteurs.
 
@@ -129,7 +133,7 @@ L'étape d'exécution va produire un ensemble généralement grand d'observation
 
 \section{\nmu expLanes} \label{sec:explanes}
 
-Le projet \explanes est né d'une frustration grandissante de l'auteur au sujet 2) du coût de développement nécessaire à la mise en place d'un protocole expérimental de qualité, 2) l'absence de canons dans ce domaine, et 3) du risque élevé d'erreurs durant l'implantation de ce protocole expérimental compromettant gravement la validité des résultats obtenus. La version actuelle, écrite pour l'environnement Matlab, a nécessité trois ans de développement et est maintenant stabilisée et utilisé en production.
+Le projet \explanes est né d'une frustration grandissante de l'auteur au sujet 2) du coût de développement nécessaire à la mise en place d'un protocole expérimental de qualité, 2) l'absence de canons dans ce domaine, et 3) du risque élevé d'erreurs durant l'implantation de ce protocole expérimental compromettant gravement la validité des résultats obtenus. La version actuelle, écrite pour l'environnement \textsf{Matlab}\textsuperscript{\tiny\textregistered}, a nécessité trois ans de développement et est maintenant stabilisée et utilisé en production.
 
 Je présenterai cette plateforme à des fins d'illustration des concepts déjà introduits et pour introduire des éléments nécessaire à la présentation des choix architecturaux présentés ci après.
 
@@ -164,13 +168,11 @@ Une fois les calculs terminés, le module d\textbf{réduction} permet, pour les 
   \item produire, à partir de ces visualisations, un rapport d'étude.
 \end{itemize}
 
-\subsection{\nmu Exemple d'usage}
+\subsection{\nmu Usage}
 
 \input{exp/shapeExample}
 
-\footnote{Cet exemple étant a visée pédagogique, le lecteur trouvera des exemples plus avancés sur le site de la plateforme \explanes.}
-
-Je me suis attaché à décrire ici une contribution personnelle à une problématique d'importance qui, sans prétendre visée à l'universalité, propose une systématisation de l'étape d'expérimentation de la méthode scientifique. Je présente dans la section suivante des éléments de réflexion concernant la fragile et dernière étape de la méthode.
+Je me suis attaché à décrire ici une contribution personnelle à une problématique d'importance qui, sans prétendre viser à l'universalité, propose une systématisation de l'étape d'expérimentation de la méthode scientifique. Je présente dans la section suivante des éléments de réflexion concernant la fragile et dernière étape de la méthode scientifique et comment ce type de contribution peut amener à son amélioration dans le contexte scientifique actuel.
 
 \section{\nmu La revue par les pairs} \label{sec:pairs}
 
@@ -202,10 +204,12 @@ Dans le domaine de la sciences des données, on peut considérablement accélér
   \item d'un compte rendu d'expérience ou article détaillant les hypothèses, le protocole expérimental et les conclusions.
 \end{enumerate}
 
-Concernant la pérennité des données et de l'article, ces données numériques dites \og statiques \fg ne posent pas de challenge particulier. Ce n'est malheureusement pas le cas du code informatique car il dépend d'une pérennité de l'interprétation de ce code sur les machines contemporaines\footnote{L'archivage et la maintenance du matériel qui a servi aux expérimentations n'est pas dans le cas général envisageable.}. Les difficultés de réplication pour cause d'obsolescence matérielle et logicielle sont endémiques de la recherche en sciences des données car cette activité se situe généralement dans des secteurs de pointe évoluant très rapidement\marginnote{Je citerai pour exemple l'évolution actuelle des bibliothèques de calcul sur unité de calcul graphique comme la bibliothèque cuda développée par nVidia. Indispensable pour tout traitement efficace d'architectures profondes, cette bibliothèque est propriétaire et les versions antérieures ne sont plus maintenues après seulement quelques années.}.
+Concernant la pérennité des données et de l'article, ces données numériques dites \og statiques \fg ne posent pas de challenge particulier. Ce n'est malheureusement pas le cas du code informatique car il dépend d'une pérennité de l'interprétation de ce code sur les machines contemporaines.L'archivage et la maintenance du matériel qui a servi aux expérimentations n'est pas dans le cas général envisageable. Les difficultés de réplication pour cause d'obsolescence matérielle et logicielle sont endémiques de la recherche en sciences des données car cette activité se situe généralement dans des secteurs de pointe évoluant très rapidement\marginnote{Je citerai pour exemple l'évolution actuelle des bibliothèques de calcul sur unité de calcul graphique comme la bibliothèque \textsf{cuda}\textsuperscript{\tiny\textregistered} développée par \textsf{nvidia}\textsuperscript{\tiny\textregistered}. Indispensable pour tout traitement efficace d'architectures profondes, cette bibliothèque est propriétaire et les versions antérieures ne sont plus maintenues après seulement quelques années.}.
 
 Il reste que, bien souvent, une maintenance régulière du code par les auteurs au cours du temps permet de préserver un certain niveau d'équivalence des résultats. Il est alors pour cela très utile de disposer d'un code qui soit bien structuré et facile à maintenir. Cette maintenance sera également grandement facilitée par le choix judicieux des dépendances du code informatique publié. Si la phase d'expérimentation nous incite généralement à essayer de nombreuses approches, dont certaines très novatrices mais potentiellement instables et faiblement maintenues, il convient au moment de la publication de réfléchir à un bon équilibre entre apport technique et pérennité.
 
 Garantir une reproducibilité complète pour un temps long de toutes ses productions est un défi probablement trop coûteux pour le chercheur. Il convient néanmoins de réfléchir en amont à cette problématique et d'allouer l'énergie nécessaire aux projets qui trouvent intérêt dans la communauté\marginnote{Les plateformes de développement collaboratif comme gitHub sont à ce titre particulièrement adaptées car elles permettent d'être informé de l'intérêt que porte la communauté aux travaux publiés et d'assister les collègues lors des tentatives de réplication.}.
 
-Il est par contre aisé que les données expérimentales soient publiques et stockées de manière pérenne. Ceci doit être encouragé par la communauté\footnote{Les plateformes de type archive (\url{https://archive.org}) ou zenodo (\url{https://zenodo.org}) sont de bons candidats.}. Même si l'implémentation particulière n'a pas vocation à être pérenne, il est bien évident que si les auteurs ont suivi un protocole expérimental canonique avec un effort de clarté et de concision dans l'implémentation, la réplication sera bien plus accessible. L'utilisation de cadres computationnels comme \explanes pour mettre en place ce protocole expérimental est d'intérêt car ils permettent d'encourager de bonnes pratiques.
+Il est par contre aisé que les données expérimentales soient publiques et stockées de manière pérenne. Ceci doit être encouragé par la communauté\footnote{Les plateformes de type \textsf
+{archive} (\url{https://archive.org}) ou \textsf
+{zenodo} (\url{https://zenodo.org}) sont de bons candidats.}. Même si l'implémentation particulière n'a pas vocation à être pérenne, il est bien évident que si les auteurs ont suivi un protocole expérimental canonique avec un effort de clarté et de concision dans l'implémentation, la réplication sera bien plus accessible. L'utilisation de cadres computationnels comme \explanes pour mettre en place ce protocole expérimental est d'intérêt car ils permettent d'encourager de bonnes pratiques en facilitant leurs mises en place.

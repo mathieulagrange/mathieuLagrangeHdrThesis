@@ -5,7 +5,7 @@
 \usepackage[T1]{fontenc}
 %\usepackage[applemac]{inputenc}
 \usepackage[french]{babel}
-\usepackage{euscript,amsmath,amssymb,amsfonts,amsthm,epsfig,color}
+\usepackage{euscript,amsmath,amssymb,amsfonts,amsthm,epsfig,color,fancyvrb}
 \usepackage{latexsym}
 \usepackage{graphicx}
 \usepackage{tikz,pgf}
@@ -14,6 +14,7 @@
 \usepackage{xspace}
 \usepackage{multibib}
 \usepackage{mcode}
+\lstset{aboveskip=\medskipamount}
 %\usepackage{a4wide}
 \graphicspath{{figures/}}
 %\bibliographystyle{IEEETran}
@@ -73,19 +74,64 @@
 
 \newcommand{\nmu}{}
 
-\title{Modélisation long terme du signal sonore}
+\newcommand{\monthyear}{%
+  \ifcase\month\or January\or February\or March\or April\or May\or June\or
+  July\or August\or September\or October\or November\or
+  December\fi\space\number\year
+}
+
+% Prints an epigraph and speaker in sans serif, all-caps type.
+\newcommand{\openepigraph}[2]{%
+  %\sffamily\fontsize{14}{16}\selectfont
+  \begin{fullwidth}
+  \sffamily\large
+  \begin{doublespace}
+  \noindent\allcaps{#1}\\% epigraph
+  \noindent\allcaps{#2}% author
+  \end{doublespace}
+  \end{fullwidth}
+}
+
+\title{Modélisation long-terme de signaux \\ \noindent sonores}
 \author{Mathieu Lagrange}
 
 \begin{document}
 
-%\maketitle
-\tableofcontents
+\maketitle
 
-\input{notice}
-\input{themes}
-\input{modeles}
-\input{methode}
-\input{academic}
+% Front matter
+\frontmatter
+
+% r.1 blank page
+\newpage
+
+% v.2 epigraphs
+\newpage\thispagestyle{empty}
+\openepigraph{%
+“L'art est notre façon de décorer l'espace; la musique, notre façon de décorer le temps.”}{Attribuée à Jean-Michel Basquiat
+}
+\vfill
+
+\newpage
+\begin{fullwidth}
+~\vfill
+\thispagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{\baselineskip}
+Copyright \copyright\ \the\year\ \thanklessauthor//\par\smallcaps{\url{https://github.com/mathieulagrange/hdrThesis}}
+\par\textit{\monthyear}
+\end{fullwidth}
+
+\newpage
+\marginnote[6\baselineskip]{"Music is how we decorate time. "\\ Attribuée à Basquiat}
+
+\tableofcontents
+%
+% \input{notice}
+% \input{themes}
+% \input{modeles}
+% \input{methode}
+% \input{academic}
 %
 \bibliographystyle{plainnat}
 \nobibliography{biblio/strings,biblio/journals,biblio/conferences,bib}
