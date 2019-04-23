@@ -55,7 +55,7 @@ Il est important de noter que la communication entre le cortex auditif et la coc
 
 Pour le traitement du son, on s'accorde pour considérer que de nombreux éléments structurants sont communément utilisés par le sah pour inférer une représentation informative de la scène sonore auquel il est soumis. Pour les besoins de l'exemple, on considérera ici que la cochlée peut être fonctionnellement modélisée par une décomposition temps / fréquence et que sa sortie représentée sous forme d'un spectrogramme ou encore d'un scalogramme\footnote{Les détails de la construction de ces représentations sont donnés dans la section dédiée au \lnameref{sec:tf}}. Du point de vue physiologique, ces représentations sont une grossière approximation~\cite{lyon2017human} mais elles constituent des références dans le domaine du traitement du signal sonore. C'est donc celles là que nous utiliserons ici.
 
-\begin{figure*}
+\begin{figure*}[t]
   \includegraphics[width=.333\textwidth]{pianoGray}
   \includegraphics[width=.333\textwidth]{pianoSpec}
   \includegraphics[width=.333\textwidth]{pianoScal}
@@ -65,7 +65,7 @@ Pour le traitement du son, on s'accorde pour considérer que de nombreux éléme
 
 Les traitements subséquents du sah peuvent alors être approximés par une opération de segmentation du plan temps/fréquence en des sources données, et ce en fonction de certains critères.  On citera, dans l'ordre d'importance communément admis, l'harmonicité, la synchronicité, la proximité en fréquence, en temps, la rythmicité, etc. Par exemple, la Figure \ref{fig:piano} montre le spectrogramme d'une note de piano. Même si différentes résonances apparaissent comme disjointes sur le plan temps/fréquence nous ne percevons qu'une seule entité sonore. C'est bien qu'il y a eu un processus de formation de source, impliquant majoritairement ici le critère d'harmonicité, \textit{i.e.} des composantes de fortes énergies situées à des fréquences en relation harmonique ont tendance à être perçues comme une seule entité sonore. L'importance relative de ces critères dans ce processus de formation de sources peut être modulée dans une certaine mesure par des processus descendants comme l'attention ou encore la pratique\marginnote{\begin{center}
 \includegraphics[width=.5\textwidth, angle =270]{resonatorCrop}
-Un \og résonateur de Helmholtz \fg, implantation physique d'un filtre passe bande.
+Un \og résonateur de Helmholtz \fg.
 \end{center}}.
 
 En effet, Helmholtz se disait capable de dissocier les différentes harmoniques d'une note de violon grâce à l'écoute répétée du son de ses résonateurs qui, par leur dimensions judicieusement choisies permettaient d'implanter un filtre passe bande dont la fréquence centrale coïncidait avec la fréquence de certaines harmoniques des notes jouées.
@@ -121,7 +121,7 @@ Nous avons donc développé un algorithme de regroupement, nommé \textsl{k-aver
   \includegraphics[width=.333\textwidth]{orcaSin}
   \includegraphics[width=.333\textwidth]{orcaSep}
   \label{fig:orca}
-  \caption{Spectrogramme, représentation sinusoïdale à court terme et segmentation de cette représentation grâce à l'algorithme des coupures normalisées d'une vocalisation d'orque captée grâce à un hydrophone dans les eaux du "Inside passage" au nord de l'île de Vancouver, Colombie Britannique, Canada.}
+  \caption{Spectrogramme, représentation sinusoïdale à court terme et segmentation de cette représentation.}
 \end{figure*}
 
 \subsection{Applications au problème casa}
@@ -136,7 +136,7 @@ Nous avons donc développé un algorithme de regroupement, nommé \textsl{k-aver
 % \label{eq:shi}
 % \end{eqnarray}
 
-Dans une première étude menée à l'Université de Victoria en collaboration avec George Tzanetakis, j'ai considéré le problème suivant : comment isoler la partie harmonique dominante d'un enregistrement polyphonique ?  Cela peut être le cas de vocalisations de mammifères marins, comme illustré avec la Figure \ref{fig:orca}, ou de la mélodie dans un enregistrement musical polyphonique.
+Dans une première étude menée à l'Université de Victoria en collaboration avec George Tzanetakis, j'ai considéré le problème suivant : comment isoler la partie harmonique dominante d'un enregistrement polyphonique ? Cela peut être le cas de la mélodie dans un enregistrement musical polyphonique ou de vocalisations de mammifères marins. La Figure \ref{fig:orca} montre son usage pour une vocalisation d'orque captée grâce à un hydrophone dans les eaux du "Inside passage" au nord de l'île de Vancouver, Colombie Britannique, Canada.
 
 Soit une représentation sinusoïdale à court terme d'un signal sonore où chaque atome $A_l^k$ est paramétrisé par une fréquence $f_l^k$ et une amplitude $A_l^k$ et $k$ et $l$ désignent respectivement l'indice de trame et l'indice de l'atome au sein de la trame. \footnote{Une représentation sinusoïdale à court terme peut être considérée ici comme une version parcimonieuse et compacte du spectrogramme où l'on a identifié et modélisé les composantes de forte énergie par des sinusoïdes fenêtrées. Le lecteur peut se référer à la section dédiée à la modélisation basée sur des  \lnameref{sec:sct} pour plus de détails.}. Partant de cette représentation, le problème précité se formule comme suit : comment définir mathématiquement certaines relations asa pour ce type de représentation, les combiner entre elles, et en fonction de ces relations isoler la partie qui se conforme le plus aux critères exprimés ?
 
