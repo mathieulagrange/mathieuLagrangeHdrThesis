@@ -79,14 +79,13 @@ Pour la partie expérimentale de la méthode, on dispose en revanche d'un ensemb
 
 Même si la tâche de systématisation est moins ambitieuse pour le composant expérimental, il est bien entendu illusoire de pouvoir proposer à la communauté un environment d'expérimentation qui soit suffisamment flexible pour permettre toutes les expériences utiles à la communauté. C'est néanmoins par ce biais que j'ai approché la question, en suivant le paradigme du \textsl{faire pour apprendre}. Durant plusieurs années j'ai donc développé un outil nommé \nameref{sec:explanes}. Cette plateforme expérimentale est basée sur une formalisation que je présenterai ici. Elle n'est probablement pas la plus élégante qui puisse être envisagée, mais elle a l'avantage d'être rompue à la pratique, où les besoins en expressivité sont dominants.
 
-\input{exp/expStep1}
+
 
 En sciences des données comme dans d'autres domaines, le principe est d'étudier la sortie $s$ d'un processus $p$ en fonction de certaines données d'entrée $d$. On souhaite que $s$ soit la meilleure possible, en fonction d'un ensemble de critères mesurables, que l'on appellera ici des \textsf
-{observations} ($o$).
+{observations} ($o$). \marginnote{\input{exp/expStep1} Un processus de traitement de donnees.}
 
-A des fins de reproducibilité, on supposera que $d$ est pérenne, \textit{i.e.} n'est pas modifié par $p$. $s$ et $o$ sont non volatils, \textit{i.e.} stockés sur disque. $p$ peut éventuellement être segmenté en plusieurs étapes de traitement, qui appliquées de manière séquentielle, permettent de produire le même résultat ($s_2=s$ et $o_2=o$).
 
-\input{exp/expStep2}
+A des fins de reproducibilité, on supposera que $d$ est pérenne, \textit{i.e.} n'est pas modifié par $p$. $s$ et $o$ sont non volatils, \textit{i.e.} stockés sur disque. $p$ peut éventuellement être segmenté en plusieurs étapes de traitement, qui appliquées de manière séquentielle, permettent de produire le même résultat ($s_2=s$ et $o_2=o$). \marginnote{\input{exp/expStep2} Séparation de ce processus en deux étapes.}
 
 Ce découpage peut se faire de manière analytique en considérant l'architecture algorithmique de $p$. En pratique, ce découpage se fait de manière à optimiser le temps nécessaire à la production de $s$ et $o$. En effet, le but de la découpe en sous tâches est de réduire le temps de calcul associé à la production de $s$ et $o$. Choisir de segmenter en deux étapes dépend d'un compromis entre le temps de calcul nécessaire à la production de $s_1$ et $o_1$ et leurs accès. En effet, si le temps nécessaire pour stocker et rapatrier $s_1$ et $o_1$ est supérieur au temps de calcul nécessaire à leur production, ce découpage n'est pas pertinent.
 
