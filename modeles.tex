@@ -308,17 +308,17 @@ On constate ici que la structure de données se complexifie sensiblement par rap
 
 La contrainte exprimée par l'équation \ref{eq:cst} favorise des trajectoires fréquentielle constantes. Dans le cas d'un modèle court terme de bonne qualité, par exemple dans le cas d'un signal monophonique à structure harmonique cette heuristique peut être raisonnable. Dans le cas de signaux bruités et/ou polyphoniques, il est utile d'améliorer la finesse du prédicteur en considérant par exemple un prédicteur linéaire appliqué aux séries temporelles des paramètres long terme. Le faible échantillonnage de ces séries temporelles nécessite des estimateurs adaptés comme celui de Burg\cite{burg1968new}.
 
-La contrainte d'évolution lente des paramètres dans le cas d'un modèle stationnaire (prédicteur constant) se traduit naturellement par un seuil sur le delta de fréquence. Dans le cas d'un modèle non stationnaire des paramètres long terme, on trouve un gain à considérer une analyse spectrale de ces évolutions pour mieux déterminer les continuations à effectuer. Parmi les nombreuses continuation possibles, la continuation qui engendre le moins de hautes fréquences est privilégiée. Là encore, du fait du faible échantillonnage des paramètres, des outils d'estimation spectrale spécifiques sont nécessaire.
+La contrainte d'évolution lente des paramètres dans le cas d'un modèle stationnaire (prédicteur constant) se traduit naturellement par un seuil sur le delta de fréquence. Dans le cas d'un modèle non stationnaire des paramètres long terme, on trouve un gain à considérer une analyse spectrale de ces évolutions possible pour mieux déterminer les continuations à effectuer. Parmi les nombreuses continuation possibles, la continuation qui engendre le moins de hautes fréquences est privilégiée. Là encore, du fait du faible échantillonnage des paramètres, des outils d'estimation spectrale spécifiques sont nécessaires.
 
 \begin{marginfigure}
   \includegraphics[width=\textwidth]{trackingxp}
-  \caption{Signal temporel ou forme d'onde d'une note de piano.}
+  \caption{Une étape de continuation. Parmi les atomes proches (point noirs) de la prédiction (étoiles), on sélectionne la continuation qui engendre le moins de hautes fréquences dans l'évolution des paramètres de fréquence et d'amplitude.}
   \label{fig:tracking}
 \end{marginfigure}
 
 Les bons résultats en terme de rendu sonore obtenu par cette chaîne d'analyse dans le cas  de la modélisation long terme sous contrainte de débit\cite{lagrangeTaslp06} et l'interpolation de données manquantes\cite{lagrangeJaes05}, montre l'intérêt de la modélisation des modulations long terme, au moins du point de vue perceptif.
 
-Fort de cette observation, Martin Raspaud à étudier un modèle long terme hiérarchique qui permet des manipulations riche comme par exemple de l'étirement temporel de notes vibrées. Le principe est de considérer les paramètres long terme comme des signaux, eux mêmes modélisables comme des sinusoïdes dont les paramètres évoluent, cette fois ci, très lentement en fonction du temps. Il est alors facile de contrôler les modulations comme le vibrato ou le tremolo.
+Fort de cette observation, Martin Raspaud a étudié un modèle long terme hiérarchique qui permet des manipulations riche comme par exemple de l'étirement temporel de notes vibrées\cite{raspaud2007modeles}. Le principe est de considérer les paramètres long terme comme des signaux, eux mêmes modélisables comme des sinusoïdes dont les paramètres évoluent, cette fois ci, très lentement en fonction du temps. Il est alors facile de contrôler les modulations comme le vibrato ou le tremolo.
 
 D'une grande élégance formelle, d'une expressivité inégalée, le modèle long terme n'a pas pu trouver un large spectre d'application du fait d'un défaut clair de versatilité. Ce même handicap s'est retrouvé dans le domaine du codage où ce type de modèle\cite{den2002parametric} n'a pas réussi à concurrencer les approches TCDM. Certaines approches, dites hybrides, consistant à combiner un modèle long terme avec un modèle de bruit et modèle de transitoire ont été proposées pour tenter de palier à ce défaut. On tombe malheureusement alors dans un problème de sélection de modèles qui est à mon avis intractable, je ne détaillerai donc pas ces approches.
 
@@ -337,17 +337,19 @@ D'une grande élégance formelle, d'une expressivité inégalée, le modèle lon
 
 \section{ \nmu Temps / fréquence / modulations}  \label{sec:tfm}
 
-S'il est clair que la décomposition fréquentielle est de première importance, la manière dont l'énergie est modulée au court du temps au sein de ces bandes de fréquences l'est également \marginnote{On peut citer pour exemple le son éminement désagréable d'un moteur thermique deux temps (type mobylette) qui part son mouvement mécanique induit une modulation typique.}. L'importance perceptive de ce type de modulations dans notre jugement du réalisme d'un stimuli sonore est particulièrement bien exemplifiée par un stimuli synthétique produit par John Chowning. Dans ce stimuli, des sinusoides d'amplitude et fréquence au début constantes sont ensuite modulées par un signal synthétique composé d'une composante sinusoïdale (pour le vibrato) et d'une composante stochastique. Ce signal modulant est ensuite mis à l'échelle pour chaque harmonique. Il est important de considérer que même si ce signal modulant a été judicieusement choisi, il n'est pas issu d'un processus d'estimation à partir de signaux réels.
+S'il est clair que la décomposition fréquentielle est de première importance, la manière dont l'énergie est modulée au court du temps au sein de ces bandes de fréquences l'est également \marginnote{On peut citer pour exemple le son éminement désagréable d'un moteur thermique deux temps (type mobylette) qui part son mouvement mécanique induit une modulation typique.}. L'importance perceptive de ce type de modulations dans notre jugement du réalisme d'un stimuli sonore est particulièrement bien exemplifiée par un stimuli synthétique produit par John Chowning. Dans ce stimuli, des sinusoïdes d'amplitude et fréquence au début constantes sont ensuite modulées par un signal synthétique composé d'une composante sinusoïdale (pour le vibrato) auquel se sur-ajoute une composante stochastique. Ce signal modulant est ensuite mis à l'échelle pour chaque harmonique. Il est important de considérer que même si ce signal modulant a été judicieusement choisi, il n'est pas issu d'un processus d'estimation à partir de signaux réels.
 
 L'écoute montre clairement que le caractère naturel, voisé, est sensiblement plus élevé avec l'ajout de la modulation et surtout de la composante stochastique \footnote{Ce stimuli est disponible ici \url{http://webpages.mcgill.ca/staff/Group2/abregm1/web/snd/Track24.mp3} pour écoute sur le site de Al Bregman dédié à l'ASA. Les spécificités techniques du processus de synthèse sont décrites ici : \url{http://webpages.mcgill.ca/staff/Group2/abregm1/web/downloadstoc.htm\#24}.}.
 
 \subsection{Modèles perceptifs}
 
-Complétons nos connaissances en prenant cette fois ci, non plus un point de vue physique mais physiologique. L'étude des éléments physiologiques en charge du traitement de ces modulations est relativement récente car probablement sensiblement plus difficile a investiguer. On a néanmoins une bonne confiance dans le fait que le système auditif des mammifères dispose d'éléments de traitement dédiés à cette tâche. On peut notamment citer le modèle de Torsten Dau\cite{dau1997modeling} et celui de Shihab Shamma\cite{fritz2003rapid} qui étend le modèle de Dau en ajoutant une troisième dimension : l'échelle.
+Complétons nos connaissances en prenant cette fois ci, non plus un point de vue psycho-perceptif mais physiologique. L'étude des éléments physiologiques en charge du traitement de ces modulations est relativement récente car probablement sensiblement plus difficile a investiguer. On a néanmoins une bonne confiance dans le fait que le système auditif des mammifères dispose d'éléments de traitement dédiés à cette tâche. On peut notamment citer le modèle de Torsten Dau\cite{dau1997modeling} et celui de Shihab Shamma\cite{fritz2003rapid} qui étend le modèle de Dau en ajoutant une troisième dimension : l'échelle.
 
-Shihab Shamma a étudié certaines neurones du cortex auditif primaire du furet, plus particulièrement ce que l'on appelle leur champs de réponse spectro/temporellle ou "spectro-temporal receptive fields" (strf). L'animal est contraint au niveau du crâne, et par opération chirugicale, une aiguille permettant de mesurer l'activité électrique est insérée dans le crâne de l'animal et judicieusement placée. Par exposition d'un ensemble de stimuli comportant des modulations, il est alors possible de mesurer ces strf. Au vu de ce type de réponses, Un modèle de traitement de signal est ensuite proposé.
+Shihab Shamma a étudié certains neurones du cortex auditif primaire du furet, plus particulièrement ce que l'on appelle leur champs de réponse spectro/temporellle ou "spectro-temporal receptive fields" (strf). L'animal est contraint au niveau du crâne, et par opération chirurgicale, une aiguille permettant de mesurer l'activité électrique est insérée dans le crâne de l'animal et judicieusement placée. Par exposition d'un ensemble de stimuli comportant des modulations, il est alors possible de mesurer ces strf. Au vu de ce type de réponses, Un modèle de traitement de signal est ensuite proposé.
 
-Dans ce modèle, le signal est donc tout d'abord décomposé sur l'axe fréquentiel. La sortie étant un équivalent du spectrogramme qui est ensuite décomposé une nouvelle fois fréquentiellement en temps et en fréquence grâce à des ondellettes bi-dimensionnelles paramétrées avec un facteur d'échelle. La dimension de l'échelle permet de définir le nombre de bandes qui sont conjointement utilisées pour effectuer cette seconde analyse fréquentielle \marginnote{Ces modèles sont bien entendu sujet à débat dans la communauté de neurophysiologie. Par exemple, le facteur d'échelle est pour Dau non nécessaire pour expliquer les données recueillies grâce à son protocole expérimental.}.
+Dans ce modèle, le signal est donc tout d'abord décomposé sur l'axe fréquentiel. La sortie est un équivalent du spectrogramme qui est ensuite décomposé une nouvelle fois fréquentiellement en temps et en fréquence grâce à des ondelettes bi-dimensionnelles paramétrées avec un facteur d'échelle. La dimension de l'échelle permet de définir le nombre de bandes qui sont conjointement utilisées pour effectuer cette seconde analyse fréquentielle.
+
+Ces modèles sont bien entendu sujet à débat dans la communauté de neurophysiologie. Par exemple, le facteur d'échelle est pour Dau non nécessaire pour expliquer les données recueillies grâce à son protocole expérimental.
 
 \subsection{\nmu Scattering d'ondelettes}  \label{sec:scattering}
 
@@ -363,52 +365,92 @@ Précisons ces notions en prenant quelques exemples. Lorsque l'on cherche à rec
   \item une translation en temps
   \item un étirement en temps
 \end{enumerate}
-En effet, pour la tâche pré-citée, que la note ait été jouée plus ou moins proche du microphone\footnote{J'écarte ici pour la simplicité du discours les aspects de nuances qui ont une influence non négligeable sur le timbre.}, à un instant donné ou quelques secondes plus tard, à une hauteur donnée ou une autre, pour une durée plus ou moins longue ne devrait pas (trop) modifier notre représentation.
+En effet, pour la tâche pré-citée, que la note ait été jouée plus ou moins proche du microphone\sidenote{J'écarte ici pour la simplicité du discours les aspects de nuances qui ont une influence non négligeable sur le timbre.}, à un instant donné ou quelques secondes plus tard, à une hauteur donnée ou une autre, pour une durée plus ou moins longue ne devrait pas modifier de manière trop sensible notre représentation.
 
-L'invariance au volume est obtenue de manière triviale en normalisant les signaux que l'on souhaite comparer. L'invariance à la translation en temps se traduit dans le domaine de Fourier en une invariance à la translation de phase par la prise du module. On souhaite généralement que l'invariance au volume et à la translation soit complète. En ce qui concerne l'invariance à l'étirement temporel, on souhaite généralement plus que la représentation soit stable à la déformation.
+L'invariance au volume est obtenue de manière triviale en normalisant les signaux que l'on souhaite comparer. L'invariance locale à la translation en temps se traduit dans le domaine de Fourier en une invariance à la translation de phase par la prise du module. On souhaite généralement que l'invariance au volume et à la translation soit complète. En ce qui concerne l'invariance à l'étirement temporel, on souhaite généralement plus que la représentation soit stable à la déformation.
 
-Il est clairement explicité dans\cite{anden2014deep} pourquoi le spectre de magnitude de Fourier n'est pas stable à même un petit étirement temporel. En effet, l'impact de l'étirement selon l'axe des fréquences n'est pas le même. Si un petit étirement déplacera d'une petite quantité les fréquences basses, les fréquences le seront beaucoup plus. Prenons le cas classique d'un signal harmonique de fréquence de fondamentale $440 Hz$, un étirement temporel va réduire la valeur de cette fréquence à disons $430 Hz$ pour un delta de $10 Hz$. Ce delta sera $n$ fois plus grand pour la $nième$ harmonique soit $100 Hz$ pour la dixième harmonique. Pour une transformée de Fourier avec des paniers d'une dizaine de Hertz, la différence entre les deux spectres va croitre très rapidement avec delta car l'énergie des harmoniques supérieures va très vite sortir des paniers où l'énergie des harmoniques se plaçait initialement.
+Il est clairement explicité dans\cite{anden2014deep} pourquoi le spectre de magnitude de Fourier n'est pas stable à même un petit étirement temporel. En effet, l'impact de l'étirement selon l'axe des fréquences n'est pas le même. Si un petit étirement déplacera d'une petite quantité les fréquences basses, les fréquences plus élevées le seront beaucoup plus. Prenons l'exemple' d'un signal harmonique de fréquence de fondamentale $440 Hz$, un étirement temporel va réduire la valeur de cette fréquence à disons $430 Hz$ pour un delta de $10 Hz$. Ce delta sera $n$ fois plus grand pour la $nième$ harmonique soit $100 Hz$ pour la dixième harmonique. Pour une transformée de Fourier avec des paniers d'une dizaine de Hertz, la différence entre les deux spectres va croitre très rapidement avec delta car l'énergie des harmoniques supérieures va très vite sortir des paniers où l'énergie des harmoniques se plaçait initialement.
 
 Pour être plus stable à ce type de déformation, il convient alors de \og délocaliser \fg les hautes fréquences de manière plus conséquente que les basses. Suivant les communautés, on obtient cette délocalisation progressive sur l'axe des fréquences avec des transformées à Q constant, de type tiers d'octave (acoustique), des Mels ou des Barks (parole)\marginnote{Cette étude est à mon sens d'importance, car elle permet de placer un cadre mathématique pour mieux expliquer ce qui a été empiriquement vérifié dans de nombreux domaines du traitement de l'audio et motivés jusqu'ici par des arguments essentiellement neuro mimétiques.}.
 
-En se plaçant dans le cadre des ondelettes, on obtient ce type de représentation en délocalisant en temps toutes les bandes de fréquence ce qui induit une perte d'information qu'il convient de compenser. Le principe du scattering permet de répondre élégamment à ce problème en cascadant des opérations de décomposition et en utilisant chaque niveau de décomposition pour produire une représentation compacte et informative \marginnote{En dissociant ainsi décomposition et représentation, on peut préserver certaines propriétés d'intérêts comme par exemple l'inversibilité pour la décomposition et la stabilité pour la représentation.}.
+En se plaçant dans le cadre des ondelettes, on obtient ce type de représentation en délocalisant en temps toutes les bandes de fréquence ce qui induit une perte d'information qu'il convient de compenser. Le principe du scattering permet de répondre élégamment à ce problème en cascadant des opérations de décomposition et en utilisant chaque niveau de décomposition pour produire une représentation compacte et informative. En dissociant ainsi décomposition et représentation, on peut préserver certaines propriétés d'intérêts comme par exemple l'inversibilité pour la décomposition et la stabilité pour la représentation.
 
-Le scattering au premier ordre est donc équivalent en termes conceptuels à une transformée à Q constant. En décomposant les sorties un banc de filtres en ondelettes avec un autre banc de filtres, on capte alors l'information de modulation, \textit{i.e.} comment l'énergie fluctue dans une même bande fréquence. On a vu précédemment l'importance de ce type de modulation pour la perception. Il est donc opportun de d'étudier l'apport du second ordre pour une représentation riche du signal sonore\marginnote{Le processus de cascade. Le troisième ordre est conceptuellement difficile à appréhender et a encore été peu étudié, pour les raisons suivantes 1) pratique : l'énergie au troisième ordre est très faible, 2) neuro-mimétique : aucun modèle perceptif n'explicite un troisième ordre de traitement.}.
+Le scattering d'ondelettes au premier ordre est équivalent en termes conceptuels à une transformée à Q constant. En décomposant les sorties un banc de filtres en ondelettes avec un autre banc de filtres, on capte alors l'information de modulation, \textit{i.e.} comment l'énergie fluctue dans une même bande fréquence. On a vu précédemment l'importance de ce type de modulation pour la perception. Il est donc opportun de d'étudier l'apport du second ordre pour une représentation riche du signal sonore.%\marginnote{Le processus de cascade. Le troisième ordre est conceptuellement difficile à appréhender et a encore été peu étudié, pour les raisons suivantes 1) pratique : l'énergie au troisième ordre est très faible, 2) neuro-mimétique : aucun modèle perceptif n'explicite un troisième ordre de traitement.}.
 
-L'apport du second ordre a été démontré expérimentalement pour des tâches de modélisation\cite{anden2014deep}.
-
-Nous avons complétés cette investigation en considérant une tâche pertinente pour notre propos : l'étude de la représentation des sons d'instruments de musique du répertoire en considérant des modes de jeux étendus. En effet, si la reconnaissance de l'instrument est considérée comme un problème résoluble par une représentation à Q constant\cite{}, la reconnaissance du mode de jeu\footnote{et par la même d'une notion plus fine de la notion de timbre musical} comporte des éléments de modulations qui ne sont pas aisément capturés par une représentation à Q constant ou un scattering d'ondelettes à l'ordre un. On montre en effet que l'ajout de l'ordre 2 permet une bien meilleure identification du mode de jeu et permet de proposer au compositeur à la recherche d'un certain timbre, d'une investigation plus aisée d'une grande base de données de sons instrumentaux\cite{}.
+L'apport du second ordre a été démontré expérimentalement pour des tâches de modélisation\cite{anden2014deep}. Nous avons complétés cette investigation en considérant une tâche pertinente pour notre propos : l'étude de la représentation des sons d'instruments de musique du répertoire en considérant des modes de jeux étendus. En effet, si la reconnaissance de l'instrument est considérée comme un problème résoluble par une représentation à Q constant, la reconnaissance du mode de jeu, et par la même d'une notion plus fine de la notion de timbre musical, comporte des éléments de modulations qui ne sont pas aisément capturés par une représentation à Q constant ou un scattering d'ondelettes à l'ordre un\cite{lostanlen2018extended}.
 
 En terme d'architecture de décomposition, le scattering suit une organisation de type réceptive, fréquence d'abord et temps ensuite. On verra dans la partie suivante un modèle prenant une approche de type source / filtre donc temps et fréquence ensuite et qui est à ce titre plus directement tourné vers la synthèse.
 
 \section{ \nmu Synthèse modale}
 
-En se référant plutôt aux processus physiques de production sonore, les approches modales permettent de proposer des méthodes efficaces pour des outils de synthèse dédiés.
+En se référant plutôt aux processus physiques de production sonore, les approches modales permettent de proposer des modèles effectifs. Ces modèles se basent sur un modèle de production de type source / filtre, où la source est généralement décrite en terme de propriétés temporelles, et le filtre en terme de propriétés fréquentielles. Pour un signal de parole, on considèrera que la source peut être soit un train d'impulsions résultant de l'ouverture périodique de l'organe phonatoire nommé, à tort,  cordes vocales pour la production des sons voisés (voyelles) soit un signal stochastique résultant de la compression du flux respiratoire pour la production des sons plosives ou sifflants (consonnes).
 
-Ces modèles se basent sur un modèle de production de type source / filtre, où la source est généralement décrite en terme de propriétés temporelles, et le filtre en terme de propriétés fréquentielles. Pour un signal de parole, on considèrera que la source peut être soit un train d'impulsions résultant de l'ouverture périodique de l'organe phonatoire nommé, à tort,  cordes vocales pour la production des sons voisés (voyelles) soit un signal stochastique résultant de la compression du flux respiratoire pour la production des sons plosives ou sifflants (consonnes).
+Le modèle source / filtre décorrelle donc naturellement la contribution de l'excitateur et celle du résonateur, ce qui est particulièrement attrayant lorsque l'on recherche un modèle de son permettant une bonne capacité d'interaction. Pour peu que les modèles utilisés pour les deux parties (source et filtre) soit bien adaptés, on obtient des modèles de sons qui sont souvent fidèles et expressifs\cite{aramaki2006analysis}. Nous avons étudié ce type de modèle pour la synthèse de sons de roulements. Ces sons présentent un challenge pour ce type de synthèse car l'interaction entre la bille et la surface sur laquelle elle roule est complexe. Néanmoins, une approche basée sur ce type de modèle\cite{LagrangeTasslp10} dont le schéma fonctionnel est présenté sur la Figure \ref{fig:modal}  a donné des résultats encourageants
+\cite{Murphy11a}.
 
-Le modèle source / filtre décorrelle donc naturellement la contribution de l'excitateur et celle du résonateur, ce qui est particulièrement attrayant lorsque l'on recherche un modèle de son permettant une bonne capacité d'interaction. Pour peu que les modèles utilisés pour les deux parties (source et filtre) soit bien adaptés, on obtient des modèles de sons qui sont souvent fidèles et expressifs\cite{aramaki2006analysis}. La flexibilité reste malheureusement en deca, car le changement de structures pour la source et le filtre ainsi que leurs modes d'interactions nécessitera le plus souvent des adaptations d'ordre computationels si ces changement sont conséquents.
+\begin{marginfigure}
+  \scalebox{.6}{
+  \input{exp/modal}}
+  \label{fig:modal}
+\caption{}
+\end{marginfigure}
 
-Nous avons par exemple étudié ce type de modèle pour la synthèse de sons de roulements. Ces sons présentent un challenge pour ce type de synthèse car l'interaction entre la bille et la surface sur laquelle elle roule est complexe.
+La source est ici modélisée comme une distribution d'impacts dont l'amplitude est modélisée par une distribution exponentielle et l'intervalle de temps entre deux impacts par une distribution gamma. En remarquant fort justement que, lorque la bille impacte fortement le médium, l'intervalle entre cet impact et le suivant augmente, Richard Kronlan Martinet\cite{conan2014synthesis} à proposé un modèle amélioré où ces variables sont modélisées de manière conjointe.
 
-\cite{LagrangeTasslp10}
+A l'intersection entre modélisation statistique et modélisation physique, dans le sens où l'architecture du modèle de son suit un modèle de production, ce type de modèle possède deux propriétés d'importance. En premier lieu, la causalité. Au niveau du modèle de synthèse, un échantillon est strictement considéré comme une composante des échantillons précédents. En second, cette approche met l'accent sur les propriétés de filtrage des composantes modales, il ne s'agit pas ici de synthétiser un signal riche à partir d'une représentation complète du signal, mais plutôt d'exploiter un modèle source / filtre avec une implantation dédiée de ces deux modules en fonction de la tâche visée.
 
- validation perceptive
+\marginnote{
+\begin{tikzpicture}[scale=0.8, label distance=1.5mm]
+  \coordinate[label=below:Fidélité]  (A) at (0,0);
+  \coordinate[label=below:Versatilité] (B) at (4,0);
+  \coordinate[label=above:Expressivité] (C) at (2,3.464);
+  \draw [line width=1.5pt] (A) -- (B) -- (C) -- cycle;
+  \draw [blue, fill=blue, line width=1.5pt] (1.6,2.2) circle [radius=.1 cm];
+  \end{tikzpicture}
+  Le modèle modal est particulièrement expressif et fidèle pour un champ assez réduit de signaux sonores.
+}
 
-\cite{Murphy11a}
+Malgré toutes ces bonnes propriétés, de manière peut être encore plus marqué que pour les modèles sinusoïdaux à long terme, la versatilité reste malheureusement en deçà, car le changement de structures pour la source et le filtre ainsi que leurs modes d'interactions nécessitera le plus souvent des adaptations d'ordre computationels si ces changements sont conséquents. En particulier, les interactions non linéaires sont excessivement difficiles à modéliser en raison de manque d'outils d'estimation canoniques.
 
-marseille\cite{conan2014synthesis}
-
-On se trouve ici à l'intersection entre modélisation statistique et modélisation physique, dans le sens où l'architecture du modèle de son suit un modèle de production.
+%Même si ce type d'approche est utilisée de manière assez marginale, elle garde à mon sens un intérêt historique pour mettre en perspective les approches modernes décrites dans la suite.
 
 
-
-On trouve avec ce type de modèle deux propriétés d'importance. En premier lieu, la causalité. Au niveau du modèle de synthèse, un échantillon est strictement considérée comme une composante des échantillons précédents.  En second, cette approche met l'accent sur les propriétés de filtrage des composantes modales, il ne s'agit pas ici de synthétiser un signal riche à partir d'une représentation complète du signal, mais plutôt d'exploiter un modèle source / filtre avec une implantation dédiée de ces deux modules en fonction de la tâche visée.
-
-Même si ce type d'approche est utilisée de manière assez marginale, elle garde à mon sens un intérêt historique pour mettre en perspective les approches modernes décrites dans la suite.
+\section{ \nmu Discussion}
 
 
-\section{ \nmu Conclusion}
+\marginnote{
+\begin{tikzpicture}[scale=0.8, label distance=1.5mm]
+  \coordinate[label=below:Fidélité]  (A) at (0,0);
+  \coordinate[label=below:Versatilité] (B) at (4,0);
+  \coordinate[label=above:Expressivité] (C) at (2,3.464);
+  \draw [line width=1.5pt] (A) -- (B) -- (C) -- cycle;
+  \draw [black, fill=black, line width=1.5pt] (2,.3) circle [radius=.1 cm]; % raw
+  \draw [olive, fill=olive, line width=1.5pt] (1.8,.8) circle [radius=.1 cm]; % spec
+  \draw [brown, fill=brown, line width=1.5pt] (2.4,.6) circle [radius=.1 cm]; % wavelets
+  \draw [cyan, fill=cyan, line width=1.5pt] (1.6,1.2) circle [radius=.1 cm]; % sct
+  \draw [blue, fill=blue, line width=1.5pt] (1.4,1.8) circle [radius=.1 cm]; % slt
+  \draw [magenta, fill=magenta, line width=1.5pt] (1.9,2.6) circle [radius=.1 cm]; % modal
+  \end{tikzpicture}
+
+  \vspace{.5cm}
+
+  \begin{tabular}{cl}
+    \tikz\draw[black,fill=black] (0,0) circle (.1 cm); & Forme d'onde \\
+    \tikz\draw[olive,fill=olive] (0,0) circle (.1 cm); & Spectrogramme \\
+    \tikz\draw[brown,fill=brown] (0,0) circle (.1 cm); & Ondelettes \\
+    \tikz\draw[cyan,fill=cyan] (0,0) circle (.1 cm); & Sinusoïdes à court terme \\
+    \tikz\draw[blue,fill=blue] (0,0) circle (.1 cm); & Sinusoïdes à long terme \\
+    \tikz\draw[magenta,fill=magenta] (0,0) circle (.1 cm); & Approches modales
+  \end{tabular}
+}
+
+resumé
+
+triangle avec des couleurs
+
+approche modale, temporelle, causale, linéaire
+
+causal non linéarité
 
 POSER LES PROBLEMATIQUES
 
