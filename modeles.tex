@@ -176,12 +176,7 @@ Pour éviter cette perte, il est nécessaire de baser notre modèle sur une repr
 Même si les travaux théoriques dans ce domaine ont permis d'ouvrir considérablement les possibilités en terme de conception, je me  tiendrai ici à la forme la plus courante en traitement du signal qui consiste en une construction d'un banc de filtre dyadique à facteur de qualité constant. Ce banc de filtre est constitué d'un ensemble filtres passe bande à l'octave, \textit{i.e.} la fréquence de coupure supérieure est égale à deux fois la fréquence de coupure inférieure. On obtient alors un pavage alternatif du plan temps / fréquence. Du fait du principe d'incertitude, les paniers ont la même aire, mais le rapport entre résolution fréquentielle et temporelle est optimalement adapté.
 
 \marginnote{
-  % \begin{center} TODO
-  %   (a) \\
-  %
-  %   (b) \\
-  %
-  % \end{center}
+\includegraphics[width=\textwidth]{waveletBins.png}
 Pavage du plan temps/fréquence pour le spectrogramme (a) et la transdformée en ondelettes (b).
 }
 
@@ -282,9 +277,9 @@ Ce modèle est particulièrement expressif car il permet des modifications du si
 L'étape d'analyse, \textit{i.e.} l'estimation des paramètres à partir d'un signal sonore est par contre, particulièrement ardue.
 
 \begin{figure*}
-  \includegraphics[width=.3333\textwidth]{voice_1024_512}
-  \includegraphics[width=.3333\textwidth]{voice_2048_512}
-  \includegraphics[width=.3333\textwidth]{voice_4096_512}
+  \includegraphics[width=.3333\textwidth]{voice_1024_512xp}
+  \includegraphics[width=.3333\textwidth]{voice_2048_512xp}
+  \includegraphics[width=.3333\textwidth]{voice_4096_512xp}
   \caption{Influence de la taille de fenêtre de la TFCT utilisée pour estimer un modèle sinusoïdal à court terme. De gauche à droite, la taille est de 25, 50, et 100ms, pour un pas d'avancement de 10ms.}
   \label{fig:ct}
 \end{figure*}
@@ -314,6 +309,12 @@ On constate ici que la structure de données se complexifie sensiblement par rap
 La contrainte exprimée par l'équation \ref{eq:cst} favorise des trajectoires fréquentielle constantes. Dans le cas d'un modèle court terme de bonne qualité, par exemple dans le cas d'un signal monophonique à structure harmonique cette heuristique peut être raisonnable. Dans le cas de signaux bruités et/ou polyphoniques, il est utile d'améliorer la finesse du prédicteur en considérant par exemple un prédicteur linéaire appliqué aux séries temporelles des paramètres long terme. Le faible échantillonnage de ces séries temporelles nécessite des estimateurs adaptés comme celui de Burg\cite{burg1968new}.
 
 La contrainte d'évolution lente des paramètres dans le cas d'un modèle stationnaire (prédicteur constant) se traduit naturellement par un seuil sur le delta de fréquence. Dans le cas d'un modèle non stationnaire des paramètres long terme, on trouve un gain à considérer une analyse spectrale de ces évolutions pour mieux déterminer les continuations à effectuer. Parmi les nombreuses continuation possibles, la continuation qui engendre le moins de hautes fréquences est privilégiée. Là encore, du fait du faible échantillonnage des paramètres, des outils d'estimation spectrale spécifiques sont nécessaire.
+
+\begin{marginfigure}
+  \includegraphics[width=\textwidth]{trackingxp}
+  \caption{Signal temporel ou forme d'onde d'une note de piano.}
+  \label{fig:tracking}
+\end{marginfigure}
 
 Les bons résultats en terme de rendu sonore obtenu par cette chaîne d'analyse dans le cas  de la modélisation long terme sous contrainte de débit\cite{lagrangeTaslp06} et l'interpolation de données manquantes\cite{lagrangeJaes05}, montre l'intérêt de la modélisation des modulations long terme, au moins du point de vue perceptif.
 
