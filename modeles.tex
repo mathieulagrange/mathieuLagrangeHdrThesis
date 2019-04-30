@@ -28,7 +28,7 @@ Trois critères d'évaluation émergent alors pour qualifier ce modèle :
     \coordinate[label=below:Versatilité] (B) at (4,0);
     \coordinate[label=above:Expressivité] (C) at (2,3.464);
     \draw [line width=1.5pt] (A) -- (B) -- (C) -- cycle;
-  \draw [blue, fill=blue, line width=1.5pt] (2,.3) circle [radius=.1 cm];
+    \draw [black, fill=black, line width=1.5pt] (2,.3) circle [radius=.1 cm]; % raw
   \end{tikzpicture}
   La forme d'onde est modèle de son versatile et fidèle mais d'une expressivité limitée.
 }
@@ -150,7 +150,7 @@ où $w$ est la fenêtre d'observation.
   \coordinate[label=below:Versatilité] (B) at (4,0);
   \coordinate[label=above:Expressivité] (C) at (2,3.464);
   \draw [line width=1.5pt] (A) -- (B) -- (C) -- cycle;
-  \draw [blue, fill=blue, line width=1.5pt] (1.6,1) circle [radius=.1 cm];
+  \draw [olive, fill=olive, line width=1.5pt] (1.8,.8) circle [radius=.1 cm]; % spec
   \end{tikzpicture}
   Le spectrogramme est à ce jour le compromis le plus apprécié.
 }
@@ -190,7 +190,7 @@ En considérant que le banc de filtre est construit de manière itérative en pa
   \coordinate[label=below:Versatilité] (B) at (4,0);
   \coordinate[label=above:Expressivité] (C) at (2,3.464);
   \draw [line width=1.5pt] (A) -- (B) -- (C) -- cycle;
-  \draw [blue, fill=blue, line width=1.5pt] (2.6,.4) circle [radius=.1 cm];
+  \draw [brown, fill=brown, line width=1.5pt] (2.4,.6) circle [radius=.1 cm]; % wavelets
   \end{tikzpicture}
   Les modèles de sons basées sur la transformée en ondelettes sont en théorie plus versatile grâce à la multirésolution, mais peu de travaux démontrent leur expressivité.
 }
@@ -240,7 +240,7 @@ Le principe ici est de s'affranchir des contraintes de la base de Fourier en dis
 
 \begin{marginfigure}
   \includegraphics[width=\textwidth]{gribonval.png}
-  \caption{Deux composantes sinusoidales dont l'amplitude est modulée a) sinusoïdalement, b) exponentiellement et décompositions par deux algorithmes de poursuite.}
+  \caption{Deux composantes sinusoïdales dont l'amplitude est modulée a) sinusoïdalement, b) exponentiellement et décompositions par deux algorithmes de poursuite.}
   \label{fig:gribonval}
 \end{marginfigure}
 
@@ -258,9 +258,9 @@ On se trouve donc avec un compromis de modèle favorisant la fidélité et la fl
     \coordinate[label=below:Versatilité] (B) at (4,0);
     \coordinate[label=above:Expressivité] (C) at (2,3.464);
     \draw [line width=1.5pt] (A) -- (B) -- (C) -- cycle;
-  \draw [blue, fill=blue, line width=1.5pt] (2,.6) circle [radius=.1 cm];
+    \draw [cyan, fill=cyan, line width=1.5pt] (1.6,1.2) circle [radius=.1 cm]; % sct
   \end{tikzpicture}
-  Les modèles sinusoïdaux à court terme sont des modèles de son versatile et fidèle, avec une expressivité améliorée par rapport à la forme d'onde.
+  Les modèles sinusoïdaux à court terme sont des modèles de son avec une expressivité améliorée par rapport au spectrogramme au prix d'une perte relative en versatilité et fidélité.
 }
 
 %Ces approches, comme la transformée en ondelettes, ont trouvés application plutôt dans le domaine du traitement de l'image, où le caractère hautement non stationnaire des transitions entre objets sont très mal approximé par des fonctions régulières comme celle de Fourier.
@@ -328,7 +328,7 @@ D'une grande élégance formelle, d'une expressivité inégalée, le modèle lon
   \coordinate[label=below:Versatilité] (B) at (4,0);
   \coordinate[label=above:Expressivité] (C) at (2,3.464);
   \draw [line width=1.5pt] (A) -- (B) -- (C) -- cycle;
-  \draw [blue, fill=blue, line width=1.5pt] (1.4,1.6) circle [radius=.1 cm];
+  \draw [blue, fill=blue, line width=1.5pt] (1.4,1.8) circle [radius=.1 cm]; % slt
   \end{tikzpicture}
   Le modèle sinusoïdal à long terme est expressif et fidèle pour un champ réduit de signaux sonores.
 }
@@ -405,18 +405,17 @@ A l'intersection entre modélisation statistique et modélisation physique, dans
   \coordinate[label=below:Versatilité] (B) at (4,0);
   \coordinate[label=above:Expressivité] (C) at (2,3.464);
   \draw [line width=1.5pt] (A) -- (B) -- (C) -- cycle;
-  \draw [blue, fill=blue, line width=1.5pt] (1.6,2.2) circle [radius=.1 cm];
+  \draw [magenta, fill=magenta, line width=1.5pt] (1.9,2.6) circle [radius=.1 cm]; % modal
   \end{tikzpicture}
   Le modèle modal est particulièrement expressif et fidèle pour un champ assez réduit de signaux sonores.
 }
 
-Malgré toutes ces bonnes propriétés, de manière peut être encore plus marqué que pour les modèles sinusoïdaux à long terme, la versatilité reste malheureusement en deçà, car le changement de structures pour la source et le filtre ainsi que leurs modes d'interactions nécessitera le plus souvent des adaptations d'ordre computationels si ces changements sont conséquents. En particulier, les interactions non linéaires sont excessivement difficiles à modéliser en raison de manque d'outils d'estimation canoniques.
+Malgré toutes ces bonnes propriétés, de manière peut être encore plus marqué que pour les modèles sinusoïdaux à long terme, la versatilité reste malheureusement en deçà, car le changement de structures pour la source et le filtre ainsi que leurs modes d'interactions nécessitera le plus souvent des adaptations d'ordre computationel si ces changements sont conséquents. En particulier, les interactions non linéaires sont excessivement difficiles à modéliser en raison de manque d'outils d'estimation canoniques.
 
 %Même si ce type d'approche est utilisée de manière assez marginale, elle garde à mon sens un intérêt historique pour mettre en perspective les approches modernes décrites dans la suite.
 
 
 \section{ \nmu Discussion}
-
 
 \marginnote{
 \begin{tikzpicture}[scale=0.8, label distance=1.5mm]
@@ -432,7 +431,7 @@ Malgré toutes ces bonnes propriétés, de manière peut être encore plus marqu
   \draw [magenta, fill=magenta, line width=1.5pt] (1.9,2.6) circle [radius=.1 cm]; % modal
   \end{tikzpicture}
 
-  \vspace{.5cm}
+  \vspace{.3cm}
 
   \begin{tabular}{cl}
     \tikz\draw[black,fill=black] (0,0) circle (.1 cm); & Forme d'onde \\
@@ -444,13 +443,34 @@ Malgré toutes ces bonnes propriétés, de manière peut être encore plus marqu
   \end{tabular}
 }
 
+Si l'on prend une vue d'ensemble des différents compromis pris par les modèles de sons précédemment décrit, on voit qu'il existe des compromis équilibré entre fidélité et expressivité au détriment de la versatilité et des compromis équilibré entre fidélité et versatilité au détriment de l'expressivité. Le grand défi de la modélisation sonore est donc de proposer des approches qui puissent se placer dans un compromis entre versatilité et expressivité avec une fidélité qui reste raisonnable.
+
+\marginnote{
+\begin{tabular}{cccc}
+  & fidélité & versatililité & expressivité  \\
+multirésolution & \blackdot  & \blackdot & \\
+causal & \blackdot  &  & \blackdot \\
+non linéaire & \blackdot  & \blackdot & \\
+dimensionalité réduite &  & &  \blackdot \\
+contrôle lent &  & &  \blackdot
+\end{tabular}
+}
+
+
+Au vu de certains amenés durant cette présentation, quelques éléments se révèlent incontournable pour espérer relever ce défi. Tout d'abord, le modèle doit inclure des aspects de \textbf{multi-résolution} pour être à même d'exploiter au mieux. Il me paraît également incontournable que le modèle soit \textbf{causal}. La non causalité permet une plus grande flexibilité algorithmique, la perte de la causalité amène des approximations qui sont au final souvent limite les modèles en terme de fidélité, car le processus physique qui a produit le signal sonore est lui causal. De nombreuses étapes de la propagation des ondes sonores peuvent être relativement bien approximés par des systèmes linéaires. Néamoins, il est critique pour la qualité perceptive des signaux produits que le modèle puisse modéliser des processus \textbf{non linéaires}. Enfin, pour des raisons d'expressivité, il est nécessaire que le contrôle soit aisé, donc de disposer d'une \textbf{faible dimensionalité} de l'espace de paramètres et que leur \textbf{échantillonnage temporel} soit sensiblement plus \textbf{lent} que celui du signal.
+
+
+resultats récents en image
+
+critique et differenciation image / son
+
+superposition additivite facile
+
+accent sur la temporalite
+
 resumé
 
-triangle avec des couleurs
-
-approche modale, temporelle, causale, linéaire
-
-causal non linéarité
+causal non linéarité multi resolution
 
 POSER LES PROBLEMATIQUES
 
@@ -460,24 +480,6 @@ NOTER LES AMELIORATIONS
 
 
 
-
-TODO EN DISCTUER UNIQUEMENT EN CONCLUSION
-
-Cette revue des modèles de sons nous a permis d'identifier deux verrous qu'il semble difficile de résoudre de manière conjointe.
-
-Rappelons ici les trois propriétés souhaités :
-\begin{enumerate}
-  \item
-  \item
-  \item versatile
-\end{enumerate}
-
-En suivant cet ordre, on peut procéder à la constitution d'un \og cahier des charges \fg du modèle idéal qui serait le suivant :
-\begin{enumerate}
-  \item multirésolution
-  \item causal
-
-\end{enumerate}
 
 \cite{wavenet}
 
