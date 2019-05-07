@@ -1,27 +1,36 @@
+\tikzstyle{stepBlock}=[draw, thick, rounded corners,
+         anchor=north, align=center, rectangle split part align={center, left}, rectangle split, rectangle split parts=3]
+\tikzstyle{noBlock}=[anchor=north, align=center]
+\tikzstyle{stepArrow}=[->, -diamond, thick,double]
+\tikzstyle{obsArrow}=[->, thick]
 
 \begin{center}
-\begin{tikzpicture}[node distance=3cm]
-\node (1) [stepBlock]
-{\textbf{generate}
-\nodepart{two}\tabular{@{}l}
-\texttt{nbClasses} \\
-\texttt{nbDimensions} \\
-\texttt{spread} \\
-\endtabular
+\begin{tikzpicture}[node distance=1.2cm]
 
-\nodepart{three}\tabular{@{}l}
-\texttt{nbRealizations} = 5\\
-\texttt{nbElementsPerClass} = 10\\
-\endtabular};
+\node (1)[noBlock]{};
+
 \node (2) [stepBlock, right=of 1]
-{\textbf{compute}
+{$p_1$
 \nodepart{two}\tabular{@{}l}
-\texttt{distance} \\
+\texttt{} \\
 \endtabular
-
 \nodepart{three}\tabular{@{}l}
 \endtabular};
-\draw[obsArrow]   (2.south) -- (2.south) node[midway,text width=3cm,text centered,below] {\textit{map\\precision}} ;
-\draw[stepArrow]   (1.east) -- (2.west) node[midway,text width=3cm,text centered,below] {\textbf{class\\elements}} ;
+
+\node (3) [stepBlock, right=of 2]
+{$p_2$
+\nodepart{two}\tabular{@{}l}
+\texttt{} \\
+\endtabular
+\nodepart{three}\tabular{@{}l}
+\endtabular};
+
+\node (4) [noBlock, right=of 3]{};
+
+\draw[obsArrow]   (2.south) -- (2.south) node[midway,text width=3cm,text centered,below] {$o_1$} ;
+\draw[obsArrow]   (3.south) -- (3.south) node[midway,text width=3cm,text centered,below] {$o_2$} ;
+\draw[stepArrow]   (1.east) -- (2.west) node[midway,text width=1cm,text centered,below] {d} ;
+\draw[stepArrow]   (2.east) -- (3.west) node[midway,text width=1cm,text centered,below] {$s_1$} ;
+\draw[stepArrow]   (3.east) -- (4.west) node[midway,text width=1cm,text centered,below] {$s_2$} ;
 \end{tikzpicture}
-\end{center}                                                                                                                                                         
+\end{center}
