@@ -414,20 +414,27 @@ FUNCTION {n.dashify}
   while$
 }
 
+%FUNCTION {format.date}
+%{ year duplicate$ empty$
+%    { "empty year in " cite$ * warning$
+%       pop$ "" }
+%    'skip$
+%  if$
+%  month empty$
+%    'skip$
+%    { month
+%      " " * swap$ *
+%    }
+%    if$
+%    extra.label *
+%}
+
 FUNCTION {format.date}
-{ year duplicate$ empty$
-    { "empty year in " cite$ * warning$
-       pop$ "" }
-    'skip$
-  if$
-  month empty$
-    'skip$
-    { month
-      " " * swap$ *
-    }
-  if$
-  extra.label *
-}
+  { year empty$
+      { "" }
+      { year  swap$ *  *}
+    if$
+  }
 
 FUNCTION {format.btitle}
 { title emphasize
