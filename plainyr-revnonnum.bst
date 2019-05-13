@@ -432,7 +432,7 @@ FUNCTION {n.dashify}
 FUNCTION {format.date}
   { year empty$
       { "" }
-      { year  swap$ *  *}
+      { year "" swap$ * "" *}
     if$
   }
 
