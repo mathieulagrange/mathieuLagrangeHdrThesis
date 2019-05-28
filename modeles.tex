@@ -58,7 +58,7 @@ Spectrogrammes de vocalisations humaines.
  % Issue de l'ouvrage "A Course In Phonetics" de Ladefoged publié en 2006,  http://www.cog.jhu.edu/courses/325-f2004/ladefoged/course/chapter8/figure8.html
  }
 
-La dénomination \og long terme \fg  étant dépendante du degré de stationarité du signal étudié, il n'est donc pas possible de fixer une durée pour tout type de signaux sonores à partir de laquelle la dénomination \og long terme \fg est appropriée. On considérera néanmoins dans les études discutées dans ce document qu'un intervalle de temps  \og long terme \fg désigne un intervalle de temps supérieur ou égal à la seconde.
+La dénomination \og long terme \fg  étant dépendante du degré de stationnarité du signal étudié, il n'est donc pas possible de fixer une durée pour tout type de signaux sonores à partir de laquelle la dénomination \og long terme \fg est appropriée. On considérera néanmoins dans les études discutées dans ce document qu'un intervalle de temps  \og long terme \fg désigne un intervalle de temps supérieur ou égal à la seconde.
 
 \section{ \nmu Typologie sonore} \label{sec:typologie}
 
@@ -134,6 +134,14 @@ Un large échantillon de méthodes sont disponibles pour améliorer la précisio
 
 Il est important de bien garder en mémoire que seule la précision des estimateurs est augmentée, la résolution de la transformée restant dépendante de la largeur du support temporel.  Augmenter l'intervalle d'observation va donc non seulement influer sur la précision, mais également sur la résolution de la transformée. Ainsi, deux sinusoïdes de fréquences proches ne pourront être \og résolues \fg, c'est-à-dire que leurs paramètres ne pourront être estimés en observant directement le spectre d'amplitude que par l'extension suffisante du support temporel de la transformée. Comme nous allons le voir dans l'exemple suivant, cette extension a un coût.
 
+
+\begin{marginfigure}
+  \includegraphics[width=1.2\textwidth]{pianoSpec}
+  \includegraphics[width=1.2\textwidth]{pianoPhase}
+  \caption{Spectrogramme d'amplitude et de phase d'une note de piano.}
+  \label{fig:phase}
+\end{marginfigure}
+
 Considérons un autre signal \og éprouvette \fg constitué cette fois ci d'un dirac :
 \begin{equation}
   s_d[n] = \begin{cases}
@@ -149,12 +157,6 @@ L'estimation du paramètre d'amplitude $a_d$ et de sa position temporelle $n_d$ 
 
 Cette dernière est par contre beaucoup plus difficile à estimer dans le domaine spectral, du fait du caractère non stationnaire du signal analysé.
 
-\begin{marginfigure}
-  \includegraphics[width=1.2\textwidth]{pianoSpec}
-  \includegraphics[width=1.2\textwidth]{pianoPhase}
-  \caption{Spectrogramme d'amplitude et de phase d'une note de piano.}
-  \label{fig:phase}
-\end{marginfigure}
 
 Pour pallier le caractère non stationnaire à long terme de la plupart des signaux naturels, il est courant d'utiliser la transformée de Fourier à court terme (TFCT). Son principe est d'effectuer une série de transformée de Fourier, chacune sur des fenêtres espacées dans le temps:
 \begin{equation}
@@ -173,7 +175,7 @@ où $w$ est la fenêtre d'observation.
   Le spectrogramme est à ce jour le compromis le plus apprécié.
 }
 
-En prenant le spectre de magnitude de la TFCT, on obtient le bien connu spectrogramme, un outil de manipulation et de visualisation qui trouve son utilité dans de nombreux domaines d'application. L'espoir ici est que les erreurs de modélisation des non stationarités du signal seront négligeables du fait du faible support temporel des fenêtres sur lesquels on applique successivement la TFD. Dans le cas où les fenêtres se recouvrent de moitié, on peut utiliser la transformée en cosinus discret modifiée (TCDM) pour conserver un échantillonnage critique~\cite{princen1986analysis}.
+En prenant le spectre de magnitude de la TFCT, on obtient le bien connu spectrogramme, un outil de manipulation et de visualisation qui trouve son utilité dans de nombreux domaines d'application. L'espoir ici est que les erreurs de modélisation des non stationnarités du signal seront négligeables du fait du faible support temporel des fenêtres sur lesquels on applique successivement la TFD. Dans le cas où les fenêtres se recouvrent de moitié, on peut utiliser la transformée en cosinus discret modifiée (TCDM) pour conserver un échantillonnage critique~\cite{princen1986analysis}.
 
 En considérant la TFCT, il est alors possible de construire un estimateur \og spectral \fg de la position temporelle de notre dirac :
 \begin{equation}
@@ -209,11 +211,11 @@ Pavage du plan temps/fréquence de la transformée en ondelettes.
 
 \begin{marginfigure}
   \includegraphics[width=\textwidth]{diracWavelet}
-  \label{fig:dirac}
   \caption{Transformée en ondelettes d'une impulsion de Dirac.}
+  \label{fig:dirac}
 \end{marginfigure}
 
-Même si les travaux théoriques dans ce domaine ont permis d'ouvrir considérablement les possibilités en terme de conception, je me  tiendrai ici à la forme la plus courante en traitement du signal qui consiste en une construction d'un banc de filtre dyadique à facteur de qualité constant. Ce banc de filtre est constitué d'un ensemble de filtres passe bande à l'octave, \textit{i.e.} la fréquence de coupure supérieure est égale à deux fois la fréquence de coupure inférieure. On obtient alors un pavage alternatif du plan temps / fréquence. Du fait du principe d'incertitude, les paniers ont la même aire, mais le rapport entre résolution fréquentielle et temporelle est optimalement adapté. La Figure \ref{fig:dirac} montre la transformée en ondelettes d'une impulsion de Dirac. On y  observe clairement l'augmentation de la résolution temporelle en fonction de la fréquence.
+Même si les travaux théoriques dans ce domaine ont permis d'ouvrir considérablement les possibilités en terme de conception, je me  tiendrai ici à la forme la plus courante en traitement du signal qui consiste en une construction d'un banc de filtre dyadique à facteur de qualité constant. Ce banc de filtre est constitué d'un ensemble de filtres passe bande à l'octave, \textit{i.e.} la fréquence de coupure supérieure est égale à deux fois la fréquence de coupure inférieure. On obtient alors un pavage alternatif du plan temps / fréquence. Du fait du principe d'incertitude, les pavés ont la même aire, mais le rapport entre résolution fréquentielle et temporelle est optimalement adapté. La Figure \ref{fig:dirac} montre la transformée en ondelettes d'une impulsion de Dirac. On y  observe clairement l'augmentation de la résolution temporelle en fonction de la fréquence.
 
 
 
@@ -287,7 +289,7 @@ Le principe de ces algorithmes est de s'affranchir des contraintes de la base de
   \label{fig:gribonval}
 \end{marginfigure}
 
-La figure \ref{fig:gribonval} illustre deux cas typiques de non stationarités rencontrées dans les signaux musicaux. Le premier consiste en une composante sinusoïdale dont l'amplitude est modulée de manière sinusoïdale. C'est une modulation typique d'un tremolo. Le second consiste en une composante sinusoïdale dont l'amplitude est modulée exponentiellement. C'est une modulation typique d'une corde frappée ou pincée comme le piano ou le clavecin.
+La figure \ref{fig:gribonval} illustre deux cas typiques de non stationnarités rencontrées dans les signaux musicaux. Le premier consiste en une composante sinusoïdale dont l'amplitude est modulée de manière sinusoïdale. C'est une modulation typique d'un tremolo. Le second consiste en une composante sinusoïdale dont l'amplitude est modulée exponentiellement. C'est une modulation typique d'une corde frappée ou pincée comme le piano ou le clavecin.
 
 Dans le cas a), l'algorithme MP identifie d'abord une composante avec un support temporel couvrant l'intégralité du signal. Deux autres composantes viennent ensuite annuler certaines parties de cette première. Dans le cas b), le changement abrupt d'énergie étant difficilement modélisable aves les fonctions de base à disposition, de nombreuses composantes d'annulation sont nécessaires, amenant à un effet de pré écho, l'énergie ajoutée n'étant que partiellement enlevée. Pour palier à ces problèmes, des contraintes de non negativité ont été proposées pour améliorer l'algorithme de poursuite (HRMP). En réduisant les contributions destructives, \textit{i.e.} enlever de l'énergie amenée par des atomes sélectionnés mais non présente dans le signal d'origine, cette approche est plus efficace au sens où l'énergie globale des atomes (somme des enveloppes des atomes utilisés) est plus faible.
 
@@ -419,7 +421,7 @@ En effet, pour la tâche pré-citée, que la note ait été jouée plus ou moins
 
 L'invariance au changement de volume est obtenue de manière triviale en normalisant les signaux que l'on souhaite comparer. L'invariance locale à la translation en temps se traduit dans le domaine de Fourier en une invariance à la translation de phase par la prise du module. On souhaite généralement que l'invariance au volume et à la translation soit complète. En ce qui concerne l'invariance à l'étirement temporel, on souhaite généralement plutôt que la représentation soit stable à la déformation.
 
-Il est clairement explicité par Joakim Anden~\cite{anden2014deep} pourquoi le spectre de magnitude de Fourier d'un signal harmonique n'est pas stable à même un petit étirement temporel. En effet, l'impact de l'étirement selon l'axe des fréquences n'est pas le même. Si un petit étirement déplacera d'une petite quantité les fréquences basses, les fréquences plus élevées le seront beaucoup plus. Prenons l'exemple d'un signal harmonique de fréquence de fondamentale $440 Hz$, un étirement temporel va réduire la valeur de cette fréquence à disons $430$ Hz pour un delta de $10$ Hz. Ce delta sera $n$ fois plus grand pour la $n^{\text{ième}}$ harmonique soit $100$ Hz pour la dixième harmonique. Pour une transformée de Fourier avec des paniers d'une dizaine de Hertz, la différence entre les deux spectres va croitre très rapidement en fonction du delta car l'énergie des harmoniques supérieures va très vite sortir des paniers où l'énergie des harmoniques se plaçait initialement.
+Il est clairement explicité par Joakim Anden~\cite{anden2014deep} pourquoi le spectre de magnitude de Fourier d'un signal harmonique n'est pas stable à même un petit étirement temporel. En effet, l'impact de l'étirement selon l'axe des fréquences n'est pas le même. Si un petit étirement déplacera d'une petite quantité les fréquences basses, les fréquences plus élevées le seront beaucoup plus. Prenons l'exemple d'un signal harmonique de fréquence de fondamentale $440 Hz$, un étirement temporel va réduire la valeur de cette fréquence à disons $430$ Hz pour un delta de $10$ Hz. Ce delta sera $n$ fois plus grand pour la $n^{\text{ième}}$ harmonique soit $100$ Hz pour la dixième harmonique. Pour une transformée de Fourier avec une quantification de l'axe fréquentiel d'une dizaine de Hertz, la différence entre les deux spectres va croitre très rapidement en fonction du delta car l'énergie des harmoniques supérieures va très rapidement se placer sur des pas de quantification différents de ceux où l'énergie des harmoniques se plaçait initialement.
 
 Pour être plus stable à ce type de déformation, il convient alors de \og délocaliser \fg les hautes fréquences de manière plus conséquente que les basses. Suivant les communautés, on obtient cette délocalisation progressive sur l'axe des fréquences avec des transformées à Q constant, de type tiers d'octave (acoustique), des Mels ou des Barks (parole)\marginnote[-4cm]{Ce résultat est à mon sens d'importance, car il permet de placer un cadre mathématique pour mieux expliquer ce qui a été empiriquement vérifié dans de nombreux domaines du traitement de l'audio et motivés jusqu'ici par des arguments essentiellement neuro mimétiques.}.
 
