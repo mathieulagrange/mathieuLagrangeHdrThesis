@@ -3,7 +3,6 @@
 % \usetikzlibrary{positioning,shapes,shadows,arrows}
 %
 % \begin{document}
-
 \begin{tikzpicture}[
 nonterminal/.append style={join=by ->},
 tip/.style={->,shorten >=1pt},every join/.style={rounded corners},
@@ -20,24 +19,22 @@ line/.style ={draw, thick, -latex',shorten
   >=2pt}]
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\matrix [column sep=4mm,row sep=10mm]
+
+
+\matrix [column sep=10mm,row sep=5mm]
 {
-\node [point] (p1) {} ; & \node (p2) {} ; & \node [terminal] (ma) {Analyse modale} ; && \node (e4) {} ; \\
-&& \node [terminal] (md) {Déconvolution modale} ; \\
-&& \node [terminal] (im) {Déconvolution des impacts} ; && \node (e2) {} ; \\
-&& \node [terminal] (id) {Distributions} ; && \node (e1) {} ;  \\
+\node (i1) {}; \\
+\node [terminal] (i2) {tfct}; \\
+\node [terminal] (i3) {sélection de pics}; \\
+\node [terminal] (i4) {suivi de partiel}; \\
+\node  (i5) {}; \\
 };
 
 \begin{scope}[every path/.style=line]
-\path (p1) -- node [above] {$s[n]$} (ma);
-\path (p2) |- (md);
-\path [dashed] (ma)  -- (md);
-\path [dashed] (ma) --  node [above] {$a_k, f_k$} (e4);
-\path (md) -- node [right] {$r[n]$} (im);
-%\path (is) -- (im);
-%\path (im) --  node [above] {$m(n)$} (e2);
-\path (im) -- node [right] {$i[n]$} (id);
-\path [dashed] (id) -- node [above] {$\lambda_a, k_i, \theta_i$} (e1);
+  \path (i1) -- node [right] {signal} (i2);
+  \path (i2) -- node [right] {spectrogramme} (i3);
+  \path (i3) -- node [right] {atomes } (i4);
+  \path (i4) -- node [right] {partiels} (i5);
 \end{scope}
 
 \end{tikzpicture}
