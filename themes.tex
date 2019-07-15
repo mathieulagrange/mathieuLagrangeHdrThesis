@@ -99,7 +99,7 @@ Séduit par l'aspect neuro-inspiré et la grande diversité algorithmique des ap
 
 Soit une scène sonore $S$ composée de plusieurs sources sonores $s_i$ représentée par un ensemble d'atomes temps / fréquence issu d'une décomposition du signal sonore donnée, on cherche alors à regrouper les atomes $A$ en fonction de leur appartenance aux sources $s_i$\footnote{Dans le cas d'une décomposition temps / fréquence comme le spectrogramme, les atomes seront les paniers temps / fréquence  $A(f, t)$ du spectrogramme, où $t$ et $f$ dénotent respectivement un indice temporel et fréquentiel.}. On supposera pour ce faire que la décomposition a été raisonnablement efficace. En effet, dans un objectif de segmentation par regroupement, il est indispensable que les atomes ne soient représentatifs que d'une seule source : $$\forall A_j, \exists ! s_i | A_j \in s_i$$. Comme on le voit sur la Figure~\ref{fig:ibm}, cette condition n'est pas complètement vérifiée dans le cas du spectrogramme car plusieurs paniers temps / fréquence reçoivent de l'énergie provenant des deux sources. On supposera alors que cette contamination est réduite et que cette condition est vérifiée pour un grand nombre d'atomes de grande énergie.
 
-Le problème casa peut donc se formaliser comme une procédure de regroupement d'atomes. Reste à 1) formaliser la procédure du regroupement, et 2) formaliser les critères asa. Ces deux points seront traités dans les deux parties suivantes.
+Le problème casa peut donc se formaliser comme une procédure de regroupement d'atomes. Reste à 1) formaliser la procédure du regroupement, et 2) formaliser les critères asa. Ces deux points seront traités dans les deux parties suivantes, avec un niveau de détail plus élevé pour la seconde, cette section étant dédiée à des problématiques spécifiques au traitement de l'audio.
 
 \subsection{Algorithmes de partitionnement}
 
@@ -165,7 +165,7 @@ Les indices de proximité locale s'expriment en terme de fréquence et d'amplitu
 où $\sigma _ { f }$ et $\sigma _ { a }$ permettent de contrôler l'importance relative des deux facteurs dans la mesure de proximité finale.
 
 \begin{figure}[t]
-  \includegraphics[width=1\textwidth]{figures/nCutDiagramFr.png}
+  \includegraphics[width=1\textwidth]{figures/ncutDiagramFr.png}
   \caption{Schéma fonctionnel du processus de segmentation basé sur l'algorithme des coupures normalisées. Le module d'analyse sinusoïdal produit pour chaque trame un ensemble d'atomes sinusoïdaux. Ces trames sont ensuite agrégées sur un intervalle de temps correspondant à 150 ms et traitées par l'algorithme de séparation. Les atomes identifiés comme appartenant à la source d'intérêt sont ensuite transmis au module de synthèse.}  \label{fig:ncut}
 \end{figure}
 
@@ -207,8 +207,6 @@ Précisons le propos : %Prenons l'exemple d'une cuillère à café placée dans 
 %Un exemple de composition de trouve dans le critère utilisé en segmentation d'image par Shi \& al, comme on le voit dans l'équation \ref{eq:shi}, on peut, dans le cas de la segmentation d'une image, définir la notion de similarité par une différence de colorimétrie entre les deux pixels comparés. La notion de proximité introduit elle une notion de seuil.
 
 L'utilisation conjointe de ces contraintes est particulièrement difficile à formaliser, mais néanmoins indispensable à l'obtention d'une segmentation de qualité. Le schéma fonctionnel de la Figure \ref{fig:alc} montre comment ces axes de structuration ont été considérés. Au début de l'algorithme, les éléments de structuration $O_{0 k}$ correspond aux trames du spectrogramme. En partant de ce type d'objets élémentaires, il est évident que la notion de proximité doit prédominer, car les notions de similarité et \textit{à fortiori} le critère de séquentialité ne peuvent se baser sur une information aussi peu discriminative.  En revanche, plus on considère des objets complexes $O_{p k}, p >> 0$, plus cette tendance va s'inverser. Fort de ce constat, nous avons donc chercher à concevoir un algorithme de structuration hiérarchique basé sur l'expression de ces critères qui soit adapté à la segmentation temporelle de scènes sonores~\cite{rossignolhal-01122006}.
-
-
 
 L'algorithme proposé effectue pour cela un regroupement hiérarchique ascendant des trames d'un spectrogramme. La première étape ne considère que le  critère de continuité, \textit{i.e.} une similarité sous contrainte de localité. Cette étape permet d'avoir des fragments au contenu spectral plus spécifique, un élément important pour obtenir une mesure de séquentialité qui soit pertinente dès le début du processus de structuration. Pour les niveaux suivants, on considère la combinaison d'une mesure de similarité de forme, exprimée comme le coût minimal d'un alignement élastique entre les deux fragments comparés, et d'une mesure de similarité de séquence, calculée à partir d'une quantification des trames associées aux fragments, comme représenté sur la Figure \ref{fig:alc}. L'algorithme procède comme suit :
 
@@ -324,59 +322,62 @@ Prenons le cas de la tâche de détection d'évènements sonores dans des scène
 
 Evaluer ces éléments nécessite d'avoir à disposition des corpus séparés avec, dans le premier cas, un niveau de bruit de fond qui augmente, dans le deuxième cas, une diversité qui varie, et dans le troisième cas des conditions d'enregistrements qui changent. Bien entendu, la prise de son et l'annotation de scènes sonores brutes pour chacune de ces conditions expérimentales sont possible mais sensiblement plus coûteuses à mettre en place pour obtenir le niveau de précision souhaité.
 
-\marginnote{Une implantation de ce modèle dédiée à l'évaluation a été réalisée en MATLAB\textsuperscript{\textregistered}. \url{https://bitbucket.org/mlagrange/simscene}. Un outil alternatif a été développé en Python par Justin Salamon \url{https://github.com/justinsalamon/scaper}.}
+\marginnote{Une implantation de ce modèle dédiée à l'évaluation a été réalisée en MATLAB\textsuperscript{\textregistered} ( \url{https://bitbucket.org/mlagrange/simscene}). Un outil alternatif a été développé en Python par Justin Salamon (\url{https://github.com/justinsalamon/scaper}).}
 
-Nous avons considéré un modèle de scènes sonores qui permet d'aisément générer des scènes sonores tout en contrôlant ces paramètres. Le modèle proposé se présente comme suit. Pour une scène $s$ composée de $z$ classes de sons, on a :
+Nous avons donc considéré un modèle de scènes sonores~\cite{lafayPhd} qui permet d'aisément générer des scènes sonores tout en contrôlant ces paramètres compositionnels, et ce à partir d'un corpus de sons isolés où chaque enregistrement audio fait partie d'une \textit{collection}. Deux enregistrements font partie d'une même collection si ils sont appréciés de manière équivalente par des auditeurs dans un contexte d'écoute donné. Pour générer des scènes avec une certaine diversité en terme de contenu, il suffit alors de choisir différent éléments de la collection. Pour générer des scènes avec une certaine diversité en terme de composition, le modèle se base sur un processus de séquencement des sons où l'amplitude et l'écart temporel entre deux sons d'une même source sont contrôlés par des processus stochastiques dont les paramètres sont estimés à partir de scènes sonores annotés en terme de présence de source.
 
-\begin{equation}
-  s[n]=\sum_{i=1}^{z}p_i[n]
-\end{equation}
-avec $n$ un indice temporel discret, et $p_i$ la piste correspondant à la classe $C_i$. La classe $C_i$ est composée de $\vert C_i\vert$ échantillons $c_{i,m}$ avec $1<m<\vert C_i\vert$. Un échantillon est donc ici un enregistrement sonore d'une durée déterminée.
 
-Soit $\mathcal{U}(x,y)$, une distribution uniforme d'entiers allant de $x$ à $y$, avec $x<y$. Une piste $p_i$ est vue comme une séquence de $k_i$ échantillons d'événements. On définit $E_j^i$ ($j \in \lbrace 1,2,\ldots,k_i\rbrace$) une suite de variables aléatoires indépendantes et identiquement distribuées (iid) suivant la loi $\mathcal{U}(1,\vert C_i \vert)$.
+%Le modèle proposé se présente comme suit. Pour une scène $s$ composée de $z$ classes de sons, on a :
 
-\begin{equation}
-  E_j^i \textrm{ iid : } \mathcal{U}(1,\vert C_i \vert) \quad \forall j
-\end{equation}
-
-On définit $e_j^i[n]$, un événement choisi aléatoirement parmi les $\vert c_i\vert$ échantillons de la classe $C_i$ :
-
-\begin{equation}
-  e_j^i=c_{i,E_j^i}
-\end{equation}
-
-On définit $V^i_j$ et $T^i_j$ ($j=\lbrace 1,2,\ldots,k_i\rbrace$), deux suites de variables aléatoires iid. Pour chaque piste $p_i$, les $V^i_j$ sont les facteurs de volume appliqués aux événements $e_j^i$, dont nous modélisons la distribution, par souci de simplicité, par une loi normale tronquée à zéro de moyenne $\mu_v^i$ et de variance $\sigma_v^i$. De même, pour chaque piste $p_i$, les $T_j^i$ sont les espacements inter-\emph{onsets}, lesquels suivent une loi normale tronquée à zéro de moyenne $\mu_t^i$ et de variance $\sigma_t^i$.
-
-Soit $\mathcal{N}(\mu,\sigma)$, une distribution normale de moyenne $\mu$ et de variance $\sigma$, on a alors :
-
-\begin{equation}
-  \label{eq:ch4_eq1}
-  V_j^i \textrm{ iid : } \mathcal{N}(\mu_a^{i},\sigma_a^{i}) \quad \forall j \quad \textrm{ et } \quad T_j^i \textrm{ iid : } \mathcal{N}({\mu_t^{i},\sigma_t^{i}}) \quad \forall j
-\end{equation}
-
-Lors de la génération d'une scène, les valeurs des $V^i_j$ et $T_j^i$ sont déterminées par tirage aléatoire, suivant les distributions correspondantes.
-
-On définit $b^i$ et $f^i$ les indices temporels de début et de fin de chaque piste $p_i$ respectivement.
-
-Une piste $p_i$ se définit alors comme suit:
-
-\begin{equation}
-  \label{eq:ch4_eq2}
-  p_{i}[n]= \sum_{j=1}^{k_i} V_j^i e_j^i(n-n_j^i) \quad \textrm{ avec } \quad n_j^i=n_{j-1}^i + T_j^i
-\end{equation}
-
-où, par convention, $n^i_0=b^i$ et $p_i[n]=0$ si $n>f^i$.
-
-Les paramètres du modèle sont, $\mu_v^i$, $\sigma_v^i$, $\mu_t^i$, $\sigma_t^i$, $b^i$, $f^i$ et $k_i$, et doivent être fixés pour chaque piste $p_i$. Pour des applications de design sonore, ces paramètres peuvent être fixés par un humain. Pour des applications de génération de corpus, ces paramètres peuvent être estimés à partir d'annotations de scènes sonores existantes. L'échantillonnage des distributions permet alors de créer une certaine diversité dans la composition des scènes tout en respectant une certaine cohérence.
-
-% La figure~\ref{fig:modelSequence} offre une illustration de l'action des paramètres introduits.
-
-Pour les bruits de fonds, deux distinctions sont à observer avec le modèle défini précédemment :
-
-\begin{enumerate}
-  \item afin d'éviter toute sensation de discontinuité, deux échantillons de texture $e_j^i$ et $e_{j+1}^i$ sont concaténés en considérant un recouvrement fixé, sur lequel est appliqué un fondu enchaîné à valeur d'énergie constante entre les échantillons;
-  \item il n'y a qu'un facteur de volume par piste ($V^i \textrm{ : } \mathcal{N}(\mu_v^{i},\sigma_v^{i})$), sa valeur s'appliquant à tous les échantillons.
-\end{enumerate}
+% \begin{equation}
+%   s[n]=\sum_{i=1}^{z}p_i[n]
+% \end{equation}
+% avec $n$ un indice temporel discret, et $p_i$ la piste correspondant à la classe $C_i$. La classe $C_i$ est composée de $\vert C_i\vert$ échantillons $c_{i,m}$ avec $1<m<\vert C_i\vert$. Un échantillon est donc ici un enregistrement sonore d'une durée déterminée.
+%
+% Soit $\mathcal{U}(x,y)$, une distribution uniforme d'entiers allant de $x$ à $y$, avec $x<y$. Une piste $p_i$ est vue comme une séquence de $k_i$ échantillons d'événements. On définit $E_j^i$ ($j \in \lbrace 1,2,\ldots,k_i\rbrace$) une suite de variables aléatoires indépendantes et identiquement distribuées (iid) suivant la loi $\mathcal{U}(1,\vert C_i \vert)$.
+%
+% \begin{equation}
+%   E_j^i \textrm{ iid : } \mathcal{U}(1,\vert C_i \vert) \quad \forall j
+% \end{equation}
+%
+% On définit $e_j^i[n]$, un événement choisi aléatoirement parmi les $\vert c_i\vert$ échantillons de la classe $C_i$ :
+%
+% \begin{equation}
+%   e_j^i=c_{i,E_j^i}
+% \end{equation}
+%
+% On définit $V^i_j$ et $T^i_j$ ($j=\lbrace 1,2,\ldots,k_i\rbrace$), deux suites de variables aléatoires iid. Pour chaque piste $p_i$, les $V^i_j$ sont les facteurs de volume appliqués aux événements $e_j^i$, dont nous modélisons la distribution, par souci de simplicité, par une loi normale tronquée à zéro de moyenne $\mu_v^i$ et de variance $\sigma_v^i$. De même, pour chaque piste $p_i$, les $T_j^i$ sont les espacements inter-\emph{onsets}, lesquels suivent une loi normale tronquée à zéro de moyenne $\mu_t^i$ et de variance $\sigma_t^i$.
+%
+% Soit $\mathcal{N}(\mu,\sigma)$, une distribution normale de moyenne $\mu$ et de variance $\sigma$, on a alors :
+%
+% \begin{equation}
+%   \label{eq:ch4_eq1}
+%   V_j^i \textrm{ iid : } \mathcal{N}(\mu_a^{i},\sigma_a^{i}) \quad \forall j \quad \textrm{ et } \quad T_j^i \textrm{ iid : } \mathcal{N}({\mu_t^{i},\sigma_t^{i}}) \quad \forall j
+% \end{equation}
+%
+% Lors de la génération d'une scène, les valeurs des $V^i_j$ et $T_j^i$ sont déterminées par tirage aléatoire, suivant les distributions correspondantes.
+%
+% On définit $b^i$ et $f^i$ les indices temporels de début et de fin de chaque piste $p_i$ respectivement.
+%
+% Une piste $p_i$ se définit alors comme suit:
+%
+% \begin{equation}
+%   \label{eq:ch4_eq2}
+%   p_{i}[n]= \sum_{j=1}^{k_i} V_j^i e_j^i(n-n_j^i) \quad \textrm{ avec } \quad n_j^i=n_{j-1}^i + T_j^i
+% \end{equation}
+%
+% où, par convention, $n^i_0=b^i$ et $p_i[n]=0$ créersi $n>f^i$.
+%
+% Les paramètres du modèle sont, $\mu_v^i$, $\sigma_v^i$, $\mu_t^i$, $\sigma_t^i$, $b^i$, $f^i$ et $k_i$, et doivent être fixés pour chaque piste $p_i$. Pour des applications de design sonore, ces paramètres peuvent être fixés par un humain. Pour des applications de génération de corpus, ces paramètres peuvent être estimés à partir d'annotations de scènes sonores existantes. L'échantillonnage des distributions permet alors de créer une certaine diversité dans la composition des scènes tout en respectant une certaine cohérence.
+%
+% % La figure~\ref{fig:modelSequence} offre une illustration de l'action des paramètres introduits.
+%
+% Pour les bruits de fonds, deux distinctions sont à observer avec le modèle défini précédemment :
+%
+% \begin{enumerate}
+%   \item afin d'éviter toute sensation de discontinuité, deux échantillons de texture $e_j^i$ et $e_{j+1}^i$ sont concaténés en considérant un recouvrement fixé, sur lequel est appliqué un fondu enchaîné à valeur d'énergie constante entre les échantillons;
+%   \item il n'y a qu'un facteur de volume par piste ($V^i \textrm{ : } \mathcal{N}(\mu_v^{i},\sigma_v^{i})$), sa valeur s'appliquant à tous les échantillons.
+% \end{enumerate}
 
 % \begin{figure}[t]
 %         \def\svgwidth{\linewidth}
