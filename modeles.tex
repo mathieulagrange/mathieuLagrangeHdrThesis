@@ -98,7 +98,7 @@ On calcule la transformée de Fourier de manière efficace grâce à des algorit
 Comme on peut le voir sur la Figure \ref{fig:spec}, en considérant le module de cette transformée, on manipule directement l'intensité du son à une fréquence donnée. Le spectre de phase est lui souvent négligé dans les modèles, car il est beaucoup plus difficile à interpréter. Ceci constitue un handicap majeur pour tous les modèles de sons basés sur la transformée de Fourier car cela pose bien souvent une limite sur la propriété de fidélité, le module et l'exposant sont mathématiquement liés.
 
 
-En considérant qu'une partie des sons que l'on cherche à modéliser possèdent une structure temporelle forte, on s'intéresse à l'estimation des paramètres de composantes périodiques simples, les sinusoïdes. Considérons pour cela un premier signal \og éprouvette \fg constitué d'une sinusoïde de fréquence et d'amplitude constante:
+En considérant qu'une partie des sons que l'on cherche à modéliser possèdent une structure temporelle forte comme une note de piano ou un sifflement d'oiseau, on s'intéresse à l'estimation des paramètres de composantes périodiques simples, les sinusoïdes. Considérons pour cela un premier signal \og éprouvette \fg constitué d'une sinusoïde de fréquence et d'amplitude constante:
 \begin{equation}
   s_s[n] = a_s \mathrm{sin}(2\pi f_s n /f_e + \phi_s)
   \label{eq:sin_toy}
@@ -181,7 +181,7 @@ En considérant la tfct, il est alors possible de construire un estimateur \og s
 \end{equation}
 \`A condition d'utiliser une fenêtre \fg à rampe \og, on peut améliorer la précision temporelle de cet estimateur en réduisant le recouvrement entre fenêtres. La encore, il s'agit d'une amélioration de la précision et non de la résolution. Seule la réduction de l'intervalle d'observation permettra de résoudre la position temporelle de deux diracs proches.
 
-Au travers de ces deux exemples, on voit qu'il est possible d'améliorer dans une certaine mesure la précision des estimations effectuées à partir d'un plan temps / fréquence obtenu grâce à la tfct. Néanmoins, les résolutions temporelles et fréquentielles restent conflictuellement contraintes par la taille de la fenêtre choisie, comme énoncé par le principe d'incertitude d'Heisenberg. On parle ici de variables complémentaires pour le temps et la fréquence, au même titre que la position et la quantité de mouvement en mécanique.
+Au travers de ces deux exemples, on voit qu'il est possible d'améliorer dans une certaine mesure la précision des estimations effectuées à partir d'un plan temps / fréquence obtenu grâce à la tfct. Néanmoins, les résolutions temporelles et fréquentielles restent conflictuellement contraintes par la taille de la fenêtre choisie,~\cite{slepian1983some} comme énoncé par le principe d'incertitude d'Heisenberg. On parle ici de variables complémentaires pour le temps et la fréquence, au même titre que la position et la quantité de mouvement en mécanique.
 
 Le problème se corse sensiblement lorsque l'on considère des signaux qui possèdent à la fois une localité temporelle et fréquentielle, ce qui est le cas de la plupart des signaux sonores naturels\marginnote[-1cm]{Un exemple iconique étant la note de piano dont la qualité s'exprime autant du côté de la localité temporelle (netteté de l'attaque) que de la localité fréquentielle (pureté des harmoniques).}.
 
@@ -209,16 +209,36 @@ Pavage du plan temps / fréquence de la transformée en ondelettes.
 
 
 
-Même si les travaux théoriques dans ce domaine ont permis d'ouvrir considérablement les possibilités en terme de conception, je me  tiendrai ici à la forme la plus courante en traitement du signal qui consiste en une construction d'un banc de filtre dyadique à facteur de qualité constant. Ce banc de filtre est constitué d'un ensemble de filtres passe bande à l'octave, \textit{i.e.} la fréquence de coupure supérieure est égale à deux fois la fréquence de coupure inférieure. On obtient alors un pavage du plan temps / fréquence alternatif à celui du spectrogramme. Du fait du principe d'incertitude, les pavés ont la même aire, mais le rapport entre résolution fréquentielle et temporelle est optimalement adapté, contrairement à celui du spectrogramme qui lui reste constant. La Figure \ref{fig:dirac} montre la transformée en ondelettes d'une impulsion de Dirac. On y  observe clairement l'augmentation de la résolution temporelle en fonction de la fréquence.
+% Même si les travaux théoriques dans ce domaine ont permis d'ouvrir considérablement les possibilités en terme de conception, je me  tiendrai ici à la forme la plus courante en traitement du signal qui consiste en une construction d'un banc de filtre dyadique à facteur de qualité constant. Ce banc de filtre est constitué d'un ensemble de filtres passe bande à l'octave, \textit{i.e.} la fréquence de coupure supérieure est égale à deux fois la fréquence de coupure inférieure.
 
-En considérant que le banc de filtre est construit de manière itérative en partant des hautes fréquences, et en notant que le signal observé est d'une durée limitée, une partie du spectre en basse fréquence ne peut être capturé. On ajoute alors un filtre passe bas dit \og de terminaison \fg qui permet de préserver l'unicité de la représentation. Ce dernier filtre est souvent appelé \og fonction d'échelle \fg. Les sorties de ce banc de filtres peuvent être ensuite re-échantillonnées à une fréquence de Nyquist correspondante à la largeur de la bande d'octave du filtre considéré% QUID DU FILTRE DE TERMINAISON ?
-. Comme le montrent les travaux pionniers effectué par Richard Kronland-Martinet~\cite{kronland1987analysis}, l'application de la transformée en ondelettes paraît avoir d'excellentes propriétés pour le traitement de l'audio, en particulier cette capacité à proposer une analyse multirésolution en préservant la propriété d'unicité.
+Soit ${\psi}(t)$ un filtre de fréquence centrale $\xi$ et de largeur $\xi/Q$, où $Q$ est le facteur de qualité du filtre, le banc de filtre est construit en dilatant
+ ${\psi}(t)$ par une séquence géométrique d'échelles $2^{\lambda/Q}$, pour obtenir
+\begin{equation}
+{\psi_{\lambda}}(t) = 2^{-\lambda/Q} {\psi}(2^{-\lambda/Q} t)\mbox{.}
+\end{equation}
+La variable $\lambda$ est un facteur d'échelle prenant des valeurs entières entre $0$ et $(J Q - 1)$, où $J$ est le nombre d'octaves couvertes par le banc de filtre.
+
+La transformée en ondelettes d'un signal
+${x}(t)$ est obtenue par convolution avec tout les filtres. Un scalogramme, comme celui de la Figure \ref{fig:dirac}, s'obtient par application du module au résultat :
+\begin{equation}
+{x}(t, \lambda)
+= \vert {x} \ast {\psi_{\lambda}} \vert (t)\mbox{.}
+\end{equation}
+
+
+En considérant ce type de décomposition, on obtient alors un pavage du plan temps / fréquence alternatif à celui du spectrogramme. Du fait du principe d'incertitude, les pavés ont la même aire, mais le rapport entre résolution fréquentielle et temporelle est optimalement adapté, contrairement à celui du spectrogramme qui lui reste constant. La Figure \ref{fig:dirac} montre le scalogramme d'une impulsion de Dirac. On y observe clairement l'augmentation de la résolution temporelle en fonction de la fréquence.
+
+En considérant que le banc de filtre est construit de manière itérative en partant des hautes fréquences, et en notant que le signal observé est d'une durée limitée, une partie du spectre en basse fréquence ne peut être capturé. On ajoute alors un filtre passe bas dit \og de terminaison \fg qui permet de préserver l'unicité de la représentation. Ce dernier filtre, souvent appelé \og fonction d'échelle \fg est peu utilisé dans le cas du traitement de l'audio car il est aisé de capturer le spectre audible avec le banc de filtre en ondelettes et ainsi ne pas considérer la composante continue. Les sorties de ce banc de filtres peuvent être ensuite re-échantillonnées à une fréquence de Nyquist correspondante à la largeur de la bande d'octave du filtre considéré.
 
 \begin{marginfigure}
   \includegraphics[width=\textwidth]{diracWavelet}
-  \caption{Transformée en ondelettes d'une impulsion de Dirac.}
+  \caption{Scalogramme d'une impulsion de Dirac.}
   \label{fig:dirac}
 \end{marginfigure}
+
+Comme le montrent les travaux pionniers effectué par Richard Kronland-Martinet~\cite{kronland1987analysis}, l'application de la transformée en ondelettes paraît avoir d'excellentes propriétés pour le traitement de l'audio, en particulier cette capacité à proposer une analyse multirésolution en préservant la propriété d'unicité.
+
+
 
 Quelques décennies plus tard, on doit malheureusement faire le constat que l'utilisation de la transformée en ondelettes reste marginale en traitement de l'audio. Dépasser ce constat arbitraire pour amener des éléments concrets nécessiterait une étude approfondie qui sort du cadre de cet exposé. On peut néanmoins avancer quelques éléments de réflexion.
 
@@ -280,11 +300,11 @@ Dans un objectif d'expressivité, il est à contrario important que l'observatio
 
 Il convient donc d'être à même de sélectionner parmi les composantes candidates, celles qui sont les plus appropriées en fonction de critères dits de \og sinusoidalité \fg. Une manière de faire consiste à corréler, pour chaque pic candidat, sa réponse fréquentielle à celle du spectre d'une sinusoïde dont les paramètres sont résultant du processus d'estimation.~\cite{peak-selection} Le degré de corrélation permet alors de quantifier la pertinence du modèle vis-à-vis de l'observation. Une étude comparative semble montrer l'intérêt de cette approche.~\cite{wells2010comparative} Dans cet algorithme, les références au modèle sont ici construites dynamiquement mais peuvent aussi être échantillonnées. On se rapproche alors du principe des algorithmes de poursuite de sous espaces.
 
-Le principe de ces algorithmes est de s'affranchir des contraintes de la base de Fourier en disposant d'un (très) large dictionnaire d'atomes redondants et de déterminer la combinaison optimale de ces atomes permettant de réduire l'erreur d'approximation. L'algorithme "matching pursuit" (mp) proposé par Stéphane Mallat~\cite{mallat1993matching} permet de résoudre efficacement ce problème en considérant un algorithme glouton, où l'atome mis à l'échelle ayant la meilleure corrélation avec le signal résiduel (égal au signal d'origine au début de l'algorithme) est itérativement sélectionné puis soustrait. L'application de cet algorithme à des signaux musicaux peut poser des problèmes, dont certains ont été étudiés par Rémi Gribonval.~\cite{gribonval1996sound} %Par exemple, dans le cas de signaux non stationnaire en amplitude, l'algorithme aura tendance à construire des approximations non satisfaisantes.
+Le principe de ces algorithmes est de s'affranchir des contraintes de la base de Fourier en disposant d'un (très) large dictionnaire d'atomes redondants et de déterminer la combinaison optimale de ces atomes permettant de réduire l'erreur d'approximation. Dans de la modélisation de données audionumériques, des atomes sont typiquement des sinusoïdes tronquées ou fenêtrées. L'algorithme "matching pursuit" (mp) proposé par Stéphane Mallat~\cite{mallat1993matching} permet de résoudre efficacement ce problème en considérant un algorithme glouton, où l'atome mis à l'échelle ayant la meilleure corrélation avec le signal résiduel (égal au signal d'origine au début de l'algorithme) est itérativement sélectionné puis soustrait. L'application de cet algorithme à des signaux musicaux peut poser des problèmes, dont certains ont été étudiés par Rémi Gribonval.~\cite{gribonval1996sound} %Par exemple, dans le cas de signaux non stationnaire en amplitude, l'algorithme aura tendance à construire des approximations non satisfaisantes.
 
 \begin{marginfigure}
   \includegraphics[width=\textwidth]{gribonval.png}
-  \caption{Deux composantes sinusoïdales dont l'amplitude est modulée a) sinusoïdalement, b) exponentiellement et décompositions par deux algorithmes de poursuite.}
+  \caption{Deux composantes sinusoïdales dont l'amplitude est modulée a) sinusoïdalement, b) exponentiellement et décompositions correspondantes par deux algorithmes de poursuite (mp et hrmp).}
   \label{fig:gribonval}
 \end{marginfigure}
 
@@ -370,7 +390,7 @@ On constate ici que la structure de données se complexifie sensiblement par rap
 
 Une étape de continuation du partiel $\mathcal{P}_{p}$ dans les trames d'indices $t+1$ à $t+l$. La sélection de la meilleure continuation se fait parmi les atomes  (point noirs) $p_{t+1...l, c}$ de fréquence $f_{t+1...l, c}$ proches des valeurs de fréquence prédites $\hat{f}_{p}[t+1...l]$ obtenue par prédiction linéaire (étoiles) et ces valeurs prédites (traits pointillés).}
 
-La contrainte exprimée par l'équation \ref{eq:macseuil} revient à avoir un prédicteur constant en fréquence. Dans le cas d'un modèle court terme de bonne qualité, par exemple dans le cas d'un signal monophonique à structure harmonique, cette heuristique peut être raisonnable. Dans le cas de signaux bruités et / ou polyphoniques, il est utile d'améliorer la finesse du prédicteur en considérant un prédicteur linéaire appliqué aux séries temporelles des paramètres long terme. Le faible échantillonnage de ces séries temporelles nécessite des estimateurs adaptés comme celui de Burg.~\cite{burg1968new}
+La contrainte exprimée par l'équation \ref{eq:macseuil} revient à avoir un prédicteur constant en fréquence. Dans le cas d'un modèle court terme de bonne qualité, par exemple dans le cas d'un signal monophonique à structure harmonique comme une note de flûte, cette heuristique peut être raisonnable. Dans le cas de signaux bruités et / ou polyphoniques, il est utile d'améliorer la finesse du prédicteur en considérant un prédicteur linéaire appliqué aux séries temporelles des paramètres long terme. Le faible échantillonnage de ces séries temporelles nécessite des estimateurs adaptés comme celui de Burg.~\cite{burg1968new}
 
 Dans ce cas, à partir des fréquences du partiel de la trame $t-g$ à la trame $t$ où $g$ est le nombre de fréquences pris en compte, on obtient par application du prédicteur linéaire une prédiction des valeurs des fréquences du partiel pour les trames suivantes : $\hat{f}_{p}[t+1...l]$, où $l$ est l'horizon temporel utilisé.
 
@@ -422,7 +442,7 @@ Pour parvenir à ce modèle, Shihab Shamma a étudié certains neurones du corte
 
 Dans ce modèle, le signal est donc tout d'abord décomposé sur l'axe fréquentiel. La sortie est un équivalent du spectrogramme qui est ensuite décomposé une nouvelle fois fréquentiellement en temps et en fréquence grâce à des ondelettes bi-dimensionnelles paramétrées avec un facteur d'échelle. La dimension de l'échelle permet de définir le nombre de bandes qui sont conjointement utilisées pour effectuer cette seconde décomposition.
 
-Ces modèles sont bien entendu sujet à débat dans la communauté de neurophysiologie. Par exemple, le facteur d'échelle est pour Torsten Dau non nécessaire pour expliquer les données recueillies grâce à son protocole expérimental.
+Ces modèles sont bien entendu sujet à débat dans la communauté de neurophysiologie. Par exemple, le facteur d'échelle n'est pas nécessaire dans le modèle de Torsten Dau pour expliquer les données recueillies grâce à son protocole expérimental.
 
 \subsection{\nmu Scattering d'ondelettes}  \label{sec:scattering}
 
@@ -443,24 +463,37 @@ En effet, pour la tâche pré-citée, que la note ait été jouée plus ou moins
 
 L'invariance au changement de volume est localement obtenue en normalisant les signaux que l'on souhaite comparer. L'invariance locale à la translation en temps se traduit dans le domaine de Fourier en une invariance à la translation de phase par la prise du module. On souhaite généralement que l'invariance au volume et à la translation soit complète. En ce qui concerne l'invariance à l'étirement temporel, on souhaite généralement plutôt que la représentation soit stable à la déformation.
 
-Il est clairement explicité par Joakim And\'en~\cite{anden2014deep} pourquoi le spectre de magnitude de Fourier d'un signal harmonique n'est pas stable à même un petit étirement temporel. En effet, l'impact de l'étirement selon l'axe des fréquences n'est pas le même. Si un petit étirement déplacera d'une petite quantité les fréquences basses, les fréquences plus élevées le seront beaucoup plus. Prenons l'exemple d'un signal harmonique de fréquence de fondamentale $440$ Hz, un étirement temporel va réduire la valeur de cette fréquence à disons $430$ Hz pour un delta de $10$ Hz. Ce delta sera $n$ fois plus grand pour la $n^{\text{ième}}$ harmonique soit $100$ Hz pour la dixième harmonique. Pour une transformée de Fourier avec une quantification de l'axe fréquentiel d'une dizaine de Hertz, la différence entre les deux spectres va croitre très rapidement en fonction du delta car l'énergie des harmoniques supérieures va très rapidement se placer sur des pas de quantification différents de ceux où l'énergie des harmoniques se plaçait initialement.
+Il est clairement explicité par Joakim And\'en~\cite{anden2014deep} pourquoi le spectre de magnitude de Fourier d'un signal harmonique n'est pas stable à même un petit étirement temporel. En effet, l'impact de l'étirement selon l'axe des fréquences n'est pas le même. Si un petit étirement déplacera d'une petite quantité les fréquences basses, les fréquences plus élevées le seront beaucoup plus. Prenons l'exemple d'un signal harmonique de fréquence de fondamentale $440$ Hz, un étirement temporel va réduire la valeur de cette fréquence à disons $430$ Hz pour un delta de $10$ Hz. Ce delta sera $n$ fois plus grand pour la $n^{\text{ième}}$ harmonique soit $100$ Hz pour la dixième harmonique. Pour une transformée de Fourier avec une quantification de l'axe fréquentiel d'une dizaine de Hertz, la différence entre les deux spectres va croître très rapidement en fonction du delta car l'énergie des harmoniques supérieures va très rapidement se placer sur des pas de quantification différents de ceux où l'énergie des harmoniques se plaçait initialement.
 
-Pour être plus stable à ce type de déformation, il convient alors de \og délocaliser \fg les hautes fréquences de manière plus conséquente que les basses. Suivant les communautés, on obtient cette délocalisation progressive sur l'axe des fréquences avec des transformées à Q constant, de type tiers d'octave (acoustique), des mels ou des Barks (parole)\marginnote[-4cm]{Ce résultat est à mon sens d'importance, car il permet de placer un cadre mathématique pour mieux expliquer l'utilité d'un axe fréquentiel logarithmique qui a été empiriquement vérifié dans de nombreux domaines du traitement de l'audio et motivé jusqu'ici par des arguments essentiellement neuro mimétiques.}.
+Pour être plus stable à ce type de déformation, il convient alors de \og délocaliser \fg les hautes fréquences de manière plus conséquente que les basses. Suivant les communautés, on obtient cette délocalisation progressive sur l'axe des fréquences avec des transformées à Q constant, de type tiers d'octave (acoustique), des mels ou des Barks (parole)\marginnote[0cm]{Ce résultat est à mon sens d'importance, car il permet de placer un cadre mathématique pour mieux expliquer l'utilité d'un axe fréquentiel logarithmique qui a été empiriquement vérifié dans de nombreux domaines du traitement de l'audio et motivé jusqu'ici par des arguments essentiellement neuro mimétiques.}.
 
-En se plaçant dans le cadre du scattering d'ondelettes, dont le schéma fonctionnel est montré sur la Figure \ref{fig:scat}, on obtient ce type de représentation en délocalisant en temps toutes les bandes de fréquence du module de la transformée en ondelettes $\psi_j$ par l'application d'un filtre moyennant $\phi_J$ ce qui induit une perte d'information qu'il convient de compenser. Le principe du scattering d'ondelettes permet de répondre élégamment à ce problème en cascadant des opérations de décomposition et en utilisant chaque niveau de décomposition pour produire une représentation compacte et informative. Ainsi, le scattering dissocie décomposition et représentation, ce qui permet de préserver certaines propriétés d'intérêt comme, par exemple, l'inversibilité pour la décomposition sous certaines conditions et la stabilité pour la représentation.
+En se plaçant dans le cadre du scattering d'ondelettes, dont le schéma fonctionnel est montré sur la Figure \ref{fig:scat}, on obtient ce type de représentation en délocalisant en temps toutes les bandes de fréquence du module de la transformée en ondelettes $\psi_j$ par l'application d'un filtre moyennant $\phi$ pour obtenir les coefficients de scattering au premier ordre $S_1$ :
 
-\begin{figure}
+\begin{equation}
+S_1{x}(t, \lambda_1)
+= \vert {x} \ast {\psi_{\lambda_1}} \vert \ast \phi(t)\mbox{.}
+\end{equation}
+
+Ceci induit une perte d'information qu'il convient de compenser. Le principe du scattering d'ondelettes permet de répondre élégamment à ce problème en cascadant des opérations de décomposition et en utilisant chaque niveau de décomposition pour produire une représentation compacte et informative. Ainsi, on obtient au second ordre :
+
+\begin{equation}
+S_2{x}(t, \lambda_1, \lambda_2)
+= \vert \vert {x} \ast {\psi_{\lambda_1}} \vert \ast {\psi_{\lambda_2}} \vert \ast \phi(t)\mbox{.}
+\end{equation}
+
+Comme le montre la Figure \ref{fig:scat}, le scattering dissocie décomposition et représentation, ce qui permet de préserver certaines propriétés d'intérêt comme, par exemple, l'inversibilité pour la décomposition sous certaines conditions et la stabilité pour la représentation.
+
+\begin{figure}[t]
   \includegraphics[width=\textwidth]{scattering.png}
-  \caption{Propagation du signal au travers du scattering d'ondelettes au second ordre.}
+  \caption{Propagation du signal au travers du scattering d'ondelettes au premier et second ordre.}
   \label{fig:scat}
 \end{figure}
 
-
-La sortie du filtre moyennant au premier ordre est équivalent en terme conceptuel à une transformée à Q constant. En décomposant les sorties rectifiées du premier banc de filtres en ondelettes $\psi_j$ avec un autre banc de filtres en ondeletes $\psi_k$, on capte alors l'information de modulation d'amplitude, \textit{i.e.} comment l'énergie fluctue dans une même bande fréquence. On a vu précédemment l'importance de ce type de modulation pour la perception. Il est donc opportun de d'étudier l'apport du second ordre pour une représentation riche du signal sonore.  %\marginnote{Le processus de cascade. Le troisième ordre est conceptuellement difficile à appréhender et a encore été peu étudié, pour les raisons suivantes 1) pratique : l'énergie au troisième ordre est très faible, 2) neuro-mimétique : aucun modèle perceptif n'explicite un troisième ordre de traitement.}.
-
+La sortie du filtre moyenneur au premier ordre est équivalent en terme à une transformée à Q constant. En décomposant les sorties rectifiées du premier banc de filtres en ondelettes $\psi_{\lambda_1}$ avec un autre banc de filtres en ondeletes $\psi_{\lambda_2}$, on capte alors l'information de modulation d'amplitude, \textit{i.e.} comment l'énergie fluctue dans une même bande fréquence. On a vu précédemment l'importance de ce type de modulation pour la perception. Il est donc opportun de d'étudier l'apport du second ordre pour une représentation riche du signal sonore.  %\marginnote{Le processus de cascade. Le troisième ordre est conceptuellement difficile à appréhender et a encore été peu étudié, pour les raisons suivantes 1) pratique : l'énergie au troisième ordre est très faible, 2) neuro-mimétique : aucun modèle perceptif n'explicite un troisième ordre de traitement.}.
 
 
-\marginnote[-8cm]{
+
+\marginnote[-12cm]{
 \begin{center}
 (1) \\
   \includegraphics[width=.5\textwidth]{mf_tech_two_dmap.png}\\
@@ -480,7 +513,7 @@ En terme d'architecture, le scattering d'ondelettes suit une organisation de typ
 
 En se référant plutôt aux processus physiques de production sonore, les approches modales permettent de proposer des modèles qui soient à la fois efficaces et effectifs. Ces modèles se basent sur un modèle de production de type source / filtre, où la source est généralement décrite en terme de propriétés temporelles, et le filtre en terme de propriétés fréquentielles. Pour un signal de parole, on considèrera que la source peut être soit un train d'impulsions résultant de l'ouverture périodique des plis vocaux pour la production des sons voisés (voyelles) soit un signal stochastique résultant de la compression du flux respiratoire pour la production des plosives ou sifflantes (consonnes).
 
-\marginnote[-1cm]{
+\marginnote[-5cm]{
   \scalebox{.7}{
   \input{exp/modal}}
 Schéma de traitement de la phase d'analyse d'un modèle de synthèse modale pour les sons de roulement. Les traits pleins désignent des signaux, les traits pointillés désignent des paramètres.
