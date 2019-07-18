@@ -4,7 +4,7 @@ La plupart des modèles de sons utilisés dans la littérature sont des modèles
 
 \section{ \nmu Préambule}
 
-On considérera ici qu'un signal sonore est un signal à valeurs réelles, échantillonné à une fréquence de 40 kHz environ. \`A titre d'exemple, la Figure \ref{fig:onde} montre la forme d'onde d'une note de piano. Ce signal peut provenir d'une version quantifiée, mais on supposera que le pas de quantification est suffisamment réduit pour n'introduire qu'une dégradation perceptivement négligeable. On notera ce signal $x[n]$. Il peut être observé sur un intervalle de temps donné, correspondant à un certain nombre d'échantillons temporels $s[n], n \in [1, ..., N]$ souvent appelé intervalle d'observation, trame, support ou encore champ réceptif. Je n'utiliserai pas dans ce document la version continue du signal, l'expression $f(x)$ devant se comprendre comme l'application d'une fonction $f$ à un signal $x$.
+On considérera ici qu'un signal sonore est un signal à valeurs réelles, échantillonné à une fréquence de 40 kHz environ. \`A titre d'exemple, la Figure \ref{fig:onde} montre la forme d'onde d'une note de piano. Ce signal peut provenir d'une version quantifiée, mais on supposera que le pas de quantification est suffisamment réduit pour n'introduire qu'une dégradation perceptivement négligeable. On notera ce signal $x[n]$. Il peut être observé sur un intervalle de temps donné, correspondant à un certain nombre d'échantillons temporels $x[n], n \in [1, ..., N]$ souvent appelé intervalle d'observation, trame, support ou encore champ réceptif. Je n'utiliserai pas dans ce document la version continue du signal, l'expression $f(x)$ devant se comprendre comme l'application d'une fonction $f$ à un signal $x$.
 
 \begin{marginfigure}
   \includegraphics[width=\textwidth]{pianoGray}
@@ -17,7 +17,7 @@ Le terme modélisation étant fortement polysémique, précisons l'usage qui ser
 Trois critères d'évaluation sont d'importance pour qualifier ce modèle pour des activités de conception, création et manipulation :
 \begin{enumerate}
   \item\textbf{fidélité} : un modèle fidèle est capable de ne pas produire d'artefacts. Ce critère peut s'exprimer formellement de la manière suivante : $\mathrm{Pe}(x) \sim \mathrm{Pe}(\tilde{x})$.
-  \item\textbf{expressivité} : un modèle expressif est capable de mettre à disposition des mécanismes de manipulation tels que la modification du modèle produise une modification cohérente de la perception du signal résultant. Ce critère peut s'exprimer formellement de la manière suivante : $\mathrm{Pe}(\mathrm{Sy}(X')) \sim \mathrm{Pe}(x')$.
+  \item\textbf{expressivité} : un modèle expressif est capable de mettre à disposition des mécanismes de manipulation tels que la modification du modèle produise une modification cohérente de la perception du signal résultant. Ce critère peut s'exprimer formellement de la manière suivante : $\mathrm{Pe}(\mathrm{Sy}(X')) \sim \mathrm{Pe}(x')$, $X'$ désigne une version du modèle $X$ modifié avec des opérateurs simples, et $x'$ désigne une version modifiée du signal $x$ à partir d'opérateurs complexes: étirement, transposition, etc.
   \item\textbf{versatilité} : un modèle versatile s'applique à tout type de signal sonore d'intérêt, \textit{i.e.} les conditions de fidélité et d'expressivité sont remplies pour tout signal $x$ d'intérêt pour une tâche donnée.
 \end{enumerate}
 Je ne considère pas ici la notion d'efficacité, \textit{i.e.} la capacité à modéliser des signaux avec peu de paramètres. Cette notion sera un élément prépondérant d'évaluation par exemple pour un algorithme de compression. De par mon expérience, les notions d'expressivité et d'efficacité sont subtilement liées. Il est néanmoins important de noter qu'un modèle efficace n'est pas forcément expressif, et qu'un modèle expressif n'est pas forcément efficace.
@@ -43,13 +43,13 @@ Bien d'autres peuvent être imaginées ou désirées, en fonction de projets de 
 }
 Avec ces trois critères d'évaluation, se dessine ici un triangle de contraintes qui nous permettra d'apprécier le compromis inhérent au choix de conception de chacun des modèles que nous discuterons. Par exemple, la forme d'onde est un modèle versatile et fidèle mais d'une expressivité limitée, car il n'y a guère que le volume que l'on puisse manipuler aisément.
 
-L'intuition ici, largement suivie dans la communauté des sciences des données est que, pour tout processus observable, il existe un modèle de ce processus pour lequel des manipulations basées sur des opérateurs mathématiques simples dans le domaine transformé \og font sens \fg dans le domaine \og signal \fg d'origine. On jugera alors la qualité du modèle par sa capacité à proposer de nouvelles réalisations du processus modélisé qui soient plausibles, dans notre cas perceptivement valides. Par exemple, en considérant le signal temporel, on peut aisément manipuler l'intensité perçue en multipliant tous les échantillons par une constante. Ce modèle ne permet par contre pas dans le cas général de manipuler aisément la hauteur perçue.
+L'intuition ici, largement suivie dans la communauté des sciences des données est que, pour tout processus observable, il existe un modèle de ce processus pour lequel des manipulations basées sur des opérateurs mathématiques simples dans le domaine transformé \og font sens \fg dans le domaine signal. On jugera alors la qualité du modèle par sa capacité à proposer de nouvelles réalisations du processus modélisé qui soient plausibles, dans notre cas perceptivement valides. Par exemple, en considérant le signal temporel, on peut aisément manipuler l'intensité perçue en multipliant tous les échantillons par une constante. Ce modèle ne permet par contre pas dans le cas général de manipuler aisément la hauteur perçue.
 
 Cette approche se distingue clairement des approches par \og modèle physique \fg qui modélisent explicitement le processus mécanique, la qualité du son étant alors censée être la résultante d'une bonne modélisation du système physique dont la mise en vibration est à l'origine du signal sonore d'intérêt. Le distinguo est ici fait sur l'objet d'intérêt, à savoir que l'on s'intéresse aux propriétés du signal et non à celles de la source. Ceci ne veut pas dire que l'on ne puisse pas, avec une approche sciences des données, se focaliser sur le signal d'un type de source sonore en particulier. Mais, dans ce cas, on s'attachera à exploiter les régularités du signal pour motiver notre modèle.
 
 Dans la communauté traitement du signal, on parle souvent de modèle paramétrique, dans le sens où le modèle dispose d'un ensemble réduit de paramètres qui peuvent être explicitement manipulés pour influer sur le son modélisé. L'usage du terme \og paramétrique \fg est néanmoins à mon avis ambigü, et par conséquent utilisé avec peu de consistance dans la littérature. Je préférerai donc à ce terme le distinguo entre \og modèle \fg et \og transformée \fg. Un modèle expose donc pour moi un ensemble de paramètres manipulables, une transformée étant plutôt un outil de description. Ceci n'empêche pas qu'une transformée puisse avoir un modèle sous-jacent, ni que les étapes d'analyse et / ou de synthèse d'un modèle ne se basent sur une ou plusieurs transformées.
 
-Précisons maintenant l'intervalle temporel dénommé par \og long terme \fg. Cela désignera ici une durée à partir de laquelle le signal sonore ne peut plus raisonnablement être considérée comme stationnaire. De par nos connaissances sur les propriétés physiques de l'organe phonatoire, il est par exemple commun de considérer que le signal de parole est localement stationnaire sur un intervalle de 25 ms. Comme on peut le voir en observant des spectrogrammes de vocalisations humaines~\cite{ladefoged2014course}, dès que l'on considère des consonnes, ou lorsque la prosodie évolue de manière conséquente, le signal sonore produit par l'organe vocal n'est plus stationnaire. Il me paraît donc plus juste de motiver ce choix par l'assertion suivante : \og il est raisonnable de modéliser le signal de parole avec un modèle stationnaire par morceaux à partir du moment où ces morceaux sont d'une durée inférieure à 25 ms \fg.
+Précisons maintenant l'intervalle temporel dénommé par \og long terme \fg. Cela désignera ici une durée à partir de laquelle le signal sonore ne peut plus raisonnablement être considérée comme stationnaire. De par nos connaissances sur les propriétés physiques de l'organe phonatoire, il est par exemple commun de considérer que le signal de parole est localement stationnaire sur un intervalle de 25 ms. Comme on peut le voir en observant des spectrogrammes de vocalisations humaines,~\cite{ladefoged2014course} dès que l'on considère des consonnes, ou lorsque la prosodie évolue de manière conséquente, le signal sonore produit par l'organe vocal n'est plus stationnaire. Il me paraît donc plus juste de motiver ce choix par l'assertion suivante : \og il est raisonnable de modéliser le signal de parole avec un modèle stationnaire par morceaux à partir du moment où ces morceaux sont d'une durée inférieure à 25 ms \fg.
 
 \marginnote[-1cm]{
   \includegraphics[width=.5\textwidth]{phonemesCrop}
@@ -62,7 +62,7 @@ La dénomination \og long terme \fg  étant dépendante du degré de stationnari
 
 \section{ \nmu Typologie sonore} \label{sec:typologie}
 
-Il est bien entendu que même si l'on souhaite que notre modèle soit versatile, on ne souhaite pas être capable de modéliser tous les signaux possibles. On supposera donc que certaines propriétés d'invariance existent, c'est-à-dire que même si une seconde de son échantillonnée à 44 kHz est représentée dans $R^{44000}$, les paramètres du modèle évoluent dans un espace de dimension beaucoup plus réduit. Je considère ce postulat raisonnable essentiellement pour des raisons d'observations physiques. En prenant l'exemple du signal de parole, il est bien entendu que le son produit est le résultat d'une interaction complexe entre un ensemble d'éléments qui ont une certaine plasticité. Il reste néanmoins évident que les déformations possibles de l'ensemble de ces éléments sont bornées.
+Il est bien entendu que même si l'on souhaite que notre modèle soit versatile, on ne souhaite pas être capable de modéliser tous les signaux possibles. On supposera donc que certaines propriétés d'invariance existent, c'est-à-dire que même si une seconde de son échantillonné à 44 kHz est représentée dans $R^{44000}$, les paramètres du modèle évoluent dans un espace de dimension beaucoup plus réduit. Je considère ce postulat raisonnable essentiellement pour des raisons d'observations physiques. En prenant l'exemple du signal de parole, il est bien entendu que le son produit est le résultat d'une interaction complexe entre un ensemble d'éléments qui ont une certaine plasticité. Il reste néanmoins évident que les déformations possibles de l'ensemble de ces éléments sont bornées.
 
 Dans le but de préciser le domaine d'investigation, je présente ici cinq grandes familles de signaux sonores :
 \begin{itemize}
@@ -73,50 +73,59 @@ Dans le but de préciser le domaine d'investigation, je présente ici cinq grand
   \item \textbf{environnementaux} : vent faisant siffler des câbles / gouttes de pluie tombant sporadiquement.
 \end{itemize}\marginnote[-2cm]{Cette typologie est ordonnée par période approximative d'intérêt de la communauté de traitement du signal. Le traitement de la parole a connu un essor dans les années 1970, la bio acoustique un peu plus tard, la musique dans les années 2000 et les signaux environnementaux dans les années 2010.}
 
-Les exemples donnés pour chaque classe sont choisis à dessein pour illustrer une dichotomie présente dans toutes ces classes. Elle nous servira de base pour notre critique des outils de modélisation à notre disposition et pour identifier les challenges majeurs que nous devons relever. Suivant cette dichotomie, certains sons portent une structuration fréquentielle forte et d'autres une structuration temporelle forte. La Figure \ref{fig:ibm} montre deux exemples dans le domaine instrumental. Ces exemples sont volontairement typés pour expliciter le propos, mais la plupart des sons naturels sont une composition de ces deux types de structures. Il est donc nécessaire pour atteindre nos objectifs de disposer d'outils performants pour modéliser conjointement ces deux types de structure.
+Les exemples donnés pour chaque classe sont choisis à dessein pour illustrer une dichotomie présente dans toutes ces classes. Elle nous servira de base pour notre critique des outils de modélisation à notre disposition et pour identifier les défis majeurs à relever.
+
+Suivant cette dichotomie, certains sons portent une structuration fréquentielle forte et d'autres une structuration temporelle forte. La Figure \ref{fig:ibm} montre deux exemples dans le domaine instrumental. Ces exemples sont volontairement typés pour expliciter le propos, mais la plupart des sons naturels sont une composition de ces deux types de structures. Il est donc nécessaire pour atteindre nos objectifs de disposer d'outils performants pour modéliser conjointement ces deux types de structure.
 
 \section{ \nmu Temps / fréquence} \label{sec:tf}
 
 Lorsque l'on cherche à décrire un son, deux dimensions émergent : l'intensité et la hauteur. Ces deux dimensions étant respectivement intimement liés à l'amplitude et à la fréquence, il est normal de constater que la plupart des modèles de son permettent de manipuler ces deux dernières quantités de manière dynamique, \textit{i.e.} au cours du temps.
 
+
+
 En supposant le signal sonore stationnaire sur l'intervalle d'observation, l'outil privilégié pour ce faire est la transformée de Fourier discrète (tfd). Cette transformée projette le signal sur une base d'exponentielles complexes:
 \begin{eqnarray}
-  S[m] &=& \sum_{n=0}^{N-1} s[n] \cdot \mathrm{e}^{\frac{-2 \mathrm{j} \pi nm}{N}} \\
-  s[n] &=& \frac{1}{N} \sum_{m=0}^{N-1} X[m] \cdot \mathrm{e}^{\frac{ 2 \mathrm{j} \pi m n }{N}}.
+  X[m] &=& \sum_{n=0}^{N-1} x[n] \cdot \mathrm{e}^{\frac{-2 \mathrm{j} \pi nm}{N}} \\
+  x[n] &=& \frac{1}{N} \sum_{m=0}^{N-1} X[m] \cdot \mathrm{e}^{\frac{ 2 \mathrm{j} \pi m n }{N}}.
 \end{eqnarray}
-Cette transformée est donc inversible, mais n'est pas à échantillonnage critique, car $s\in \mathbb{R}$  et $S \in \mathbb{C}$\footnote{Une transformée est dite à échantillonnage critique quand un signal nécessite le même nombre de bits pour être représenté dans le domaine transformée que dans celui d'origine.}.
-
-On calcule la transformée de Fourier de manière efficace grâce à des algorithmes de transformée de Fourier rapides qui exploitent, pour le plus connu d'entre eux, des longueurs de supports en puissance de deux.~\cite{cooley1965algorithm}
+Cette transformée est donc inversible, mais n'est pas à échantillonnage critique,~\footnote{Une transformée est dite à échantillonnage critique quand un signal nécessite le même nombre de bits pour être représenté dans le domaine transformée que dans celui d'origine.} car $x\in \mathbb{R}$  et $X \in \mathbb{C}$.
 
 \begin{marginfigure}
-  \includegraphics[width=1.2\textwidth]{pianoSp}
+  \footnotesize
+  (a) \\
+  \includegraphics[width=1.2\textwidth]{pianoSp} \\
+  (b) \\
   \includegraphics[width=1.2\textwidth]{pianoPh}
-  \caption{Spectre d'amplitude et de phase d'une note de piano.}
+  \caption{Spectre d'amplitude (a) et de phase (b) d'une note de piano.}
   \label{fig:spec}
 \end{marginfigure}
 
-Comme on peut le voir sur la Figure \ref{fig:spec}, en considérant le module de cette transformée, on manipule directement l'intensité du son à une fréquence donnée. Le spectre de phase est lui souvent négligé dans les modèles, car il est beaucoup plus difficile à interpréter. Ceci constitue un handicap majeur pour tous les modèles de sons basés sur la transformée de Fourier car cela pose bien souvent une limite sur la propriété de fidélité, le module et l'exposant sont mathématiquement liés.
+On calcule la transformée de Fourier de manière efficace grâce à des algorithmes de transformée de Fourier rapides qui exploitent, pour le plus connu d'entre eux, des longueurs de supports en puissance de deux.~\cite{cooley1965algorithm}
+
+
+
+Comme on peut le voir sur la Figure \ref{fig:spec}, en considérant le module de cette transformée, on manipule directement l'intensité du son à une fréquence donnée. Le spectre de phase est lui souvent négligé dans les modèles, car il est beaucoup plus difficile à interpréter. Ceci constitue un handicap majeur pour tous les modèles de sons basés sur la transformée de Fourier car cela pose bien souvent une limite sur la propriété de fidélité, le module et l'exposant étant mathématiquement liés.
 
 
 En considérant qu'une partie des sons que l'on cherche à modéliser possèdent une structure temporelle forte comme une note de piano ou un sifflement d'oiseau, on s'intéresse à l'estimation des paramètres de composantes périodiques simples, les sinusoïdes. Considérons pour cela un premier signal \og éprouvette \fg constitué d'une sinusoïde de fréquence et d'amplitude constante:
 \begin{equation}
-  s_s[n] = a_s \mathrm{sin}(2\pi f_s n /f_e + \phi_s)
+  x_s[n] = a_s \mathrm{sin}(2\pi f_s n /f_e + \phi_s)
   \label{eq:sin_toy}
 \end{equation}
 Les paramètres d'amplitude et de fréquence de cette composante s'estiment aisément grâce au spectre de Fourier de ce signal :
 \begin{eqnarray}
   \hat{f}_s &=&  \frac{M}{N} . f_e\\
-  \hat{a}_s &=& S_s[M]
+  \hat{a}_s &=& X_s[M]
     \label{eq:sin_toy_est}
 \end{eqnarray}
 avec
 \begin{equation}
-  M = \argmax_m | S_s[m] |.
+  M = \argmax_m | X_s[m] |.
   \label{eq:sin_toy_select}
 \end{equation}
 
-Dans le cas de plusieurs sinusoïdes, on remplacera l'équation \ref{eq:sin_toy_select} par une sélection de maxima locaux dans le spectre de puissance et on considèrera l'usage d'une fenêtre de type co-sinusoïdale (hamming, hann, ...) pour améliorer la localité fréquentielle de la transformée.~\cite{harris1978use} En effet, considérer le signal sur un intervalle de temps fixé par la largeur de la trame revient implicitement à fenêtrer le signal par une fenêtre rectangulaire qui a des propriétés spectrales non désirables dans le cas multi composantes. Avec des fenêtres co-sinusoïdales, le lobe principal s'élargit, d'où une perte locale de résolution, mais permet de réduire considérablement l'importance des lobes secondaires, ce qui s'avère indispensable dans un contexte multi composantes.
-\marginnote[-2cm]{
+\marginnote[0cm]{
+\footnotesize
    \begin{center}
    (a) \\
    \includegraphics[width=.5\textwidth]{s-rectangularFr} \\
@@ -126,6 +135,9 @@ Dans le cas de plusieurs sinusoïdes, on remplacera l'équation \ref{eq:sin_toy_
 Spectre d'amplitude de la fenêtre rectangulaire (a), et de la fenêtre de Hann (b).
 }
 
+Dans le cas de plusieurs sinusoïdes, on remplacera l'équation \ref{eq:sin_toy_select} par une sélection de maxima locaux dans le spectre de puissance et on considèrera l'usage d'une fenêtre de type co-sinusoïdale (hamming, hann, ...) pour améliorer la localité fréquentielle de la transformée.~\cite{harris1978use} En effet, considérer le signal sur un intervalle de temps fixé par la largeur de la trame revient implicitement à fenêtrer le signal par une fenêtre rectangulaire qui a des propriétés spectrales non désirables dans le cas multi composantes. Avec des fenêtres co-sinusoïdales, le lobe principal s'élargit, d'où une perte locale de résolution, mais permet de réduire considérablement l'importance des lobes secondaires, ce qui s'avère indispensable dans un contexte multi composantes.
+
+
 On peut améliorer la précision de ces estimations en réduisant le pas de quantification de l'axe fréquentiel. On utilise pour cela la technique du "zero padding", qui consiste à concaténer une série de valeurs nulles au signal observé avant d'opérer la transformation. La transformée s'opérant alors sur plus de points, son pas de discrétisation fréquentielle s'en trouve augmenté. Par conséquent, la précision des estimateurs de l'équation \ref{eq:sin_toy_est} en est augmentée.
 
 Un large échantillon de méthodes sont disponibles pour améliorer la précision de ces estimations par d'autres moyens moins directs, comme  celles basées sur le réassignement~\cite{auger1995improving} qui étudient les relations entre le spectre du signal fenêtré et le spectre du signal fenêtré par la dérivée de la fenêtre. Conceptuellement proches du réassignement, les méthodes basées sur la phase étudient elles les relations entre le spectre du signal et celui de sa dérivée. Nous avons d'ailleurs pu en montrer l'équivalence théorique et numérique.~\cite{lagrangeJaes07}
@@ -134,9 +146,12 @@ Il est important de bien garder en mémoire que seule la précision des estimate
 
 
 \begin{marginfigure}
-  \includegraphics[width=1.2\textwidth]{pianoSpec}
-  \includegraphics[width=1.2\textwidth]{pianoPhase}
-  \caption{Spectrogramme d'amplitude et de phase d'une note de piano.}
+  \footnotesize
+  (a) \\
+  \includegraphics[width=1.2\textwidth]{pianoSpec} \\
+  (b) \\
+  \includegraphics[width=1.2\textwidth]{pianoPhase} \\
+  \caption{Spectrogramme d'amplitude (a) et de phase (b) d'une note de piano.}
   \label{fig:phase}
 \end{marginfigure}
 
@@ -160,7 +175,7 @@ Pour pallier le caractère non stationnaire à long terme de la plupart des sign
 \begin{equation}
 X[m, t] = \sum_{n = - \infty}^{\infty} x[n] w[n-t] \mathrm{e}^{\frac{-2 \mathrm{j}  \pi m n}{N}}
 \end{equation}
-où $w$ est la fenêtre d'observation. Pour exemple, la Figure \ref{fig:phase} montre le spectrogramme d'amplitude et de phase d'une note de piano. Pour ce cas simple avec une bonne parcimonie et une structure temporelle élevée, des régularités sont observables dans le spectrogramme de phase aux fréquences des harmoniques de la note de piano. Pour des sons plus complexes, l'interprétation du spectre de phase devient ardue.
+où $w$ est la fenêtre d'observation. En prenant le module de la tfct, on obtient le bien connu spectrogramme, un outil de manipulation et de visualisation qui trouve son utilité dans de nombreux domaines d'application. Pour exemple, la Figure \ref{fig:phase} montre le spectrogramme d'amplitude et de phase d'une note de piano. Pour ce cas simple avec une bonne parcimonie et une structure temporelle élevée, des régularités sont observables dans le spectrogramme de phase aux fréquences des harmoniques de la note de piano. Pour des sons plus complexes, l'interprétation du spectre de phase devient ardue.
 
 \marginnote[-4cm]{
 \begin{tikzpicture}[scale=0.8, label distance=1.5mm]
@@ -173,7 +188,7 @@ où $w$ est la fenêtre d'observation. Pour exemple, la Figure \ref{fig:phase} m
   Le spectrogramme est à ce jour le compromis le plus apprécié.
 }
 
-En prenant la magnitude de la tfct, on obtient le bien connu spectrogramme, un outil de manipulation et de visualisation qui trouve son utilité dans de nombreux domaines d'application. L'espoir ici est que les erreurs de modélisation des non stationnarités du signal seront négligeables du fait du faible support temporel des fenêtres sur lesquels on applique successivement la tfd. Dans le cas où les fenêtres se recouvrent de moitié, on peut utiliser la transformée en cosinus discret modifiée (tcdm) pour conserver un échantillonnage critique.~\cite{princen1986analysis}
+L'espoir ici est que les erreurs de modélisation des non stationnarités du signal seront négligeables du fait du faible support temporel des fenêtres sur lesquels on applique successivement la tfd. Dans le cas où les fenêtres se recouvrent de moitié, on peut utiliser la transformée en cosinus discret modifiée (tcdm) pour conserver un échantillonnage critique.~\cite{princen1986analysis}
 
 En considérant la tfct, il est alors possible de construire un estimateur \og spectral \fg de la position temporelle de notre dirac :
 \begin{equation}
@@ -187,7 +202,7 @@ Le problème se corse sensiblement lorsque l'on considère des signaux qui poss�
 
 Il paraît alors naturel de considérer des approches à résolution multiples. Tout le problème consiste alors à trouver une représentation qui maximise le potentiel apporté par la multirésolution en terme de fidélité tout en minimisant la perte en expressivité. En effet, la manipulation de données non régulièrement échantillonnées ou recopiées sous divers formats, sont un frein à l'aisance de manipulation.
 
-\marginnote[0cm]{
+\marginnote[-3cm]{
    \begin{center}
   \includegraphics[width=.5\textwidth]{pile}
  \end{center}
@@ -211,8 +226,8 @@ Pavage du plan temps / fréquence de la transformée en ondelettes.
 
 % Même si les travaux théoriques dans ce domaine ont permis d'ouvrir considérablement les possibilités en terme de conception, je me  tiendrai ici à la forme la plus courante en traitement du signal qui consiste en une construction d'un banc de filtre dyadique à facteur de qualité constant. Ce banc de filtre est constitué d'un ensemble de filtres passe bande à l'octave, \textit{i.e.} la fréquence de coupure supérieure est égale à deux fois la fréquence de coupure inférieure.
 
-Soit ${\psi}(t)$ un filtre de fréquence centrale $\xi$ et de largeur $\xi/Q$, où $Q$ est le facteur de qualité du filtre, le banc de filtre est construit en dilatant
- ${\psi}(t)$ par une séquence géométrique d'échelles $2^{\lambda/Q}$, pour obtenir
+Soit ${\psi}(t)$ un filtre de fréquence centrale $\xi$ et de largeur $\xi/Q$, où $Q$ est le facteur de qualité du filtre, un banc de filtre en ondelettes est construit en dilatant
+ ${\psi}(t)$ par une séquence géométrique d'échelles $2^{\lambda/Q}$ pour obtenir
 \begin{equation}
 {\psi_{\lambda}}(t) = 2^{-\lambda/Q} {\psi}(2^{-\lambda/Q} t)\mbox{.}
 \end{equation}
@@ -228,21 +243,22 @@ ${x}(t)$ est obtenue par convolution avec tout les filtres. Un scalogramme, comm
 
 En considérant ce type de décomposition, on obtient alors un pavage du plan temps / fréquence alternatif à celui du spectrogramme. Du fait du principe d'incertitude, les pavés ont la même aire, mais le rapport entre résolution fréquentielle et temporelle est optimalement adapté, contrairement à celui du spectrogramme qui lui reste constant. La Figure \ref{fig:dirac} montre le scalogramme d'une impulsion de Dirac. On y observe clairement l'augmentation de la résolution temporelle en fonction de la fréquence.
 
-En considérant que le banc de filtre est construit de manière itérative en partant des hautes fréquences, et en notant que le signal observé est d'une durée limitée, une partie du spectre en basse fréquence ne peut être capturé. On ajoute alors un filtre passe bas dit \og de terminaison \fg qui permet de préserver l'unicité de la représentation. Ce dernier filtre, souvent appelé \og fonction d'échelle \fg est peu utilisé dans le cas du traitement de l'audio car il est aisé de capturer le spectre audible avec le banc de filtre en ondelettes et ainsi ne pas considérer la composante continue. Les sorties de ce banc de filtres peuvent être ensuite re-échantillonnées à une fréquence de Nyquist correspondante à la largeur de la bande d'octave du filtre considéré.
-
 \begin{marginfigure}
   \includegraphics[width=\textwidth]{diracWavelet}
   \caption{Scalogramme d'une impulsion de Dirac.}
   \label{fig:dirac}
 \end{marginfigure}
 
-Comme le montrent les travaux pionniers effectué par Richard Kronland-Martinet~\cite{kronland1987analysis}, l'application de la transformée en ondelettes paraît avoir d'excellentes propriétés pour le traitement de l'audio, en particulier cette capacité à proposer une analyse multirésolution en préservant la propriété d'unicité.
+En considérant que le banc de filtre est construit de manière itérative en partant des hautes fréquences, et en notant que le signal observé est d'une durée limitée, une partie du spectre en basse fréquence ne peut être capturé. On ajoute alors un filtre passe bas dit \og de terminaison \fg qui permet de préserver l'unicité de la représentation. Ce dernier filtre, souvent appelé \og fonction d'échelle \fg est peu utilisé dans le cas du traitement de l'audio car il est aisé de capturer le spectre audible avec le banc de filtre en ondelettes et ainsi ne pas considérer la composante continue. Les sorties de ce banc de filtres peuvent être ensuite re-échantillonnées à une fréquence de Nyquist correspondante à la largeur de la bande d'octave du filtre considéré.
+
+
+Comme le montrent les travaux pionniers effectué par Richard Kronland-Martinet,~\cite{kronland1987analysis} l'application de la transformée en ondelettes paraît avoir d'excellentes propriétés pour le traitement de l'audio, en particulier cette capacité à proposer une analyse multirésolution en préservant la propriété d'unicité.
 
 
 
 Quelques décennies plus tard, on doit malheureusement faire le constat que l'utilisation de la transformée en ondelettes reste marginale en traitement de l'audio. Dépasser ce constat arbitraire pour amener des éléments concrets nécessiterait une étude approfondie qui sort du cadre de cet exposé. On peut néanmoins avancer quelques éléments de réflexion.
 
-Une première explication peut être que les fonctions de bases de la transformée en ondelettes, \textit{i.e.} les réponses impulsionnelles des filtres passe bande ont des formes particulièrement irrégulières, non adaptées à l'audio. On peut en effet aisément retenir cet argument pour des ondelettes de Daubechies de faible longueur, mais devient moins recevable pour des longueurs plus élevées, ou pour les ondelettes de Morlet. Cet argument pourrait par contre expliquer pourquoi cette transformée à plutôt pris son essor dans le domaine du traitement d'image, où les discontinuités sont beaucoup plus fortes que pour les signaux sonores. En effet chaque contour d'un objet amène une discontinuité importante dans l'espace couleur, qui, dans le cas de la reconnaissance apporte des éléments d'interprétation très importants, et, dans le cas du codage, se doit d'être représenté en détail, sous peine d'engendrer des artéfacts de type \og lissage \fg très pénalisant.
+Une première explication peut être que les fonctions de bases de la transformée en ondelettes, \textit{i.e.} les réponses impulsionnelles des filtres passe bande ont des formes particulièrement irrégulières, non adaptées à l'audio. On peut en effet aisément retenir cet argument pour des ondelettes de Daubechies de faible longueur, mais devient moins recevable pour des longueurs plus élevées, ou pour les ondelettes de Morlet. Cet argument pourrait par contre expliquer pourquoi cette transformée à plutôt pris son essor dans le domaine du traitement d'image, où les discontinuités sont beaucoup plus fortes que pour les signaux sonores. En effet chaque contour d'un objet amène une discontinuité importante dans l'espace couleur, qui, dans le cas de la reconnaissance apporte des éléments d'interprétation très importants, et, dans le cas du codage, se doit d'être représenté en détail, sous peine d'engendrer des artéfacts de type \og lissage \fg très pénalisants.
 
 Une seconde explication, finalement peut être plus déterminante, peut avoir trait à la faible expressivité de la transformée. L'interprétation  du spectrogramme est intuitive et permet une manipulation fine du contenu spectral d'un signal audio par exemple pour des opérations de masquage présentées dans la section dédiée à l'\lnameref{sec:asa}. L'échantillonnage non régulier en temps et en fréquence de la transformée en ondelettes ne simplifie pas l'expression des transformations que l'on souhaite généralement opérer (transposition, étirement, ...). La version filtrée pour obtenir un échantillonnage régulier en temps est plus appropriée, mais au prix de la perte de toute notion de multirésolution.
 
@@ -257,7 +273,7 @@ Une seconde explication, finalement peut être plus déterminante, peut avoir tr
   La transformée en ondelettes est en théorie assez versatile grâce à la multirésolution, mais peu de travaux démontrent son expressivité.
 }
 
-\marginnote[0cm]{
+\marginnote[-4cm]{
    \begin{center}
   \includegraphics[width=.5\textwidth]{seq}
  \end{center}
@@ -265,9 +281,9 @@ Analyses fréquentielles effectuées sur des support temporels différents séqu
 }
 
 
-En tout état de cause, dans le domaine de l'audio, la grande majorité des systèmes de traitement considère une représentation de type tfct, avec des paramètres de résolution et de précision constants, adaptés à la tâche. Dans les applications de codage, on trouve des mécanismes à résolution multiple de type alterné, implantés grâce des TCDM à plusieurs largeurs de support.~\cite{brandenburg1999mp3} Au sein du codeur, une heuristique détermine parmi les résolutions possibles, la résolution la plus adaptée au vu du signal contenu dans l'intervalle d'observation considéré. Cet échantillonnage non régulier de l'axe temporel permet une meilleure fidélité et flexibilité si l'heuristique est adaptée, ceci au détriment de l'expressivité, le plan temps / fréquence induit étant non régulier, ce qui n'est généralement pas un facteur limitant dans des chaînes de codage.
+En tout état de cause, dans le domaine de l'audio, la grande majorité des systèmes de traitement considère une représentation de type tfct, avec des paramètres de résolution et de précision constants, adaptés à la tâche. Dans les applications de codage, on trouve des mécanismes à résolution multiple de type alterné, implantés grâce des tcdm à plusieurs largeurs de support.~\cite{brandenburg1999mp3} Au sein du codeur, une heuristique détermine parmi les résolutions possibles, la résolution la plus adaptée au vu du signal contenu dans l'intervalle d'observation considéré. Cet échantillonnage non régulier de l'axe temporel permet une meilleure fidélité et flexibilité si l'heuristique est adaptée, ceci au détriment de l'expressivité, le plan temps / fréquence induit étant non régulier, ce qui n'est généralement pas un facteur limitant dans des chaînes de codage.
 
-On considère donc ici que dans l'intervalle d'observation, une source sonore est dominante et que le type de source est structurée soit de manière temporelle soit de manière fréquentielle. Dans le cas d'un contenu polyphonique avec une structure à la fois en temps et en fréquence, cette approche se révèle bien entendu inopérante. La définition d'une méthode d'analyse/synthèse multirésolution reste donc, avec les éléments présentés ici, un champ de recherche encore largement ouvert.
+On considère donc ici que dans l'intervalle d'observation, une source sonore est dominante et que la source est structurée soit de manière temporelle soit de manière fréquentielle. Dans le cas d'un contenu polyphonique avec une structure à la fois en temps et en fréquence, cette approche se révèle bien entendu inopérante. La définition d'une méthode d'analyse/synthèse multirésolution reste donc, avec les éléments présentés ici, un champ de recherche encore largement ouvert.
 
 \section{ \nmu Sinusoïdes à court terme}  \label{sec:sct}
 
@@ -284,7 +300,21 @@ En suivant cette observation, on peut modéliser chaque zone de forte énergie d
 \end{equation}
 où $t$ et $c$ désignent respectivement l'indice temporel de trame et l'indice de composante dans cette trame et $C_t$ désigne le nombre de composantes par trame $t$.
 
-Les paramètres de fréquence $f_{t, c}$, d'amplitude $a_{t, c}$, et de phase $\phi_{t, c}$ de chaque atome $p_{t, c}$ peuvent être estimés grâce aux techniques évoquées dans la section précédente. Même si cette technique est motivée par la parcimonie des signaux sonores, elle se révèle très robuste à la réduction de cette dernière pour peu que le nombre de composantes soit suffisant. En effet, l'expansion de Karhunen-Lo\`eve de signaux bruités montre qu'une représentation sinusoïdale de ce type de signaux est valide, à condition que les pics soient suffisamment nombreux et de fréquences suffisamment proches pour que la densité spectrale de puissance dans ces zones varie lentement dans le temps. Le nombre de composantes par intervalle de temps $C_t$ est donc un facteur déterminant. En pratique, dans un compromis favorisant la fidélité et la versatilité au détriment de l'expressivité, on choisira $C_t$ en fonction de contraintes de complexité, \textit{i.e.} le plus grand nombre possible.
+Les paramètres de fréquence $f_{t, c}$, d'amplitude $a_{t, c}$, et de phase $\phi_{t, c}$ de chaque atome $p_{t, c}$ peuvent être estimés grâce aux techniques évoquées dans la section précédente, qui se basent sur le spectrogramme. On voit par exemple sur la Figure \ref{fig:ct} l'impact de l'augmentation de la taille de fenêtre de la tfct utilisée pour identifier les composantes à court terme. Dans le cas de signaux polyphoniques, on voit qu'il peut être ardu de préserver un bon compromis résolution temporelle / résolution fréquentielle.
+
+\begin{figure*}[t]
+  \footnotesize
+  \begin{tabular}{ccc}
+    (a) & (b) & (c)  \\
+  \includegraphics[width=.3\textwidth]{voice_1024_512xp} &
+  \includegraphics[width=.3\textwidth]{voice_2048_512xp} &
+  \includegraphics[width=.3\textwidth]{voice_4096_512xp} \\
+\end{tabular}
+  \caption{Influence de la taille de fenêtre de la tfct utilisée pour estimer un modèle sinusoïdal à court terme d'un glissando de trombone. De gauche à droite, la taille est de 25 (a), 50 (b), et 100 ms (c), pour un pas d'avancement de 10 ms. Chaque point correspond  à une composante à court terme $p_{t, c}$ et sa taille est fonction de l'amplitude de la composante $a_{t, c}$.}
+  \label{fig:ct}
+\end{figure*}
+
+L'effectivité du modèle sinusoïdal à court terme est motivée par la parcimonie des signaux sonores. Elle se révèle néanmoins très robuste à la réduction de cette dernière pour peu que le nombre de composantes soit suffisant. En effet, l'expansion de Karhunen-Lo\`eve de signaux bruités montre qu'une représentation sinusoïdale de ce type de signaux est valide, à condition que les pics soient suffisamment nombreux et de fréquences suffisamment proches pour que la densité spectrale de puissance dans ces zones varie lentement dans le temps. Le nombre de composantes par intervalle de temps $C_t$ est donc un facteur déterminant. En pratique, dans un compromis favorisant la fidélité et la versatilité au détriment de l'expressivité, on choisira $C_t$ en fonction de contraintes de complexité, \textit{i.e.} le plus grand nombre possible.
 
 %La précision de ces estimations peut être améliorer par des techniques de sur échantillonage en fréquence et en temps, au détriment du coût de calcul. Ceci étant dit, les limites de cette technique sont bien illustrés dans la figure suivante :
 
@@ -296,11 +326,14 @@ Les paramètres de fréquence $f_{t, c}$, d'amplitude $a_{t, c}$, et de phase $\
 % \end{equation}
 % En considérant le rapport de la DFT du signal et celle de la DFT de la dérivée du signal, on obtient une autre série d'estimateurs. On a prouvé l'équivalence théorique de ces dernières à la technique du réassignement, supportée par des expérimentations montrant des performances similaires~\cite{lagrangeJaes07}.
 
-Dans un objectif d'expressivité, il est à contrario important que l'observation  soit en adéquation avec le modèle utilisé, c'est-à-dire que les composantes sinusoïdales modélisent effectivement des composantes quasi-périodiques présentes dans le signal analysé. En effet, même si une partie bruitée du signal peut être raisonnablement modélisée avec des composantes sinusoïdales de fréquence proches et de phase arbitraire, il sera difficile avec cette modélisation de préserver une bonne qualité d'écoute lors de la manipulation de ce modèle.
+Dans un objectif d'expressivité, il est à contrario important que l'observation  soit en adéquation avec le modèle utilisé, c'est-à-dire que les composantes sinusoïdales modélisent effectivement des composantes quasi-périodiques présentes dans le signal analysé. En effet, même si une partie bruitée du signal peut être raisonnablement modélisée avec des composantes sinusoïdales de fréquence proches et de phase arbitraire, il sera difficile avec cette modélisation de préserver une bonne qualité d'écoute lors de la manipulation de ce modèle, par exemple pour effectuer un étirement ou une transposition.
 
 Il convient donc d'être à même de sélectionner parmi les composantes candidates, celles qui sont les plus appropriées en fonction de critères dits de \og sinusoidalité \fg. Une manière de faire consiste à corréler, pour chaque pic candidat, sa réponse fréquentielle à celle du spectre d'une sinusoïde dont les paramètres sont résultant du processus d'estimation.~\cite{peak-selection} Le degré de corrélation permet alors de quantifier la pertinence du modèle vis-à-vis de l'observation. Une étude comparative semble montrer l'intérêt de cette approche.~\cite{wells2010comparative} Dans cet algorithme, les références au modèle sont ici construites dynamiquement mais peuvent aussi être échantillonnées. On se rapproche alors du principe des algorithmes de poursuite de sous espaces.
 
-Le principe de ces algorithmes est de s'affranchir des contraintes de la base de Fourier en disposant d'un (très) large dictionnaire d'atomes redondants et de déterminer la combinaison optimale de ces atomes permettant de réduire l'erreur d'approximation. Dans de la modélisation de données audionumériques, des atomes sont typiquement des sinusoïdes tronquées ou fenêtrées. L'algorithme "matching pursuit" (mp) proposé par Stéphane Mallat~\cite{mallat1993matching} permet de résoudre efficacement ce problème en considérant un algorithme glouton, où l'atome mis à l'échelle ayant la meilleure corrélation avec le signal résiduel (égal au signal d'origine au début de l'algorithme) est itérativement sélectionné puis soustrait. L'application de cet algorithme à des signaux musicaux peut poser des problèmes, dont certains ont été étudiés par Rémi Gribonval.~\cite{gribonval1996sound} %Par exemple, dans le cas de signaux non stationnaire en amplitude, l'algorithme aura tendance à construire des approximations non satisfaisantes.
+Le principe de ces algorithmes est de s'affranchir des contraintes de la base de Fourier en disposant d'un (très) large dictionnaire d'atomes redondants et de déterminer la combinaison optimale de ces atomes permettant de réduire l'erreur d'approximation. Dans de la modélisation de données audio-numériques, ces atomes sont typiquement des sinusoïdes tronquées ou fenêtrées. L'algorithme "matching pursuit" (mp) proposé par Stéphane Mallat~\cite{mallat1993matching} permet de résoudre efficacement ce problème en considérant un algorithme glouton, où l'atome mis à l'échelle ayant la meilleure corrélation avec le signal résiduel (égal au signal d'origine au début de l'algorithme) est itérativement sélectionné puis soustrait. L'application de cet algorithme à des signaux musicaux peut poser des problèmes, dont certains ont été étudiés par Rémi Gribonval.~\cite{gribonval1996sound} %Par exemple, dans le cas de signaux non stationnaire en amplitude, continuitél'algorithme aura tendance à construire des approximations non satisfaisantes.
+
+La Figure \ref{fig:gribonval} illustre deux cas typiques de non stationnarités rencontrées dans les signaux musicaux. Le premier consiste en une composante sinusoïdale dont l'amplitude est modulée de manière sinusoïdale, Figure \ref{fig:gribonval}(a). C'est une modulation typique d'un tremolo. Le second consiste en une composante sinusoïdale dont l'amplitude est modulée par la multiplication d'une marche d'escalier et d'une exponentielle décroissante, Figure \ref{fig:gribonval}(b). C'est une modulation typique d'une corde frappée ou pincée comme le piano ou le clavecin.
+
 
 \begin{marginfigure}
   \includegraphics[width=\textwidth]{gribonval.png}
@@ -308,9 +341,7 @@ Le principe de ces algorithmes est de s'affranchir des contraintes de la base de
   \label{fig:gribonval}
 \end{marginfigure}
 
-La Figure \ref{fig:gribonval} illustre deux cas typiques de non stationnarités rencontrées dans les signaux musicaux. Le premier consiste en une composante sinusoïdale dont l'amplitude est modulée de manière sinusoïdale, Figure \ref{fig:gribonval}(a). C'est une modulation typique d'un tremolo. Le second consiste en une composante sinusoïdale dont l'amplitude est modulée par la multiplication d'une marche d'escalier et d'une exponentielle décroissante, Figure \ref{fig:gribonval}(b). C'est une modulation typique d'une corde frappée ou pincée comme le piano ou le clavecin.
-
-Dans le premier cas, l'algorithme mp identifie d'abord une composante avec un support temporel couvrant l'intégralité du signal. Deux autres composantes viennent ensuite annuler certaines parties de cette première. Dans le second cas, le changement abrupt d'énergie étant difficilement modélisable aves les fonctions de base à disposition, de nombreuses composantes d'annulation sont nécessaires, amenant à un effet de pré écho, l'énergie ajoutée n'étant que partiellement enlevée. Pour palier à ces problèmes, des contraintes de non négativité ont été proposées pour améliorer l'algorithme de poursuite, alternative nommée "high resolution matching pursuit" (hrmp). En réduisant les contributions destructives, \textit{i.e.} enlever de l'énergie amenée par des atomes sélectionnés mais non présente dans le signal d'origine, cette approche est plus efficace au sens où l'énergie globale des atomes (somme des enveloppes des atomes utilisés) est plus faible. Dans des approches codage, le fait d'utiliser un nombre de composantes réduit est désirable pour des raisons de contrôle du débit. Cette propriété est, dans une certaine mesure, souhaitable également pour des applications de manipulations car cela permet d'avoir un nombre de paramètres réduits à manipuler. Il est par contre important que le gain en compacité ne se fasse au détriment de l'expressivité.
+Dans le premier cas, l'algorithme mp identifie d'abord une composante avec un support temporel couvrant l'intégralité du signal. Deux autres composantes viennent ensuite annuler certaines parties de cette première. Dans le second cas, le changement abrupt d'énergie étant difficilement modélisable aves les fonctions de base à disposition, de nombreuses composantes d'annulation sont nécessaires, amenant à un effet de pré écho, l'énergie ajoutée n'étant que partiellement enlevée. Pour palier à ces problèmes, des contraintes de non négativité ont été proposées pour améliorer l'algorithme de poursuite, alternative nommée "high resolution matching pursuit" (hrmp). En réduisant les contributions destructives, \textit{i.e.} des atomes sélectionnés pour se soustrairent à des contributions résiduelles d'atomes précedemment sélectionnés, cette approche est plus efficace au sens où l'énergie globale des atomes (somme des enveloppes des atomes utilisés) est plus faible. Dans des approches codage, le fait d'utiliser un nombre de composantes réduit est désirable pour des raisons de contrôle du débit. Cette propriété est, dans une certaine mesure, souhaitable également pour des applications de manipulation car cela permet d'avoir un nombre de paramètres réduit à manipuler. Il est par contre important que le gain en compacité ne se fasse au détriment de l'expressivité.
 
 
 \marginnote[0cm]{
@@ -324,7 +355,7 @@ Dans le premier cas, l'algorithme mp identifie d'abord une composante avec un su
   Les modèles sinusoïdaux à court terme sont des modèles de son avec une expressivité améliorée par rapport au spectrogramme au prix d'une perte relative en versatilité et fidélité.
 }
 
-De manière générale, il est difficile de critiquer les approches basées poursuites dans le sens où leur pertinence vis à vis de la tâche va grandement dépendre du dictionnaire choisi. On notera tout de même que ces approches sont construites avec un objectif d'approximation et non d'identification. Par exemple dans le cas de la sinusoïde modulée sinusoidalement, Figure \ref{fig:gribonval}(a), les deux algorithmes de poursuites sont tout deux à même de fournir une bonne approximation du signal, mais \og n'identifient \fg pas le phénomène, le dictionnaire n'ayant pas ce type de forme à disposition. Dans une application de type codage, on préfèrera sans doute la seconde approximation pour des raisons d'efficacité de la représentation. Pour ce qui est de la notion d'expressivité, le choix entre les deux modèles seront une affaire de compromis en fonction du type de manipulation souhaité. On se trouve donc avec un compromis de modèle favorisant la fidélité et la versatilité, au détriment de l'expressivité. Il est en effet difficile, dans le cas d'un dictionnaire très largement redondant de déterminer des fonctions simples de manipulation.
+De manière générale, il est difficile de critiquer les approches basées poursuite dans le sens où leur pertinence vis à vis de la tâche va grandement dépendre du dictionnaire choisi. On notera tout de même que ces approches sont construites avec un objectif d'approximation et non d'identification. Par exemple dans le cas de la sinusoïde modulée sinusoidalement, Figure \ref{fig:gribonval}(a), les deux algorithmes de poursuites sont tout deux à même de fournir une bonne approximation du signal, mais \og n'identifient \fg pas le phénomène, le dictionnaire n'ayant pas ce type de forme à disposition. Dans une application de type codage, on préfèrera sans doute la seconde approximation pour des raisons d'efficacité de la représentation. Pour ce qui est de la notion d'expressivité, le choix entre les deux modèles seront une affaire de compromis en fonction du type de manipulation souhaité. On se trouve donc avec un compromis de modèle favorisant la fidélité et la versatilité, au détriment de l'expressivité. Il est en effet difficile, dans le cas d'un dictionnaire très largement redondant de déterminer des fonctions simples de manipulation.
 
 %Ces approches, comme la transformée en ondelettes, ont trouvés application plutôt dans le domaine du traitement de l'image, où le caractère hautement non stationnaire des transitions entre objets sont très mal approximé par des fonctions régulières comme celle de Fourier.
 
@@ -332,33 +363,27 @@ De manière générale, il est difficile de critiquer les approches basées pour
 
 L'approche sinusoïdale à court terme effectue des observations discrètes d'un processus de production sonore qui lui est par essence continu. Dans le cas de nombreux instruments de musique, il est raisonnable de considérer que ce processus continu peut être représenté par une somme de sinusoïdes dont les paramètres varient \textsl{lentement} dans le temps. Une variation lente s'entend ici de l'ordre de la dizaine de Hertz. Dans ce cas, le modèle sinusoïdal à long terme est particulièrement à propos. Ce modèle peut s'écrire comme suit :
 \begin{equation}
-x[n]=\sum_{l=1}^{L} a_{l}[n] \sin \left(\frac{2 \pi}{F_{s}} f_{l}[n] + \Phi_k \cdot n\right)
+x[n]=\sum_{l=1}^{L} a_{l}[n] \sin \left(\frac{2 \pi}{F_{s}} f_{l}[n] \cdot n + \Phi_k \right)
 \label{eq:slt}
 \end{equation}
 où $a_{l}[n]$ et $f_{l}[n]$ sont des signaux contrôlant respectivement l'amplitude et la phase des $L$ oscillateurs composant le modèle. Au contraire du modèle court terme de l'équation \ref{eq:sct}, il est donc possible de modéliser des signaux non stationnaires et s'avère donc pertinent pour modéliser des signaux à long terme.
 
-Chaque composante sinusoïdale est souvent appelée un \textsl{partiel} pour des raisons historiques. En effet, ce modèle a été appliqué originellement à des sources monophoniques, dont les composantes périodiques étaient appelé partiels. Dans le cas de signaux harmoniques, les partiels sont également souvent appelées harmoniques et la première harmonique, l'harmonique fondamentale.
+Chaque composante sinusoïdale est souvent appelée \textsl{partiel} pour des raisons historiques. En effet, ce modèle a été appliqué originellement à des sources monophoniques, dont les composantes périodiques étaient appelées partiels, l'ensemble des partiels composant la note. Dans le cas de signaux harmoniques, les partiels sont également souvent appelées harmoniques et la première harmonique, l'harmonique fondamentale.
 
-Ce modèle est particulièrement expressif car il permet des modifications du signal d'intérêt comme la translation, la transposition, ou encore l'étirement, simplement en manipulant les paramètres des partiels. Ces transformations sont de plus de faible coût car les paramètres sont échantillonnés à une fréquence environ 1000 fois plus faible que le signal audio-numérique. Le processus de synthèse est également aisé à mettre en \oe{}uvre avec les moyens computationels actuels. Dans le cas d'un très grand nombre de composantes, des algorithmes de "pruning" perceptuels~\cite{lagrangeDafx01} peuvent être mis en place. L'étape d'analyse, \textit{i.e.} l'estimation des paramètres à partir d'un signal sonore est par contre, particulièrement ardue dans le cas général.
 
-\begin{figure*}[t]
-  \includegraphics[width=.3333\textwidth]{voice_1024_512xp}
-  \includegraphics[width=.3333\textwidth]{voice_2048_512xp}
-  \includegraphics[width=.3333\textwidth]{voice_4096_512xp}
-  \caption{Influence de la taille de fenêtre de la tfct utilisée pour estimer un modèle sinusoïdal à court terme. De gauche à droite, la taille est de 25, 50, et 100 ms, pour un pas d'avancement de 10 ms. Chaque point correspond  à une composante à court terme $p_{t, c}$ et sa taille est fonction de l'amplitude de la composante $a_{t, c}$.}
-  \label{fig:ct}
-\end{figure*}
-
-Dans notre présentation des algorithmes d'estimation des paramètres long terme, on supposera que le signal analysé est composé d'une ou plusieurs sources dont une grande partie de l'énergie peut être correctement approximée par ce modèle. On fera également état ici des approches dites de \og restauration \fg de continuité, qui considèrent connu un modèle court terme du signal analysé mais dont la fiabilité n'est pas présupposée. En effet, certains artefacts dans la représentation à court terme nécessitent un traitement algorithmique approprié pour une bonne estimation des paramètres long terme. On voit par exemple sur la Figure \ref{fig:ct} l'impact de l'augmentation de la taille de fenêtre de la tfct utilisée pour identifier les composantes à court terme. Dans le cas de signaux polyphoniques, il peut être ardu de préserver un bon compromis temps / fréquence, il est donc indispensable que l'étape d'identification de continuité soit robuste à ce type d'artefacts.
-
-\marginnote[-1.5cm]{
+\marginnote[0cm]{
 \begin{center}
   \scalebox{1}{
   \input{exp/slt}}
 \end{center}
 
-Schéma fonctionnel des approches d'identification de composantes long terme par restauration de continuité. Le signal sonore est projeté sur le plan temps / fréquence où des atomes court terme $p_{t, c}$ correspondant à des maxima locaux sont identifiés. Certains atomes de trames successives de fréquence proche formeront des partiels $\mathcal{P}_{p}$.
+Schéma fonctionnel des approches d'identification de composantes long terme (les partiels) par restauration de continuité. Le signal sonore est projeté sur le plan temps / fréquence où des atomes court terme $p_{t, c}$ correspondant à des maxima locaux sont identifiés. Certains atomes de trames successives et de fréquence proche formeront des partiels $\mathcal{P}_{p}$.
 }
+
+Ce modèle est particulièrement expressif car il permet des modifications du signal d'intérêt comme la translation, la transposition, ou encore l'étirement, simplement en manipulant les paramètres des partiels. Ces transformations sont de plus de faible coût car les paramètres sont échantillonnés à une fréquence environ 1000 fois plus faible que le signal audio-numérique. Le processus de synthèse est également aisé à mettre en \oe{}uvre avec les moyens computationels actuels. Dans le cas d'un très grand nombre de composantes, des algorithmes de "pruning" perceptuels~\cite{lagrangeDafx01} peuvent être mis en place. L'étape d'analyse, \textit{i.e.} l'estimation des paramètres à partir d'un signal sonore est par contre, particulièrement ardue dans le cas général.
+
+Dans notre présentation des algorithmes d'estimation des paramètres long terme, on supposera que le signal analysé est composé d'une ou plusieurs sources dont une grande partie de l'énergie peut être correctement approximée par ce modèle. On fera également état ici des approches dites de \og suivi \fg de partiels, qui considèrent connu un modèle court terme du signal analysé. Le but d'un algorithme de suivi de partiel est en quelque sorte de restaurer la continuité temporelle entre les composantes à court terme d'un même partiel.
+
 
 On considère donc ici que le résultat de cette étape de continuation est une version échantillonnée des paramètres de contrôle nécessaire au modèle de l'équation \ref{eq:slt} :
 \begin{equation}
@@ -368,39 +393,38 @@ où $t$ est l'indice de trame du spectrogramme, $b_{p}$ est l'indice de trame de
 \begin{equation}
 \mathcal{P}_{p}[t]=\left(n, \phi_{p}[t], a_{p}[t], f_{p}[t]\right)
 \end{equation}
-Le passage de cette version échantillonnée à court terme des paramètres à l'échantillonnage signal peut se faire par différentes techniques d'interpolation.
+Le passage de cette version échpermiantillonnée à court terme des paramètres à l'échantillonnage signal peut se faire par différentes techniques d'interpolation.
 
-Dans l'article séminal de George Mac Aulay \& al~\cite{mcaulay}, il est donc proposé \og d'identifier \fg ces composantes long terme en reliant entre eux des atomes de trames successives. L'algorithme proposé est itératif. Supposant un ensemble de partiel identifiés à la trame $t$, on va chercher à prolonger ces partiels à la trame $t+1$ en commençant par le partiel de plus basse fréquence, tel que la différence entre leur fréquence à la trame $t$ et la fréquence de l'atome est minimale :
+Dans l'article séminal de George Mac Aulay,~\cite{mcaulay} il est proposé \og d'identifier \fg ces composantes long terme en reliant entre eux des atomes de trames successives. L'algorithme proposé est itératif. Supposant un ensemble de partiels identifié à la trame $t$, on va chercher à prolonger ces partiels à la trame $t+1$ en commençant par le partiel de plus basse fréquence, tel que la différence entre la fréquence du partiel $\mathcal{P}_{p}$ à la trame $t$ et la fréquence d'un atome disponible à la trame $t+1$ est minimale :
 \begin{equation}
-k_{\mathrm{min}} = \argmin_{k}\left|f_{t+1, k}-f_{p}[t]\right|
+c_{\mathrm{min}} = \argmin_{c}\left|f_{t+1, c}-f_{p}[t]\right|
 \label{eq:mac}
 \end{equation}
 Si cette continuation n'engendre pas un saut en fréquence trop conséquent :
 \begin{equation}
-\left|f_{t+1, k_{\mathrm{min}}}-f_{p}[t]\right|<\Delta_{f}
+\left|f_{t+1, c_{\mathrm{min}}}-f_{p}[t]\right|<\Delta_{f}
 \label{eq:macseuil}
 \end{equation}
-où le seuil en fréquence $\Delta_{f}$ est un paramètre du modèle, alors le partiel $p$ est prolongé à trame $t+1$. Dans un principe d'allocation exclusif, l'atome $p_{t+1, k_{\mathrm{min}}}$ ne pourra pas être utilisé pour la continuation d'un autre partiel. Chaque atome non utilisé à la trame $t+1$ devient alors une composante long terme qui sera potentiellement prolongée aves des atomes de la trame $t+2$.
+où le seuil en fréquence $\Delta_{f}$ est un paramètre du modèle, alors le partiel $\mathcal{P}_{p}$ est prolongé à trame $t+1$. Dans un principe d'allocation exclusif, l'atome $p_{t+1, c_{\mathrm{min}}}$ ne pourra pas être utilisé pour la continuation d'un autre partiel. Chaque atome non utilisé à la trame $t+1$ devient alors une composante long terme qui sera potentiellement prolongée aves des atomes de la trame $t+2$.
 
 On constate ici que la structure de données se complexifie sensiblement par rapport à la plupart de celles introduites avec des outils de traitement du signal canoniques, amenant une approche plus \og informatique \fg à une problématique de traitement du signal. Cette modélisation plus \og riche \fg a permis une flexibilité de manipulation qui a donné lieu à la proposition d'un large ensemble d'heuristiques qui ne seront pas présentées ici, même si elles ont leur intérêt pour la qualité du rendu sonore de ce type d'approche.
 
 
-\marginnote[-1cm]{
-  \includegraphics[width=.5\textwidth]{trackingxp2xp}
+La contrainte exprimée par l'équation \ref{eq:macseuil} revient à avoir un prédicteur constant en fréquence. Dans le cas d'un modèle court terme de bonne qualité, par exemple dans le cas d'un signal monophonique à structure harmonique comme une note de flûte, cette heuristique peut être raisonnable. Dans le cas de signaux non stationnaires comme le glissando de trombone de la Figure \ref{fig:ct}, de signaux bruités et / ou polyphoniques, il est utile d'améliorer la finesse du prédicteur en considérant un prédicteur linéaire appliqué aux séries temporelles des paramètres long terme. Le faible échantillonnage de ces séries temporelles nécessite des estimateurs adaptés comme celui de Burg.~\cite{burg1968new}
 
-Une étape de continuation du partiel $\mathcal{P}_{p}$ dans les trames d'indices $t+1$ à $t+l$. La sélection de la meilleure continuation se fait parmi les atomes  (point noirs) $p_{t+1...l, c}$ de fréquence $f_{t+1...l, c}$ proches des valeurs de fréquence prédites $\hat{f}_{p}[t+1...l]$ obtenue par prédiction linéaire (étoiles) et ces valeurs prédites (traits pointillés).}
+\marginnote[0.5cm]{
+  \includegraphics[width=.5\textwidth]{trackingxp2xp2}
 
-La contrainte exprimée par l'équation \ref{eq:macseuil} revient à avoir un prédicteur constant en fréquence. Dans le cas d'un modèle court terme de bonne qualité, par exemple dans le cas d'un signal monophonique à structure harmonique comme une note de flûte, cette heuristique peut être raisonnable. Dans le cas de signaux bruités et / ou polyphoniques, il est utile d'améliorer la finesse du prédicteur en considérant un prédicteur linéaire appliqué aux séries temporelles des paramètres long terme. Le faible échantillonnage de ces séries temporelles nécessite des estimateurs adaptés comme celui de Burg.~\cite{burg1968new}
+Une étape de continuation du partiel $\mathcal{P}_{p}$ dans les trames d'indices $t+1$ à $t+l$. La sélection de la meilleure continuation se fait parmi les continuations (traits pointillés) composées des atomes  (point noirs) $p_{t+1...l, c}$ de fréquence $f_{t+1...l, c}$ proches des valeurs de fréquence prédites $\hat{f}_{p}[t+1...l]$ obtenue par prédiction linéaire (étoiles) et ces valeurs prédites.}
 
-Dans ce cas, à partir des fréquences du partiel de la trame $t-g$ à la trame $t$ où $g$ est le nombre de fréquences pris en compte, on obtient par application du prédicteur linéaire une prédiction des valeurs des fréquences du partiel pour les trames suivantes : $\hat{f}_{p}[t+1...l]$, où $l$ est l'horizon temporel utilisé.
+Dans ce cas, à partir des fréquences du partiel de la trame $t-g$ à la trame $t$ où $g$ est la longueur de la série temporelle des fréquences pris en compte, on obtient par application du prédicteur linéaire une prédiction des valeurs des fréquences du partiel pour les trames suivantes : $\hat{f}_{p}[t+1...l]$, où $l$ est l'horizon temporel utilisé.
 
-La contrainte d'évolution lente des paramètres dans un modèle d'évolution quasi stationnaire se traduit naturellement par un seuil sur le delta de fréquence, voir Equation \ref{eq:macseuil}. Dans le cas d'un modèle non stationnaire des paramètres long terme, on trouve un gain à considérer une analyse spectrale de ces évolutions possible pour mieux déterminer les continuations à effectuer. Pour ce faire, parmi toutes les succession possibles de prédictions, la continuation qui engendre le moins de hautes fréquences est privilégiée. Là encore, du fait du faible échantillonnage des paramètres, des outils d'estimation spectrale spécifiques sont nécessaires.
-
+La contrainte d'évolution lente des paramètres dans un modèle d'évolution quasi stationnaire se traduit naturellement par un seuil sur le delta de fréquence, voir Equation \ref{eq:macseuil}. Dans le cas d'un modèle non stationnaire des paramètres long terme, on trouve un gain à considérer une analyse spectrale de ces évolutions possibles pour mieux déterminer les continuations à effectuer. Pour ce faire, parmi toutes les continuations possibles, la continuation qui engendre le moins de hautes fréquences est privilégiée. Là encore, du fait du faible échantillonnage des paramètres, des outils d'estimation spectrale spécifiques sont nécessaires.
 
 Soit un partiel $\mathcal{P}_{p}$ que l'on cherche à prolonger dans les trames d'indices $t+1$ à $t+l$. On dispose des prédictions des valeurs de fréquence dans ces trames : $\hat{f}_{p}[t+1...l]$. Les atomes $p_{t+1...l, c}$ proches de ces prédictions sont sélectionnés. Toutes les successions de valeurs de fréquences sont alors considéré comme des signaux et analysé spectralement. La continuation engendrant le moins de contenu haute fréquence est sélectionné.
 
 
-Les bons résultats en terme de rendu sonore obtenu par cette chaîne d'analyse dans le cas  de la modélisation long terme sous contrainte de débit~\cite{lagrangeTaslp06} et l'interpolation de données manquantes~\cite{lagrangeJaes05}, montrent l'intérêt de la modélisation des modulations long terme, au moins du point de vue perceptif.
+Les bons résultats en terme de rendu sonore obtenu par cette chaîne d'analyse dans le cas  de la modélisation long terme sous contrainte de débit~\cite{lagrangeTaslp06} et l'interpolation de données manquantes,~\cite{lagrangeJaes05} montrent l'intérêt de la modélisation des modulations long terme, au moins du point de vue perceptif.
 
 Fort de cette observation, Martin Raspaud a étudié un modèle long terme hiérarchique qui permet des manipulations riche comme par exemple de l'étirement temporel de notes vibrées.~\cite{raspaud2007modeles} Le principe est de considérer les paramètres long terme comme des signaux, eux mêmes modélisables comme des sinusoïdes dont les paramètres évoluent, cette fois ci, très lentement en fonction du temps. Il est alors aisé de contrôler les modulations de haut niveau comme le vibrato ou le tremolo.
 
@@ -417,13 +441,13 @@ Fort de cette observation, Martin Raspaud a étudié un modèle long terme hiér
 }
 
 
-D'une grande élégance formelle, d'une bonne expressivité, le modèle long terme n'a pas pu trouver un large spectre d'application du fait d'un défaut clair de versatilité. Ce même handicap s'est retrouvé dans le domaine du codage où ce type de modèle~\cite{den2002parametric} n'a pas réussi à concurrencer les approches par transformée. Certaines approches, dites hybrides, consistant à combiner un modèle long terme avec un modèle de bruit et modèle de transitoire ont été proposées pour tenter de palier à ce défaut. On tombe malheureusement alors dans un problème de sélection de modèles qui est à mon avis intractable. Je ne détaillerai donc pas ces approches.
+D'une grande élégance formelle, d'une bonne expressivité, le modèle long terme n'a pas trouvé un large spectre d'application du fait d'un défaut clair de versatilité. Ce même handicap s'est retrouvé dans le domaine du codage où ce type de modèle n'a pas réussi à concurrencer les approches par transformée.~\cite{den2002parametric} Certaines approches, dites hybrides, consistant à combiner un modèle long terme avec un modèle de bruit et / ou un modèle de transitoire ont été proposées pour tenter de palier à ce défaut. On tombe malheureusement alors dans un problème de sélection de modèles qui est à mon avis intractable. Je ne détaillerai donc pas ces approches.
 
 % Egalement, l'application des techniques d'estimation comme celle du filtrage particulaire pour l'estimation conjointe des paramètres court terme et long terme proposée par Corentin Dubois~\cite{dubois2007joint} constitue une alternative d'intérêt à ce type d'approche.
 
 \section{ \nmu Temps / fréquence / modulations}  \label{sec:tfm}
 
-S'il est clair que la décomposition du signal sonore le long de l'axe fréquentiel est de première importance, la manière dont l'amplitude et la fréquence sont modulées au cours du temps au sein de ces bandes de fréquences l'est également. On peut citer pour exemple le son éminemment désagréable d'un moteur thermique deux temps (type mobylette ou tronçonneuse, ...).
+S'il est clair que la décomposition du signal sonore le long de l'axe fréquentiel est de première importance, la manière dont l'amplitude et la fréquence sont modulées au cours du temps au sein de ces bandes de fréquence l'est également. On peut citer pour exemple le son éminemment désagréable d'un moteur thermique deux temps (type mobylette ou tronçonneuse).
 
 \marginnote[0cm]{
 \begin{center}
@@ -432,11 +456,11 @@ S'il est clair que la décomposition du signal sonore le long de l'axe fréquent
 
 Ce stimuli est disponible pour écoute : \url{http://webpages.mcgill.ca/staff/Group2/abregm1/web/snd/Track24.mp3}} % pour écoute sur le site de Al Bregman dédié à l'ASA. Les détails techniques du processus de synthèse sont renseignés ici : \url{http://webpages.mcgill.ca/staff/Group2/abregm1/web/downloadstoc.htm\#24}.
 
-L'importance perceptive de ce type de modulations dans notre jugement du réalisme d'un stimuli sonore est particulièrement bien exemplifiée par un stimuli synthétique produit par John Chowning. Dans ce stimuli, des sinusoïdes d'amplitude et fréquence au début constantes sont ensuite modulées par un signal synthétique composé d'une composante sinusoïdale (pour le vibrato) auquel se sur-ajoute une composante stochastique. Ce signal modulant est ensuite mis à l'échelle pour chaque harmonique. Il est important de considérer que même si ce signal modulant a été judicieusement choisi, il n'est pas issu d'un processus d'estimation à partir de signaux réels. L'écoute montre clairement que le caractère naturel, voisé, est sensiblement plus élevé avec l'ajout de ces modulations.
+L'importance perceptive de ce type de modulations dans notre jugement du réalisme d'un stimuli sonore est particulièrement bien exemplifiée par un stimuli synthétique produit par John Chowning. Dans ce stimuli, des sinusoïdes d'amplitude et fréquence au début constantes sont ensuite modulées par un signal synthétique composé d'une composante sinusoïdale (pour le vibrato) auquel se sur-ajoute une composante stochastique. Ce signal modulant est ensuite mis à l'échelle pour chaque harmonique. Il est important de considérer que même si ce signal modulant a été judicieusement choisi, il n'est pas issu d'un processus d'estimation effectué à partir de signaux réels. L'écoute montre clairement que le caractère naturel, voisé, est sensiblement plus élevé avec l'ajout de ces modulations.
 
 \subsection{Modèles perceptifs}
 
-Complétons nos connaissances en prenant un point de vue physiologique. L'étude des éléments physiologiques en charge du traitement de ces modulations est relativement récente car assez complexe à investiguer. On a néanmoins une bonne confiance dans le fait que le système auditif des mammifères dispose d'éléments de traitement dédiés à cette tâche. On peut notamment citer le modèle de Torsten Dau~\cite{dau1997modeling}, qui en plus de la traditionnelle analyse en fréquence effectuée au niveau de la cochlée ajoute une analyse de la modulation d'amplitude. On a donc un modèle temps / fréquence / taux de modulation. Celui de Shihab Shamma~\cite{fritz2003rapid} étend le modèle de Torsten Dau en ajoutant une troisième dimension : l'échelle, correspondant aux degré de sélectivité des filtres de modulation.
+Complétons nos connaissances en prenant un point de vue physiologique. L'étude des éléments physiologiques en charge du traitement de ces modulations est relativement récente car assez complexe à investiguer. On a néanmoins une bonne confiance dans le fait que le système auditif des mammifères dispose d'éléments de traitement dédiés à cette tâche. On peut notamment citer le modèle de Torsten Dau,~\cite{dau1997modeling} qui en plus de la traditionnelle analyse en fréquence effectuée au niveau de la cochlée ajoute une analyse de la modulation d'amplitude. On a donc un modèle temps / fréquence / taux de modulation. Celui de Shihab Shamma~\cite{fritz2003rapid} étend le modèle de Torsten Dau en ajoutant une troisième dimension : l'échelle, correspondant aux degré de sélectivité des filtres de modulation.
 
 Pour parvenir à ce modèle, Shihab Shamma a étudié certains neurones du cortex auditif primaire du furet, plus particulièrement ce que l'on appelle leur champs de réponse spectro / temporellle ou "spectro-temporal receptive fields" (strf). L'animal est contraint au niveau de la tête, et par opération chirurgicale, une aiguille permettant de mesurer l'activité électrique est insérée dans le crâne de l'animal et judicieusement placée. Par exposition d'un ensemble de stimuli comportant des modulations, il est alors possible de mesurer ces strf. Au vu de ce type de réponses, un modèle de traitement de signal est ensuite proposé.
 
@@ -453,21 +477,21 @@ En prenant un point de vue mathématique cette fois-ci, Stéphane Mallat a propo
 \end{itemize}
 où $\epsilon$ désigne une petite valeur.
 
-Précisons ces notions en prenant quelques exemples. Lorsque l'on cherche à reconnaitre l'instrument de musique qui a joué une note, on souhaite généralement disposer d'une représentation du signal de cette performance qui soit invariante à certains aspects de la performance comme :
+Précisons ces notions en prenant quelques exemples. Lorsque l'on cherche à reconnaître l'instrument de musique qui a été utilisé pour jouer une note, on souhaite généralement disposer d'une représentation du signal de cette performance qui soit invariante à certains aspects de la performance comme :
 \begin{enumerate}
   \item un changement d'amplitude;
   \item un décalage en temps;
   \item un étirement en temps.
 \end{enumerate}
-En effet, pour la tâche pré-citée, que la note ait été jouée plus ou moins proche du microphone\sidenote{J'écarte ici pour la simplicité du discours les aspects de nuances qui ont une influence non négligeable sur le timbre.}, à un instant donné ou quelques secondes plus tard, à une hauteur donnée ou une autre, pour une durée plus ou moins longue ne devrait pas modifier de manière trop sensible notre représentation.
+En effet, pour la tâche pré-citée, que la note ait été jouée plus ou moins proche du microphone\sidenote{J'écarte ici pour la simplicité du discours les aspects de nuances qui ont une influence non négligeable sur le timbre.}, à un instant donné ou quelques secondes plus tard, à une hauteur donnée ou une autre, pour une durée plus ou moins longue ne devrait pas modifier de manière trop conséquente notre représentation.
 
-L'invariance au changement de volume est localement obtenue en normalisant les signaux que l'on souhaite comparer. L'invariance locale à la translation en temps se traduit dans le domaine de Fourier en une invariance à la translation de phase par la prise du module. On souhaite généralement que l'invariance au volume et à la translation soit complète. En ce qui concerne l'invariance à l'étirement temporel, on souhaite généralement plutôt que la représentation soit stable à la déformation.
+Sous hypothèse de stationnarité, l'invariance au changement de volume est localement obtenue en normalisant les signaux que l'on souhaite comparer. L'invariance locale à la translation en temps se traduit dans le domaine de Fourier en une invariance à la translation de phase par la prise du module. On souhaite généralement que l'invariance au volume et à la translation soit complète. En ce qui concerne l'invariance à l'étirement temporel, on souhaite généralement plutôt que la représentation soit stable à la déformation.
 
 Il est clairement explicité par Joakim And\'en~\cite{anden2014deep} pourquoi le spectre de magnitude de Fourier d'un signal harmonique n'est pas stable à même un petit étirement temporel. En effet, l'impact de l'étirement selon l'axe des fréquences n'est pas le même. Si un petit étirement déplacera d'une petite quantité les fréquences basses, les fréquences plus élevées le seront beaucoup plus. Prenons l'exemple d'un signal harmonique de fréquence de fondamentale $440$ Hz, un étirement temporel va réduire la valeur de cette fréquence à disons $430$ Hz pour un delta de $10$ Hz. Ce delta sera $n$ fois plus grand pour la $n^{\text{ième}}$ harmonique soit $100$ Hz pour la dixième harmonique. Pour une transformée de Fourier avec une quantification de l'axe fréquentiel d'une dizaine de Hertz, la différence entre les deux spectres va croître très rapidement en fonction du delta car l'énergie des harmoniques supérieures va très rapidement se placer sur des pas de quantification différents de ceux où l'énergie des harmoniques se plaçait initialement.
 
 Pour être plus stable à ce type de déformation, il convient alors de \og délocaliser \fg les hautes fréquences de manière plus conséquente que les basses. Suivant les communautés, on obtient cette délocalisation progressive sur l'axe des fréquences avec des transformées à Q constant, de type tiers d'octave (acoustique), des mels ou des Barks (parole)\marginnote[0cm]{Ce résultat est à mon sens d'importance, car il permet de placer un cadre mathématique pour mieux expliquer l'utilité d'un axe fréquentiel logarithmique qui a été empiriquement vérifié dans de nombreux domaines du traitement de l'audio et motivé jusqu'ici par des arguments essentiellement neuro mimétiques.}.
 
-En se plaçant dans le cadre du scattering d'ondelettes, dont le schéma fonctionnel est montré sur la Figure \ref{fig:scat}, on obtient ce type de représentation en délocalisant en temps toutes les bandes de fréquence du module de la transformée en ondelettes $\psi_j$ par l'application d'un filtre moyennant $\phi$ pour obtenir les coefficients de scattering au premier ordre $S_1$ :
+En se plaçant dans le cadre du scattering d'ondelettes, dont le schéma fonctionnel est montré sur la Figure \ref{fig:scat}, on obtient ce type de représentation en délocalisant en temps toutes les bandes de fréquence du module de la transformée en ondelettes $\psi_1$ par l'application d'un filtre moyennant $\phi$ pour obtenir les coefficients de scattering au premier ordre $S_1$ :
 
 \begin{equation}
 S_1{x}(t, \lambda_1)
@@ -489,7 +513,7 @@ Comme le montre la Figure \ref{fig:scat}, le scattering dissocie décomposition 
   \label{fig:scat}
 \end{figure}
 
-La sortie du filtre moyenneur au premier ordre est équivalent en terme à une transformée à Q constant. En décomposant les sorties rectifiées du premier banc de filtres en ondelettes $\psi_{\lambda_1}$ avec un autre banc de filtres en ondeletes $\psi_{\lambda_2}$, on capte alors l'information de modulation d'amplitude, \textit{i.e.} comment l'énergie fluctue dans une même bande fréquence. On a vu précédemment l'importance de ce type de modulation pour la perception. Il est donc opportun de d'étudier l'apport du second ordre pour une représentation riche du signal sonore.  %\marginnote{Le processus de cascade. Le troisième ordre est conceptuellement difficile à appréhender et a encore été peu étudié, pour les raisons suivantes 1) pratique : l'énergie au troisième ordre est très faible, 2) neuro-mimétique : aucun modèle perceptif n'explicite un troisième ordre de traitement.}.
+La sortie du filtre moyenneur au premier ordre est donc équivalent à une transformée à Q constant. En décomposant les sorties rectifiées du premier banc de filtres en ondelettes $\psi_{\lambda_1}$ avec un autre banc de filtres en ondeletes $\psi_{\lambda_2}$, on capte alors l'information de modulation d'amplitude, \textit{i.e.} comment l'énergie fluctue dans une même bande fréquence. On a vu précédemment l'importance de ce type de modulation pour la perception. Il est donc opportun de d'étudier l'apport du second ordre pour une représentation riche du signal sonore.  %\marginnote{Le processus de cascade. Le troisième ordre est conceptuellement difficile à appréhender et a encore été peu étudié, pour les raisons suivantes 1) pratique : l'énergie au troisième ordre est très faible, 2) neuro-mimétique : aucun modèle perceptif n'explicite un troisième ordre de traitement.}.
 
 
 
@@ -511,9 +535,9 @@ En terme d'architecture, le scattering d'ondelettes suit une organisation de typ
 
 \section{ \nmu Synthèse modale}
 
-En se référant plutôt aux processus physiques de production sonore, les approches modales permettent de proposer des modèles qui soient à la fois efficaces et effectifs. Ces modèles se basent sur un modèle de production de type source / filtre, où la source est généralement décrite en terme de propriétés temporelles, et le filtre en terme de propriétés fréquentielles. Pour un signal de parole, on considèrera que la source peut être soit un train d'impulsions résultant de l'ouverture périodique des plis vocaux pour la production des sons voisés (voyelles) soit un signal stochastique résultant de la compression du flux respiratoire pour la production des plosives ou sifflantes (consonnes).
+En se référant plutôt aux processus physiques de production sonore, les approches modales permettent de proposer des modèles qui sont à la fois efficaces et effectifs. Ces modèles se basent sur un modèle de production de type source / filtre, où la source est généralement décrite en terme de propriétés temporelles, et le filtre en terme de propriétés fréquentielles. Pour un signal de parole, on considèrera que la source peut être soit un train d'impulsions résultant de l'ouverture périodique des plis vocaux pour la production des sons voisés (voyelles) soit un signal stochastique résultant de la compression du flux respiratoire pour la production des plosives ou sifflantes (consonnes).
 
-\marginnote[-5cm]{
+\marginnote[0cm]{
   \scalebox{.7}{
   \input{exp/modal}}
 Schéma de traitement de la phase d'analyse d'un modèle de synthèse modale pour les sons de roulement. Les traits pleins désignent des signaux, les traits pointillés désignent des paramètres.
@@ -523,9 +547,9 @@ Le modèle source / filtre décorrèle donc naturellement la contribution de l'e
 
 Nous avons étudié ce type de modèle pour la synthèse de sons de roulements d'une bille sur une plaque. Ces sons présentent un challenge pour ce type de synthèse car l'interaction entre la bille et la surface sur laquelle elle roule est complexe. Néanmoins, ce type de modèle adapté au problème~\cite{LagrangeTasslp10} a donné des résultats encourageants.~\cite{Murphy11a}
 
-Dans cette contribution, l'étape d'analyse consiste à identifier les composantes résonantes paramétrées par leur fréquence de résonance $f_k$ et leur amplitude $a_k$ et les utiliser pour opérer une déconvolution du signal enregistré $s[n]$. Le résiduel $r[n]$ de cette déconvolution  permet d'identifier une forme typique $i[n]$ de l'impact de la bille avec la plaque la position des impacts. Cette forme est alors utilisée pour déconvoluer $r[n]$ et ainsi obtenir un signal $d[n]$ essentiellement composé de pics indiquant la position and l'importance des impacts de la bille sur la plaque.
+Dans cette contribution, l'étape d'analyse consiste à identifier les composantes résonantes paramétrées par leur fréquence de résonance $f_k$ et leur amplitude $a_k$ et les utiliser pour opérer une déconvolution du signal enregistré $s[n]$. Le résiduel $r[n]$ de cette déconvolution  permet d'identifier une forme typique $i[n]$ de l'impact de la bille avec la plaque la position des impacts. Cette forme est alors utilisée pour déconvoluer $r[n]$ et ainsi obtenir un signal $d[n]$ essentiellement composé de pics indiquant la position et la puissance des impacts de la bille sur la plaque.
 
-La source est modélisée comme une série d'impacts dont l'amplitude est modélisée par une distribution exponentielle paramétrée par $\lambda_a$  et l'intervalle de temps entre deux impacts par une distribution gamma paramétrée par $k_i$ et $\theta_i$. Ces paramètres sont estimés à partir de $d[n]$.
+La source est modélisée comme une série d'impacts dont l'amplitude est modélisée par une distribution exponentielle paramétrée par $\lambda_a$  et l'intervalle de temps entre deux impacts par une distribution gamma paramétrée par $k_i$ et $\theta_i$. Ces paramètres sont estimés à partir de $i[n]$.
 
 En remarquant fort justement que, lorsque la bille impacte fortement la plaque sur laquelle elle roule, l'intervalle entre cet impact et le suivant augmente, Simon Conan a proposé un modèle amélioré où ces variables sont modélisées de manière conjointe.~\cite{conan2014synthesis}
 
@@ -595,14 +619,12 @@ Au vu des arguments discutés durant cette présentation, quelques éléments se
 
 Ensuite, de nombreuses étapes de la propagation des ondes sonores peuvent être considérés comme des systèmes linéaires. Néanmoins, il s'avère critique pour la qualité perceptive des signaux produits que le modèle puisse également modéliser des processus \textbf{non linéaires} pour accéder à une grande versatilité. Cela pose bien entendu le problème du contrôle, les structures algorithmiques non linéaires étant plus complexes à manipuler. Pour des raisons d'expressivité, il est ensuite nécessaire que le contrôle soit aisé, ce qui amène d'autres contraintes en terme d'espace de description. Il est souhaitable qu'il soit d'une \textbf{faible dimensionalité} et que son \textbf{échantillonnage temporel} soit sensiblement plus \textbf{lent} que celui du signal.
 
-La plupart des outils présentés dans ce chapitre relève du domaine du traitement du signal. Il est néanmoins remarquable que, pour la plupart des contributions récentes en sciences des données, les éléments déterminants au progrès des systèmes relèvent principalement de l'apprentissage automatique. Même si ces disciplines partagent de nombreux fondements mathématiques en terme de modélisation de l'information, il est important de bien comprendre les différences de méthodologie. Ce sujet passionnant nécessiterait une étude complète, je me contenterai donc ici d'une caricature pour les besoins du propos. Dans une approche traitement du signal, l'expert met en place une structure algorithmique avec un nombre de degrés de liberté assez réduit qui lui permet d'envisager un paramétrage manuel ou par le biais d'un plan expérimental relativement réduit. Dans l'approche apprentissage, le nombre de degrés de liberté devient tellement grand que les mécanismes d'optimisation automatique deviennent indispensables. Il est bien entendu que ces méthodes d'optimisation ont leurs paramètres également, qui doivent être également choisi avec soin.
+La plupart des outils présentés dans ce chapitre relèvent du domaine du traitement du signal. Il est néanmoins remarquable que, pour la plupart des contributions récentes en sciences des données, les éléments déterminants au progrès des systèmes relèvent principalement de l'apprentissage automatique. Même si ces disciplines partagent de nombreux fondements mathématiques en terme de modélisation de l'information, il est important de bien comprendre les différences de méthodologie. Ce sujet passionnant nécessiterait une étude complète, je me contenterai donc ici d'une caricature pour les besoins du propos. Dans une approche traitement du signal, l'expert met en place une structure algorithmique avec un nombre de degrés de liberté réduit qui lui permet d'envisager un paramétrage manuel ou par le biais d'un plan expérimental relativement réduit. Dans l'approche apprentissage, le nombre de degrés de liberté devient tellement grand que les mécanismes d'optimisation automatique deviennent indispensables. Il est bien entendu que ces méthodes d'optimisation ont leurs paramètres également, qui doivent être également choisi avec soin.
 
-Au fur et à mesure de l'augmentation de la disponibilité des grandes quantités de données et de la capacité de traitement, la place de l'apprentissage dans les chaînes de prise de décision n'a fait que grandir. Ce mouvement inéductable sonne-t-il le glas du traitement du signal ? En terme de composant algorithmique indépendant c'est en effet probable. En terme de discipline, de nombreuses opportunités sont ouvertes. En effet, les avancées obtenues grâce aux mécanismes d'apprentissage relèvent pour beaucoup de démarches inductives. A ce jour, la compréhension et la formalisation de la manière dont l'information est traitée dans ces structures algorithmiques complexes est donc largement incomplète.
+La place de l'apprentissage dans les chaînes de prise de décision n'a fait que grandir ces dernières années. Ce mouvement sonne-t-il le glas du traitement du signal ? En terme de composant algorithmique indépendant c'est en effet probable. En terme de discipline, de nombreuses opportunités sont ouvertes. En effet, les avancées obtenues grâce aux mécanismes d'apprentissage relèvent pour beaucoup de démarches inductives. A ce jour, la compréhension et la formalisation de la manière dont l'information est traitée dans ces structures algorithmiques complexes est donc largement incomplète.
 
 Finalement, qu'il s'agisse de modèles de perception, de modèles d'apprentissage, ou de modèles de production, \og tout est filtrage \fg. Il est pour cette raison prédictible que les contributions à l'interface de ces deux disciplines qui permettront d'utiliser conjointement les leviers de ces deux communautés constitueront des avancées significatives aux défis relevant du domaine des sciences des données.~\cite{mallat2016understanding}
 
-Dans cette quête, l'étude des signaux temporels comme les signaux sonores permet de se confronter aux besoins pré-cités: multirésolution, causalité, non-linéarité qui sont au c\oe{}ur des problématiques identifiées par la communauté des sciences des données.
-
-Les avancées récentes par réseaux de neurones convolutionels récurrents pour la synthèse de signaux sonores basés échantillons~\cite{wavenet} proposent des architectures qui possèdent de manière remarquable les conditions nécessaires pré-citées et devraient obtenir en théorie un excellent compromis entre fidélité et versatilité. La possibilité de conditionner le réseau de manière assez flexible donne en outre de bons espoirs en terme d'expressivité.
+Dans cette quête, l'étude des signaux temporels comme les signaux sonores permet de se confronter aux besoins pré-cités: multirésolution, causalité, non-linéarité. Ces verrous sont au c\oe{}ur des problématiques identifiées par la communauté des sciences des données. Par exemple, les avancées récentes par réseaux de neurones convolutionels récurrents pour la synthèse de signaux sonores basés échantillons~\cite{wavenet} proposent des architectures qui possèdent de manière remarquable les conditions nécessaires pré-citées et devraient obtenir en théorie un excellent compromis entre fidélité et versatilité. La possibilité de conditionner le réseau de manière assez flexible donne en outre de bons espoirs en terme d'expressivité.
 
 Est-ce que l'intérêt de ce type d'architecture se confirmera en amenant des réponses aux défis identifiés dans ce chapitre ? Répondre à cette question ouvre un champ d'expérimentation passionnant pour l'expérimentateur qui se doit d'être guidé par une approche méthodologique rigoureuse, et fondée sur des questionnements scientifiques clairement explicités.
