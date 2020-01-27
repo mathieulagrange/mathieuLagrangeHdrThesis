@@ -1,0 +1,189 @@
+\documentclass[compress]{beamer}
+\usepackage{euscript,amsmath,amssymb,amsfonts,amsthm,epsfig,subfigure,color,graphicx,media9}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{pgf,csquotes}
+\usepackage{tikz}
+\usetikzlibrary{fit,arrows,positioning}
+\newsavebox{\mysavebox}
+
+% \definecolor{blue}{rgb}{51,131,255}
+%
+%\usepackage[autolinebreaks,useliterate]{mcode}
+
+% \usepackage{letltxmacro}
+% \LetLtxMacro\olditemize\itemize
+% \LetLtxMacro\oldenumerate\enumerate
+
+\graphicspath{{figures/}}
+
+\usepackage[doi=false,
+            isbn=false,
+            url=false,
+            firstinits=true,
+            bibstyle=authoryear,
+            backend=biber,
+            style=authoryear]{biblatex} %, backend=bibtex
+\AtEveryCitekey{%\clearfield{title}
+    \scriptsize
+    \clearfield{note}
+    \clearfield{pages}
+    \clearfield{volume}%
+    \clearfield{number}
+    \clearlist{location}
+    \clearlist{publisher}
+    \clearname{editor}}
+\renewcommand*{\multicitedelim}{\\}
+
+
+\addbibresource{bib/strings.bib}
+\addbibresource{bib/stringsShort.bib}
+\addbibresource{bib/bib.bib}
+\addbibresource{bib/references.bib}
+\addbibresource{bib/journals.bib}
+\addbibresource{bib/conferences.bib}
+\addbibresource{bib/software.bib}
+
+\usepackage{beamerthemedefault, multimedia, wasysym, amssymb, kpfonts}
+
+\useoutertheme{smoothbars}
+\useinnertheme[shadow=true]{rounded}
+\setbeamercovered{transparent}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}[frame number]
+\setbeamerfont{footline}{size=\fontsize{7}{11}\selectfont}
+%\setbeamertemplate{itemize items}{$\multimapdotinv$}
+%\setbeamertemplate{itemize items}{\textbf{$\strictfi$}}
+\setbeamertemplate{enumerate items}[circle]
+\setbeamertemplate{section in toc}[circle]
+%\useoutertheme{infolines}
+\setbeamercolor{block title}{bg=green}
+
+\definecolor{violet}{rgb}{0.8, 0.6, 0.8}
+\definecolor{green}{rgb}{0.8 ,.9, 0.8}
+\definecolor{blue}{rgb}{0.3, 0 ,0.6}
+
+\newcommand{\includesound}[1]{
+\includemedia[
+  addresource=#1,
+  flashvars={
+    source=#1
+   &autoPlay=true
+  }
+]{\structure{\includegraphics[keepaspectratio,width=.5cm]{figures/play}}}{APlayer.swf}
+}
+
+% footnote without numbers
+\let\oldfootnote\footnote
+\renewcommand\footnote[1]{\let\thefootnote\relax%
+\oldfootnote{#1}}
+
+\newrobustcmd*{\footfullcitenomark}{%
+  \AtNextCite{%
+    \let\thefootnote\relax
+    \let\mkbibfootnote\mkbibfootnotetext}%
+  \footfullcite}
+
+  \defbeamertemplate*{footnotetext}{default}{%
+  %\parindent 1em\noindent%
+  \raggedright
+  %\hbox to 1.8em{\hfil\insertfootnotemark}%
+  \insertfootnotetext\par}
+
+\newrobustcmd*{\footfullcitenomarkleft}{%
+  \AtNextCite{%
+    \setbeamertemplate{footnote}{\usebeamertemplate{footnotetext}}%
+    \let\mkbibfootnote\mkbibfootnotetext}%
+  \footfullcite}
+
+% title, url, authors, extensions
+\newcommand\citenote[4]{\footnote{#3 \href{#2}{\structure{#1}} #4}}
+
+
+\setbeamertemplate{itemize item}{\textrm{--}}
+
+% \defbeamertemplate{description item}{align left}{\insertdescriptionitem\hfill}
+% \setbeamertemplate{description item}[align left]
+
+%\usecolortheme[named=purple]{structure}
+
+\title[]{\LARGE \bf Soutenance d'habilitation à diriger les recherches}
+
+\subtitle{\og Modélisation Long-Terme de Signaux Sonores \fg}
+
+\author{Mathieu Lagrange}
+
+\institute[]
+{
+\begin{minipage}{.5\columnwidth}
+  \tiny
+\begin{description}
+\item[Frédéric Bimbot] Directeur de Recherche CNRS, IRISA, Rennes
+\item[Alain de Cheveigné] Directeur de Recherche CNRS, ENS Paris
+\item[Béatrice Daille] Professeur, LS2N, Nantes
+\item[Patrick Flandrin] Directeur de Recherche CNRS, ENS Lyon
+\item[Stéphane Mallat] Professeur, Collège de France
+\end{description}
+\end{minipage}
+\begin{minipage}{.4\columnwidth}
+  \centering
+  \includegraphics[height=2cm]{figures/logoLs2n}\\
+  \includesound{sounds/hello.mp3}
+\end{minipage}
+
+% \includegraphics[height=1.5cm]{figures/logoEcn}
+% \includegraphics[height=1.5cm]{figures/logoCnrs}
+}
+
+\date[]{14 Novembre 2019}
+
+\logo{\includegraphics[height=.6cm]{figures/logoCnrs}}
+
+\begin{document}
+
+\tikzstyle{mystyle}=[
+nonterminal/.append style={join=by ->},
+tip/.style={->,shorten >=1pt},every join/.style={rounded corners},
+terminal/.style={
+% The shape:
+rectangle,minimum size=6mm,rounded corners=1mm,
+% The rest
+very thick,draw=black!50,
+top color=white,bottom color=black!10,
+font=\ttfamily},
+point/.style={circle,fill=black,minimum size=2pt},
+%every node/.style=draw,
+line/.style ={draw, thick, -latex',shorten
+  >=2pt}]
+
+  \AtBeginSection[]{
+    \begin{frame}
+    \vfill
+    \centering
+    \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+      \huge \bf
+      \secname\par%
+    \end{beamercolorbox}
+    \vfill
+    \end{frame}
+  }
+
+% Update itemize to have a default overlay
+%\renewcommand{\itemize}[1][<+(1)->]{\olditemize[#1]}
+%\renewcommand{\enumerate}[1][<+(1)->]{\oldenumerate[#1]}
+
+%\includeonlyframes{current}
+
+\frame{\titlepage \thispagestyle{empty}}
+
+% show section lists
+\begin{frame}{Agenda} \tableofcontents \end{frame} % [pausesections]
+
+\section[Cv]{Curriculum Vit\ae}\input{cv.tex}
+\section[Problématiques]{Problématiques en traitement du signal audio-numérique} \input{task.tex}
+\section[CASA]{Analyse computationnelle de scènes auditives (CASA)} \input{casa.tex}
+\section[Expérimentation]{Expérimentation en traitement du signal audio-numérique} \input{exp.tex}
+\section[Perspectives]{Perspectives de recherche} \input{proj.tex}
+
+\end{document}
